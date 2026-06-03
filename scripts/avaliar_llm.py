@@ -1,10 +1,10 @@
 """
-Script de avaliacao comparativa de LLMs para o DeclaraAI.
+Script de avaliação comparativa de LLMs para o DeclaraAI.
 
-Roda as perguntas do dataset de avaliacao com diferentes modelos via Ollama
-e salva os resultados em CSV para comparacao no artigo academico.
+Roda as perguntas do dataset de avaliação com diferentes modelos via Ollama
+e salva os resultados em CSV para comparação no artigo acadêmico.
 
-Modos de execucao:
+Modos de execução:
     python scripts/avaliar_llm.py                    # todos os modelos
     python scripts/avaliar_llm.py --modelo mistral   # apenas um modelo
     python scripts/avaliar_llm.py --no-rag           # ablation study (sem RAG)
@@ -77,8 +77,8 @@ def chamar_llm_direto(pergunta: str, modelo: str) -> dict:
     payload = {
         "model": modelo,
         "prompt": (
-            f"Voce e um especialista em imposto de renda brasileiro. "
-            f"Responda diretamente a seguinte pergunta: {pergunta}"
+            f"Você é um especialista em imposto de renda brasileiro. "
+            f"Responda diretamente à seguinte pergunta: {pergunta}"
         ),
         "stream": False,
     }
@@ -112,7 +112,7 @@ def avaliar_modelo(modelo: str, perguntas: list[dict], modo_rag: bool) -> list[d
     modelo_ollama = modelo if modelo != "vanilla_sem_rag" else "mistral"
 
     print(f"\n{'=' * 60}")
-    print(f"Modelo: {nome_modelo} | RAG: {'sim' if modo_rag else 'nao'}")
+    print(f"Modelo: {nome_modelo} | RAG: {'sim' if modo_rag else 'não'}")
     print(f"{'=' * 60}")
 
     for i, pergunta in enumerate(perguntas, 1):
@@ -169,10 +169,10 @@ def imprimir_resumo(resultados: list[dict], modelo: str) -> None:
     cobertura_media = sum(r["cobertura_keywords_pct"] for r in resultados) / len(resultados)
     latencia_media = sum(r["latencia_segundos"] for r in resultados) / len(resultados)
     chunks_media = sum(r["chunks_recuperados"] for r in resultados) / len(resultados)
-    print(f"\nResumo — {modelo}")
-    print(f"  Cobertura de keywords media: {cobertura_media:.1f}%")
-    print(f"  Latencia media: {latencia_media:.1f}s")
-    print(f"  Chunks recuperados medio: {chunks_media:.1f}")
+    print(f"\nResumo - {modelo}")
+    print(f"  Cobertura de keywords média: {cobertura_media:.1f}%")
+    print(f"  Latência média: {latencia_media:.1f}s")
+    print(f"  Chunks recuperados em média: {chunks_media:.1f}")
 
 
 def salvar_csv(todos_resultados: list[dict]) -> None:
@@ -187,7 +187,7 @@ def salvar_csv(todos_resultados: list[dict]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Avaliacao comparativa de LLMs — DeclaraAI")
+    parser = argparse.ArgumentParser(description="Avaliação comparativa de LLMs - DeclaraAI")
     parser.add_argument("--modelo", choices=MODELOS, help="Avalia apenas este modelo")
     parser.add_argument(
         "--no-rag",
@@ -198,7 +198,7 @@ def main() -> None:
         "--limite",
         type=int,
         default=None,
-        help="Limita o numero de perguntas (util para testes rapidos)",
+        help="Limita o número de perguntas (útil para testes rápidos)",
     )
     args = parser.parse_args()
 

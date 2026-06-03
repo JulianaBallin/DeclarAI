@@ -1,13 +1,13 @@
 """
-Script de avaliacao RAGAS para o DeclaraAI.
+Script de avaliação RAGAS para o DeclaraAI.
 
-Calcula as 4 metricas RAGAS usando Ollama local como juiz:
-- Faithfulness: respostas estao apoiadas no contexto?
-- Answer Relevancy: respostas enderedacam as perguntas?
+Calcula as 4 métricas RAGAS usando Ollama local como juiz:
+- Faithfulness: respostas estão apoiadas no contexto?
+- Answer Relevancy: respostas endereçam as perguntas?
 - Context Precision: chunks relevantes chegam no topo?
-- Context Recall: tudo necessario foi recuperado?
+- Context Recall: tudo necessário foi recuperado?
 
-Pre-requisito:
+Pré-requisito:
     pip install ragas langchain-community
 
 Uso:
@@ -74,7 +74,7 @@ def avaliar_com_ragas(perguntas: list[dict], modelo: str) -> list[dict]:
             faithfulness,
         )
     except ImportError as e:
-        print(f"Dependencia nao instalada: {e}")
+        print(f"Dependência não instalada: {e}")
         print("Execute: pip install ragas langchain-community datasets")
         return []
 
@@ -89,7 +89,7 @@ def avaliar_com_ragas(perguntas: list[dict], modelo: str) -> list[dict]:
 
         questoes.append(pergunta["pergunta"])
         respostas.append(dados.get("resposta", ""))
-        contextos.append(dados.get("contextos_raw", [dados.get("fontes", [])]))
+        contextos.append(dados.get("contexto_utilizado") or [])
         ground_truths.append(pergunta.get("resposta_referencia", ""))
 
     dataset = Dataset.from_dict({
@@ -99,7 +99,7 @@ def avaliar_com_ragas(perguntas: list[dict], modelo: str) -> list[dict]:
         "ground_truth": ground_truths,
     })
 
-    print("\nCalculando metricas RAGAS (pode demorar varios minutos)...")
+    print("\nCalculando métricas RAGAS (pode demorar vários minutos)...")
     resultado = evaluate(
         dataset=dataset,
         metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
@@ -138,7 +138,7 @@ def imprimir_resumo(resultados: list[dict], modelo: str) -> None:
         return
     n = len(resultados)
     metricas = ["faithfulness", "answer_relevancy", "context_precision", "context_recall", "media_ragas"]
-    print(f"\nResumo RAGAS -- modelo: {modelo}")
+    print(f"\nResumo RAGAS - modelo: {modelo}")
     for m in metricas:
         media = sum(r[m] for r in resultados) / n
         print(f"  {m}: {media:.4f}")
@@ -156,9 +156,9 @@ def salvar_csv(todos_resultados: list[dict]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Avaliacao RAGAS -- DeclaraAI")
+    parser = argparse.ArgumentParser(description="Avaliação RAGAS - DeclaraAI")
     parser.add_argument("--modelo", default="mistral", help="Modelo Ollama a usar como LLM e juiz")
-    parser.add_argument("--limite", type=int, default=None, help="Limita numero de perguntas")
+    parser.add_argument("--limite", type=int, default=None, help="Limita número de perguntas")
     args = parser.parse_args()
 
     perguntas = carregar_perguntas()
@@ -175,7 +175,7 @@ def main() -> None:
         salvar_csv(resultados)
         print(f"\nTotal de registros salvos: {len(resultados)}")
     else:
-        print("Nenhum resultado gerado. Verifique as dependencias e o Ollama.")
+        print("Nenhum resultado gerado. Verifique as dependências e o Ollama.")
 
 
 if __name__ == "__main__":

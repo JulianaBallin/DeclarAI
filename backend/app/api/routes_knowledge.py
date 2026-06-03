@@ -10,8 +10,10 @@ from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, UploadFile, File
 from fastapi.responses import FileResponse
+from pydantic import BaseModel, Field
 
 from app.core.config import configuracoes
+from app.rag.chunker import ChunkerTexto
 from app.services.rag_service import get_servico_rag
 import logging
 
@@ -20,6 +22,12 @@ logger = logging.getLogger(__name__)
 roteador = APIRouter()
 
 EXTENSOES_PERMITIDAS = {".pdf", ".txt", ".html", ".htm"}
+
+
+class RequisicaoReindexacao(BaseModel):
+    tipo: str = Field(default="fixo", pattern="^(fixo|sentenca|semantico)$")
+    chunk_size: int | None = Field(default=None, ge=50, le=4000)
+    chunk_overlap: int | None = Field(default=None, ge=0, le=1000)
 
 
 @roteador.get(
@@ -59,6 +67,56 @@ async def listar_arquivos_base():
 
 
 @roteador.post(
+    "/reindex",
+    summary="Re-indexar base com configuração de chunking",
+    description=(
+        "Limpa o ChromaDB e re-indexa a base de conhecimento. "
+        "Permite ajustar chunk_size e chunk_overlap para experimentos."
+    ),
+)
+async def reindexar_base(requisicao: RequisicaoReindexacao):
+    """
+    Re-indexa a base de conhecimento com configuração informada.
+
+    Os tipos 'sentenca' e 'semantico' ficam registrados para os scripts de
+    experimento, mas usam o chunker local até a implementação das estratégias
+    avançadas no pipeline principal.
+    """
+    try:
+        tamanho_chunk = requisicao.chunk_size
+        overlap = requisicao.chunk_overlap
+
+        if requisicao.tipo == "sentenca":
+            tamanho_chunk = tamanho_chunk or 600
+            overlap = overlap if overlap is not None else 0
+        elif requisicao.tipo == "semantico":
+            tamanho_chunk = tamanho_chunk or 800
+            overlap = overlap if overlap is not None else 120
+
+        servico = get_servico_rag()
+        servico.banco_vetorial.limpar()
+        servico.chunker = ChunkerTexto(
+            tamanho_chunk=tamanho_chunk,
+            overlap=overlap,
+        )
+        total_chunks = servico.ingerir_base_conhecimento()
+
+        return {
+            "mensagem": "Base re-indexada com sucesso.",
+            "tipo": requisicao.tipo,
+            "chunk_size": servico.chunker.tamanho_chunk,
+            "chunk_overlap": servico.chunker.overlap,
+            "chunks_indexados": total_chunks,
+        }
+    except Exception as erro:
+        logger.error(f"Erro na re-indexação experimental: {erro}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Erro ao re-indexar a base: {str(erro)}",
+        )
+
+
+@roteador.post(
     "/upload",
     summary="Adicionar arquivo à base de conhecimento",
     description=(
@@ -90,7 +148,7 @@ async def adicionar_a_base(arquivo: UploadFile = File(...)):
     diretorio = Path(configuracoes.CAMINHO_BASE_CONHECIMENTO)
     diretorio.mkdir(parents=True, exist_ok=True)
 
-    # Usa o nome original — permite substituir versões antigas do mesmo arquivo
+    # Usa o nome original - permite substituir versões antigas do mesmo arquivo
     nome_destino = arquivo.filename or f"documento{extensao}"
     caminho_destino = diretorio / nome_destino
 

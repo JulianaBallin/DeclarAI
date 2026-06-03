@@ -1,13 +1,13 @@
 """
-Script de avaliacao de estrategias de chunking para o DeclaraAI.
+Script de avaliação de estratégias de chunking para o DeclaraAI.
 
-Testa diferentes configuracoes de chunking nas perguntas do dataset
-e salva metricas em CSV para comparacao no artigo academico.
+Testa diferentes configurações de chunking nas perguntas do dataset
+e salva métricas em CSV para comparação no artigo acadêmico.
 
-Configuracoes testadas:
+Configurações testadas:
 - Chunking fixo com diferentes chunk_size e overlap
-- Chunking por sentenca (NLTK)
-- Chunking semantico (SemanticChunker)
+- Chunking por sentença (NLTK)
+- Chunking semântico (SemanticChunker)
 
 Uso:
     python scripts/avaliar_chunking.py
@@ -82,7 +82,7 @@ def configurar_chunking(config: dict) -> bool:
             dados = resposta.json()
             print(f"  Re-indexado: {dados.get('chunks_indexados', 0)} chunks")
             return True
-        print(f"  Erro ao re-indexar: {resposta.status_code} -- {resposta.text[:100]}")
+        print(f"  Erro ao re-indexar: {resposta.status_code} - {resposta.text[:100]}")
         return False
     except Exception as e:
         print(f"  Erro ao configurar chunking: {e}")
@@ -122,14 +122,14 @@ def calcular_cobertura_keywords(contextos: list[str], keywords: list[str]) -> fl
 
 def avaliar_configuracao(config: dict, perguntas: list[dict]) -> list[dict]:
     print(f"\n{'=' * 60}")
-    print(f"Configuracao: {config['nome']}")
+    print(f"Configuração: {config['nome']}")
     if config["chunk_size"]:
         print(f"  chunk_size={config['chunk_size']}, overlap={config['chunk_overlap']}")
     print(f"{'=' * 60}")
 
     configurado = configurar_chunking(config)
     if not configurado:
-        print("  Pulando esta configuracao (erro no re-indexamento)")
+        print("  Pulando esta configuração (erro no re-indexamento)")
         return []
 
     resultados = []
@@ -169,11 +169,11 @@ def imprimir_resumo(resultados: list[dict], config_nome: str) -> None:
     score_medio = sum(r["score_medio_contexto"] for r in resultados) / n
     cobertura_media = sum(r["cobertura_keywords_pct"] for r in resultados) / n
     latencia_media = sum(r["latencia_segundos"] for r in resultados) / n
-    print(f"\nResumo -- {config_nome}")
-    print(f"  Taxa de recuperacao: {taxa_rec:.1f}%")
-    print(f"  Score medio de contexto: {score_medio:.4f}")
-    print(f"  Cobertura de keywords media: {cobertura_media:.1f}%")
-    print(f"  Latencia media: {latencia_media:.2f}s")
+    print(f"\nResumo - {config_nome}")
+    print(f"  Taxa de recuperação: {taxa_rec:.1f}%")
+    print(f"  Score médio de contexto: {score_medio:.4f}")
+    print(f"  Cobertura de keywords média: {cobertura_media:.1f}%")
+    print(f"  Latência média: {latencia_media:.2f}s")
 
 
 def salvar_csv(todos_resultados: list[dict]) -> None:
@@ -188,17 +188,17 @@ def salvar_csv(todos_resultados: list[dict]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Avaliacao de estrategias de chunking -- DeclaraAI")
+    parser = argparse.ArgumentParser(description="Avaliação de estratégias de chunking - DeclaraAI")
     parser.add_argument(
         "--config",
         choices=[c["nome"] for c in CONFIGURACOES_CHUNKING],
-        help="Avalia apenas esta configuracao",
+        help="Avalia apenas esta configuração",
     )
     parser.add_argument(
         "--limite",
         type=int,
         default=None,
-        help="Limita numero de perguntas (util para testes rapidos)",
+        help="Limita número de perguntas (útil para testes rápidos)",
     )
     args = parser.parse_args()
 
@@ -213,7 +213,7 @@ def main() -> None:
     )
 
     print(f"Dataset: {len(perguntas)} perguntas")
-    print(f"Configuracoes a testar: {len(configs)}")
+    print(f"Configurações a testar: {len(configs)}")
     print(f"API: {API_URL}")
 
     todos_resultados = []
@@ -225,8 +225,8 @@ def main() -> None:
     salvar_csv(todos_resultados)
     print(f"\nTotal de registros salvos: {len(todos_resultados)}")
 
-    print("\nProximos passos:")
-    print("  1. Abra notebooks/01_experimentos_chunking.ipynb para visualizar os graficos")
+    print("\nPróximos passos:")
+    print("  1. Abra notebooks/01_experimentos_chunking.ipynb para visualizar os gráficos")
     print("  2. Execute: jupyter notebook notebooks/01_experimentos_chunking.ipynb")
 
 

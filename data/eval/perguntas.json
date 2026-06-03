@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "descricao": "Dataset de avaliacao do pipeline RAG do DeclaraAI. Perguntas sobre IRPF com respostas de referencia anotadas manualmente.",
+  "descricao": "Dataset de avaliação do pipeline RAG do DeclaraAI. Perguntas sobre IRPF com respostas de referência anotadas manualmente.",
   "total": 60,
   "categorias": [
     "obrigatoriedade",
@@ -20,481 +20,827 @@
     {
       "id": 1,
       "categoria": "obrigatoriedade",
-      "pergunta": "Quem e obrigado a declarar imposto de renda em 2024?",
-      "resposta_referencia": "E obrigado a declarar quem recebeu rendimentos tributaveis acima de R$ 30.639,90 no ano, ou rendimentos isentos acima de R$ 200.000,00, ou teve receita bruta de atividade rural acima de R$ 153.199,50, ou possui bens e direitos acima de R$ 800.000,00, entre outros criterios.",
-      "keywords": ["obrigatorio", "declarar", "rendimentos", "R$ 30.639,90", "2024"],
+      "pergunta": "Quem é obrigado a declarar imposto de renda em 2024?",
+      "resposta_referencia": "É obrigado a declarar quem recebeu rendimentos tributáveis acima de R$ 30.639,90 no ano, ou rendimentos isentos acima de R$ 200.000,00, ou teve receita bruta de atividade rural acima de R$ 153.199,50, ou possui bens e direitos acima de R$ 800.000,00, entre outros critérios.",
+      "keywords": [
+        "obrigatório",
+        "declarar",
+        "rendimentos",
+        "R$ 30.639,90",
+        "2024"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 2,
       "categoria": "obrigatoriedade",
-      "pergunta": "Pessoa que vendeu um imovel precisa declarar imposto de renda?",
-      "resposta_referencia": "Sim. Quem realizou operacao de alienacao de bens e direitos sujeita ao pagamento do imposto de renda, bem como quem efetuou vendas na bolsa de valores ou em mercado de ativos, e obrigado a declarar.",
-      "keywords": ["venda", "imovel", "alienacao", "obrigatorio", "declarar"],
+      "pergunta": "Pessoa que vendeu um imóvel precisa declarar imposto de renda?",
+      "resposta_referencia": "Sim. Quem realizou operação de alienação de bens e direitos sujeita ao pagamento do imposto de renda, bem como quem efetuou vendas na bolsa de valores ou em mercado de ativos, é obrigado a declarar.",
+      "keywords": [
+        "venda",
+        "imóvel",
+        "alienação",
+        "obrigatório",
+        "declarar"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 3,
       "categoria": "obrigatoriedade",
-      "pergunta": "Quem recebe apenas um salario minimo precisa declarar?",
-      "resposta_referencia": "Nao necessariamente. A obrigatoriedade depende do valor total de rendimentos tributaveis recebidos. Se os rendimentos ficaram abaixo do limite de R$ 30.639,90, a pessoa nao e obrigada a declarar, mesmo que tenha recebido um salario minimo por todos os meses.",
-      "keywords": ["salario minimo", "limite", "rendimentos", "obrigatoriedade"],
+      "pergunta": "Quem recebe apenas um salário mínimo precisa declarar?",
+      "resposta_referencia": "Não necessariamente. A obrigatoriedade depende do valor total de rendimentos tributáveis recebidos. Se os rendimentos ficaram abaixo do limite de R$ 30.639,90, a pessoa não é obrigada a declarar, mesmo que tenha recebido um salário mínimo por todos os meses.",
+      "keywords": [
+        "salário mínimo",
+        "limite",
+        "rendimentos",
+        "obrigatoriedade"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 4,
       "categoria": "deducoes_medicas",
-      "pergunta": "Consulta medica pode ser deduzida no imposto de renda?",
-      "resposta_referencia": "Sim. Despesas medicas pagas a medicos de qualquer especialidade sao dedutiveis sem limite no imposto de renda. E necessario guardar os recibos ou notas fiscais com o nome do profissional, CRM e valor pago.",
-      "keywords": ["consulta medica", "dedutivel", "sem limite", "despesas medicas"],
+      "pergunta": "Consulta médica pode ser deduzida no imposto de renda?",
+      "resposta_referencia": "Sim. Despesas médicas pagas a médicos de qualquer especialidade são dedutíveis sem limite no imposto de renda. É necessário guardar os recibos ou notas fiscais com o nome do profissional, CRM e valor pago.",
+      "keywords": [
+        "consulta médica",
+        "dedutível",
+        "sem limite",
+        "despesas médicas"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 5,
       "categoria": "deducoes_medicas",
-      "pergunta": "Plano de saude e dedutivel no imposto de renda?",
-      "resposta_referencia": "Sim. Despesas com planos de saude proprios, do conjuge, filhos e dependentes incluidos na declaracao sao totalmente dedutiveis sem limite de valor. E necessario ter o informe de pagamentos emitido pela operadora.",
-      "keywords": ["plano de saude", "dedutivel", "sem limite", "operadora", "dependentes"],
+      "pergunta": "Plano de saúde é dedutível no imposto de renda?",
+      "resposta_referencia": "Sim. Despesas com planos de saúde próprios, do cônjuge, filhos e dependentes incluídos na declaração são totalmente dedutíveis sem limite de valor. É necessário ter o informe de pagamentos emitido pela operadora.",
+      "keywords": [
+        "plano de saúde",
+        "dedutível",
+        "sem limite",
+        "operadora",
+        "dependentes"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 6,
       "categoria": "deducoes_medicas",
-      "pergunta": "Academia de ginastica pode ser deduzida do imposto de renda?",
-      "resposta_referencia": "Nao. Despesas com academias de ginastica nao sao dedutiveis no imposto de renda, pois nao sao consideradas despesas medicas pela legislacao fiscal. Apenas despesas com medicos, hospitais, exames e planos de saude sao aceitas.",
-      "keywords": ["academia", "nao dedutivel", "ginastica", "despesas medicas"],
+      "pergunta": "Academia de ginástica pode ser deduzida do imposto de renda?",
+      "resposta_referencia": "Não. Despesas com academias de ginástica não são dedutíveis no imposto de renda, pois não são consideradas despesas médicas pela legislação fiscal. Apenas despesas com médicos, hospitais, exames e planos de saúde são aceitas.",
+      "keywords": [
+        "academia",
+        "não dedutível",
+        "ginástica",
+        "despesas médicas"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 7,
       "categoria": "deducoes_medicas",
-      "pergunta": "Dentista e dedutivel no IRPF?",
-      "resposta_referencia": "Sim. Despesas com dentistas sao dedutiveis sem limite no imposto de renda. O recibo deve conter o nome do profissional, numero do CRO (Conselho Regional de Odontologia) e o valor pago.",
-      "keywords": ["dentista", "dedutivel", "sem limite", "CRO", "odontologia"],
+      "pergunta": "Dentista é dedutível no IRPF?",
+      "resposta_referencia": "Sim. Despesas com dentistas são dedutíveis sem limite no imposto de renda. O recibo deve conter o nome do profissional, número do CRO (Conselho Regional de Odontologia) e o valor pago.",
+      "keywords": [
+        "dentista",
+        "dedutível",
+        "sem limite",
+        "CRO",
+        "odontologia"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 8,
       "categoria": "deducoes_medicas",
-      "pergunta": "Internacao hospitalar e deducao de imposto de renda?",
-      "resposta_referencia": "Sim. Despesas com internacoes hospitalares sao dedutiveis sem limite no imposto de renda. A nota fiscal ou recibo do hospital deve estar em nome do contribuinte ou do dependente.",
-      "keywords": ["internacao", "hospital", "dedutivel", "sem limite"],
+      "pergunta": "Internação hospitalar e dedução de imposto de renda?",
+      "resposta_referencia": "Sim. Despesas com internações hospitalares são dedutíveis sem limite no imposto de renda. A nota fiscal ou recibo do hospital deve estar em nome do contribuinte ou do dependente.",
+      "keywords": [
+        "internação",
+        "hospital",
+        "dedutível",
+        "sem limite"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 9,
       "categoria": "deducoes_medicas",
-      "pergunta": "Remedios comprados em farmacia sao dedutiveis?",
-      "resposta_referencia": "Nao. Compras de medicamentos em farmacia nao sao dedutiveis no imposto de renda, a menos que o medicamento tenha sido adquirido durante uma internacao hospitalar e conste na conta do hospital.",
-      "keywords": ["remedios", "farmacia", "nao dedutivel", "medicamentos"],
+      "pergunta": "Remédios comprados em farmácia são dedutíveis?",
+      "resposta_referencia": "Não. Compras de medicamentos em farmácia não são dedutíveis no imposto de renda, a menos que o medicamento tenha sido adquirido durante uma internação hospitalar e conste na conta do hospital.",
+      "keywords": [
+        "remédios",
+        "farmácia",
+        "não dedutível",
+        "medicamentos"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 10,
       "categoria": "deducoes_educacao",
-      "pergunta": "Mensalidade de faculdade e dedutivel no imposto de renda?",
-      "resposta_referencia": "Sim, mas com limite. Despesas com ensino superior (faculdade, universidade) sao dedutiveis com limite anual por pessoa. Em 2024, o limite e de R$ 3.561,50 por dependente ou pelo proprio contribuinte.",
-      "keywords": ["mensalidade", "faculdade", "dedutivel", "limite", "ensino superior"],
+      "pergunta": "Mensalidade de faculdade é dedutível no imposto de renda?",
+      "resposta_referencia": "Sim, mas com limite. Despesas com ensino superior (faculdade, universidade) são dedutíveis com limite anual por pessoa. Em 2024, o limite é de R$ 3.561,50 por dependente ou pelo próprio contribuinte.",
+      "keywords": [
+        "mensalidade",
+        "faculdade",
+        "dedutível",
+        "limite",
+        "ensino superior"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 11,
       "categoria": "deducoes_educacao",
       "pergunta": "Escola particular para filho menor de 18 anos pode ser deduzida?",
-      "resposta_referencia": "Sim, com limite. Despesas com educacao de dependentes, incluindo ensino fundamental e medio em escola particular, sao dedutiveis. O limite anual por dependente em 2024 e de R$ 3.561,50.",
-      "keywords": ["escola particular", "filho", "dependente", "dedutivel", "limite"],
+      "resposta_referencia": "Sim, com limite. Despesas com educação de dependentes, incluindo ensino fundamental e médio em escola particular, são dedutíveis. O limite anual por dependente em 2024 é de R$ 3.561,50.",
+      "keywords": [
+        "escola particular",
+        "filho",
+        "dependente",
+        "dedutível",
+        "limite"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 12,
       "categoria": "deducoes_educacao",
       "pergunta": "Curso de idiomas pode ser deduzido do IRPF?",
-      "resposta_referencia": "Nao. Cursos de idiomas nao sao dedutiveis no imposto de renda. A legislacao so permite deducao de despesas com educacao formal: ensino infantil, fundamental, medio, tecnico e superior. Cursos livres, de idiomas e profissionalizantes nao se enquadram.",
-      "keywords": ["curso de idiomas", "nao dedutivel", "educacao formal"],
+      "resposta_referencia": "Não. Cursos de idiomas não são dedutíveis no imposto de renda. A legislação só permite dedução de despesas com educação formal: ensino infantil, fundamental, médio, técnico e superior. Cursos livres, de idiomas e profissionalizantes não se enquadram.",
+      "keywords": [
+        "curso de idiomas",
+        "não dedutível",
+        "educação formal"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 13,
       "categoria": "deducoes_educacao",
-      "pergunta": "MBA e deducao de imposto de renda?",
-      "resposta_referencia": "Depende. MBA reconhecido pelo MEC como curso de pos-graduacao lato sensu pode ser dedutivel. Cursos de extensao ou cursos MBA sem reconhecimento do MEC nao sao dedutiveis. O limite anual e de R$ 3.561,50.",
-      "keywords": ["MBA", "pos-graduacao", "MEC", "dedutivel", "limite"],
+      "pergunta": "MBA e dedução de imposto de renda?",
+      "resposta_referencia": "Depende. MBA reconhecido pelo MEC como curso de pós-graduação lato sensu pode ser dedutível. Cursos de extensão ou cursos MBA sem reconhecimento do MEC não são dedutíveis. O limite anual é de R$ 3.561,50.",
+      "keywords": [
+        "MBA",
+        "pós-graduação",
+        "MEC",
+        "dedutível",
+        "limite"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 14,
       "categoria": "previdencia_privada",
-      "pergunta": "Previdencia privada PGBL pode ser deduzida do imposto de renda?",
-      "resposta_referencia": "Sim. Contribuicoes para PGBL (Plano Gerador de Beneficio Livre) sao dedutiveis ate 12% da renda bruta tributavel anual. Apenas o PGBL permite deducao; o VGBL nao da direito a deducao na declaracao.",
-      "keywords": ["PGBL", "previdencia privada", "dedutivel", "12%", "renda bruta"],
+      "pergunta": "Previdência privada PGBL pode ser deduzida do imposto de renda?",
+      "resposta_referencia": "Sim. Contribuições para PGBL (Plano Gerador de Benefício Livre) são dedutíveis até 12% da renda bruta tributável anual. Apenas o PGBL permite dedução; o VGBL não dá direito a dedução na declaração.",
+      "keywords": [
+        "PGBL",
+        "previdência privada",
+        "dedutível",
+        "12%",
+        "renda bruta"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 15,
       "categoria": "previdencia_privada",
       "pergunta": "INSS pago pelo trabalhador pode ser deduzido?",
-      "resposta_referencia": "Sim. As contribuicoes ao INSS pagas pelo trabalhador (desconto em folha) sao dedutiveis integralmente na declaracao, sem limite de valor. O valor consta no informe de rendimentos do empregador.",
-      "keywords": ["INSS", "contribuicao", "dedutivel", "informe de rendimentos"],
+      "resposta_referencia": "Sim. As contribuições ao INSS pagas pelo trabalhador (desconto em folha) são dedutíveis integralmente na declaração, sem limite de valor. O valor consta no informe de rendimentos do empregador.",
+      "keywords": [
+        "INSS",
+        "contribuição",
+        "dedutível",
+        "informe de rendimentos"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 16,
       "categoria": "rendimentos",
-      "pergunta": "O que e o informe de rendimentos e para que serve?",
-      "resposta_referencia": "O informe de rendimentos e um documento emitido pelo empregador, banco ou pagador contendo todos os valores pagos ao contribuinte no ano (salarios, juros, dividendos) e os impostos retidos. E usado para preencher a declaracao de IR com os valores corretos.",
-      "keywords": ["informe de rendimentos", "empregador", "salarios", "imposto retido"],
+      "pergunta": "O que é o informe de rendimentos e para que serve?",
+      "resposta_referencia": "O informe de rendimentos é um documento emitido pelo empregador, banco ou pagador contendo todos os valores pagos ao contribuinte no ano (salários, juros, dividendos) e os impostos retidos. É usado para preencher a declaração de IR com os valores corretos.",
+      "keywords": [
+        "informe de rendimentos",
+        "empregador",
+        "salários",
+        "imposto retido"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 17,
       "categoria": "rendimentos",
-      "pergunta": "Rendimentos de poupanca precisam ser declarados?",
-      "resposta_referencia": "Sim, mas sao isentos de imposto. Os rendimentos de caderneta de poupanca sao isentos de IR, mas devem ser informados na declaracao na ficha de rendimentos isentos e nao tributaveis. O saldo da poupanca tambem deve ser declarado na ficha de bens e direitos.",
-      "keywords": ["poupanca", "isento", "rendimentos isentos", "bens e direitos"],
+      "pergunta": "Rendimentos de poupança precisam ser declarados?",
+      "resposta_referencia": "Sim, mas são isentos de imposto. Os rendimentos de caderneta de poupança são isentos de IR, mas devem ser informados na declaração na ficha de rendimentos isentos e não tributáveis. O saldo da poupança também deve ser declarado na ficha de bens e direitos.",
+      "keywords": [
+        "poupança",
+        "isento",
+        "rendimentos isentos",
+        "bens e direitos"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 18,
       "categoria": "rendimentos",
-      "pergunta": "13 salario e tributavel no imposto de renda?",
-      "resposta_referencia": "Sim. O 13 salario (gratificacao natalina) e tributavel. O imposto e geralmente retido na fonte pelo empregador na epoca do pagamento. O valor pago e o imposto retido constam no informe de rendimentos.",
-      "keywords": ["13 salario", "tributavel", "retido na fonte", "imposto"],
+      "pergunta": "13º salário é tributável no imposto de renda?",
+      "resposta_referencia": "Sim. O 13º salário (gratificação natalina) é tributável. O imposto é geralmente retido na fonte pelo empregador na época do pagamento. O valor pago e o imposto retido constam no informe de rendimentos.",
+      "keywords": [
+        "13º salário",
+        "tributável",
+        "retido na fonte",
+        "imposto"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 19,
       "categoria": "dependentes",
-      "pergunta": "Quem pode ser incluido como dependente na declaracao de IR?",
-      "resposta_referencia": "Podem ser dependentes: conjuge ou companheiro(a) ha mais de 5 anos, filhos e enteados ate 21 anos (ou ate 24 anos se em universidade), pais e avos com renda mensal ate R$ 2.824,00, irmao ou neto sob tutela, entre outros previstos na legislacao.",
-      "keywords": ["dependente", "conjuge", "filhos", "pais", "limite de idade"],
+      "pergunta": "Quem pode ser incluído como dependente na declaração de IR?",
+      "resposta_referencia": "Podem ser dependentes: cônjuge ou companheiro(a) há mais de 5 anos, filhos e enteados até 21 anos (ou até 24 anos se em universidade), pais e avós com renda mensal até R$ 2.824,00, irmão ou neto sob tutela, entre outros previstos na legislação.",
+      "keywords": [
+        "dependente",
+        "cônjuge",
+        "filhos",
+        "pais",
+        "limite de idade"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 20,
       "categoria": "dependentes",
       "pergunta": "Quanto posso deduzir por dependente no IR?",
-      "resposta_referencia": "Em 2024, a deducao por dependente e de R$ 2.275,08 por ano por pessoa. Esta deducao e aplicada diretamente na base de calculo do imposto.",
-      "keywords": ["deducao por dependente", "R$ 2.275,08", "base de calculo"],
+      "resposta_referencia": "Em 2024, a dedução por dependente é de R$ 2.275,08 por ano por pessoa. Esta dedução é aplicada diretamente na base de cálculo do imposto.",
+      "keywords": [
+        "dedução por dependente",
+        "R$ 2.275,08",
+        "base de cálculo"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 21,
       "categoria": "autonomos",
-      "pergunta": "Autonomo precisa declarar imposto de renda?",
-      "resposta_referencia": "Sim, se tiver recebido rendimentos acima do limite de obrigatoriedade (R$ 30.639,90 em 2024). Autonomos devem informar os rendimentos recebidos, o INSS recolhido como autonomo (carnê-leão) e as despesas relacionadas a atividade.",
-      "keywords": ["autonomo", "carne-leao", "rendimentos", "INSS"],
+      "pergunta": "Autônomo precisa declarar imposto de renda?",
+      "resposta_referencia": "Sim, se tiver recebido rendimentos acima do limite de obrigatoriedade (R$ 30.639,90 em 2024). Autônomos devem informar os rendimentos recebidos, o INSS recolhido como autônomo (carnê-leão) e as despesas relacionadas à atividade.",
+      "keywords": [
+        "autônomo",
+        "carnê-leão",
+        "rendimentos",
+        "INSS"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 22,
       "categoria": "autonomos",
-      "pergunta": "O que e o livro caixa para o imposto de renda?",
-      "resposta_referencia": "O livro caixa e o registro das despesas necessarias ao exercicio da atividade profissional do autonomo. As despesas registradas podem ser deduzidas dos rendimentos recebidos, reduzindo a base de calculo do imposto. Nao ha necessidade de envio a Receita Federal, mas deve ser mantido pelo contribuinte.",
-      "keywords": ["livro caixa", "despesas", "autonomo", "deducao", "atividade profissional"],
+      "pergunta": "O que é o livro caixa para o imposto de renda?",
+      "resposta_referencia": "O livro caixa é o registro das despesas necessárias ao exercício da atividade profissional do autônomo. As despesas registradas podem ser deduzidas dos rendimentos recebidos, reduzindo a base de cálculo do imposto. Não há necessidade de envio à Receita Federal, mas deve ser mantido pelo contribuinte.",
+      "keywords": [
+        "livro caixa",
+        "despesas",
+        "autônomo",
+        "dedução",
+        "atividade profissional"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 23,
       "categoria": "alugueis",
       "pergunta": "Aluguel recebido precisa ser declarado no IR?",
-      "resposta_referencia": "Sim. Rendimentos de alugueis sao tributaveis e devem ser declarados mensalmente via carne-leao (para pessoa fisica) ou na declaracao anual. O imposto e calculado sobre o valor do aluguel menos as despesas dedutiveis (IPTU, condominio pago pelo proprietario, etc.).",
-      "keywords": ["aluguel", "rendimentos", "tributavel", "carne-leao", "IPTU"],
+      "resposta_referencia": "Sim. Rendimentos de aluguéis são tributáveis e devem ser declarados mensalmente via carnê-leão (para pessoa física) ou na declaração anual. O imposto é calculado sobre o valor do aluguel menos as despesas dedutíveis (IPTU, condomínio pago pelo proprietário, etc.).",
+      "keywords": [
+        "aluguel",
+        "rendimentos",
+        "tributável",
+        "carnê-leão",
+        "IPTU"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 24,
       "categoria": "alugueis",
       "pergunta": "Quem paga aluguel pode deduzir do imposto de renda?",
-      "resposta_referencia": "Nao. O pagamento de aluguel nao e dedutivel no imposto de renda da pessoa fisica. Apenas o recebimento de aluguel gera obrigacao de declarar. Quem aluga imovel para morar nao tem direito a deducao.",
-      "keywords": ["aluguel pago", "nao dedutivel", "locatario", "pessoa fisica"],
+      "resposta_referencia": "Não. O pagamento de aluguel não é dedutível no imposto de renda da pessoa física. Apenas o recebimento de aluguel gera obrigação de declarar. Quem aluga imóvel para morar não tem direito a dedução.",
+      "keywords": [
+        "aluguel pago",
+        "não dedutível",
+        "locatário",
+        "pessoa física"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 25,
       "categoria": "doacoes",
-      "pergunta": "Doacoes para entidades beneficentes sao dedutiveis?",
-      "resposta_referencia": "Depende. Doacoes a fundos controlados pelos conselhos municipais, estaduais e federais do idoso e da crianca (ECA) sao dedutiveis com limite de ate 6% do imposto devido. Doacoes para projetos aprovados pela Lei Rouanet, Audiovisual e Esporte tambem tem beneficios. Doacoes diretas a entidades nao sao dedutiveis.",
-      "keywords": ["doacoes", "dedutiveis", "ECA", "limite", "imposto devido"],
+      "pergunta": "Doações para entidades beneficentes são dedutíveis?",
+      "resposta_referencia": "Depende. Doações a fundos controlados pelos conselhos municipais, estaduais e federais do idoso e da criança (ECA) são dedutíveis com limite de até 6% do imposto devido. Doações para projetos aprovados pela Lei Rouanet, Audiovisual e Esporte também têm benefícios. Doações diretas a entidades não são dedutíveis.",
+      "keywords": [
+        "doações",
+        "dedutíveis",
+        "ECA",
+        "limite",
+        "imposto devido"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 26,
       "categoria": "penalidades",
-      "pergunta": "Qual e a multa por nao declarar o imposto de renda dentro do prazo?",
-      "resposta_referencia": "A multa por atraso na entrega da declaracao e de 1% ao mes sobre o imposto devido, com minimo de R$ 165,74 e maximo de 20% do imposto devido. Quem nao tem imposto a pagar paga apenas a multa minima.",
-      "keywords": ["multa", "atraso", "1% ao mes", "R$ 165,74", "20%"],
+      "pergunta": "Qual é a multa por não declarar o imposto de renda dentro do prazo?",
+      "resposta_referencia": "A multa por atraso na entrega da declaração é de 1% ao mês sobre o imposto devido, com mínimo de R$ 165,74 e máximo de 20% do imposto devido. Quem não tem imposto a pagar paga apenas a multa mínima.",
+      "keywords": [
+        "multa",
+        "atraso",
+        "1% ao mês",
+        "R$ 165,74",
+        "20%"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 27,
       "categoria": "penalidades",
-      "pergunta": "O que acontece se declarar informacoes falsas no IR?",
-      "resposta_referencia": "Declarar informacoes falsas ou omitir rendimentos configura crime contra a ordem tributaria, previsto na Lei 8.137/90. A pena e de 2 a 5 anos de reclusa, alem da cobranca do imposto, multa de 75% e juros. A Receita Federal tambem pode cruzar dados e intimar o contribuinte.",
-      "keywords": ["informacoes falsas", "crime", "multa", "75%", "Lei 8.137"],
+      "pergunta": "O que acontece se declarar informações falsas no IR?",
+      "resposta_referencia": "Declarar informações falsas ou omitir rendimentos configura crime contra a ordem tributária, previsto na Lei 8.137/90. A pena é de 2 a 5 anos de reclusa, além da cobrança do imposto, multa de 75% e juros. A Receita Federal também pode cruzar dados e intimar o contribuinte.",
+      "keywords": [
+        "informações falsas",
+        "crime",
+        "multa",
+        "75%",
+        "Lei 8.137"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 28,
       "categoria": "documentos_fiscais",
-      "pergunta": "Qual a diferenca entre NF-e, NFC-e e NFS-e?",
-      "resposta_referencia": "NF-e (Nota Fiscal Eletronica) e usada para vendas de produtos entre empresas. NFC-e (Nota Fiscal de Consumidor Eletronica) e usada para vendas de produtos ao consumidor final (cupom fiscal eletronico). NFS-e (Nota Fiscal de Servicos Eletronica) e emitida por prestadores de servicos.",
-      "keywords": ["NF-e", "NFC-e", "NFS-e", "nota fiscal", "servicos", "consumidor"],
+      "pergunta": "Qual a diferença entre NF-e, NFC-e e NFS-e?",
+      "resposta_referencia": "NF-e (Nota Fiscal Eletrônica) é usada para vendas de produtos entre empresas. NFC-e (Nota Fiscal de Consumidor Eletrônica) é usada para vendas de produtos ao consumidor final (cupom fiscal eletrônico). NFS-e (Nota Fiscal de Serviços Eletrônica) é emitida por prestadores de serviços.",
+      "keywords": [
+        "NF-e",
+        "NFC-e",
+        "NFS-e",
+        "nota fiscal",
+        "serviços",
+        "consumidor"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 29,
       "categoria": "documentos_fiscais",
-      "pergunta": "Recibo simples tem validade fiscal para deducao no IR?",
-      "resposta_referencia": "Recibos simples (sem nota fiscal eletronica) sao aceitos pela Receita Federal para comprovacao de despesas medicas e educacionais. Porem, em caso de malha fina, a Receita pode questionar recibos sem CNPJ ou CRM do emissor. E importante que o recibo contenha dados completos do prestador.",
-      "keywords": ["recibo", "validade fiscal", "malha fina", "CNPJ", "CRM"],
+      "pergunta": "Recibo simples tem validade fiscal para dedução no IR?",
+      "resposta_referencia": "Recibos simples (sem nota fiscal eletrônica) são aceitos pela Receita Federal para comprovação de despesas médicas e educacionais. Porém, em caso de malha fina, a Receita pode questionar recibos sem CNPJ ou CRM do emissor. É importante que o recibo contenha dados completos do prestador.",
+      "keywords": [
+        "recibo",
+        "validade fiscal",
+        "malha fina",
+        "CNPJ",
+        "CRM"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 30,
       "categoria": "documentos_fiscais",
-      "pergunta": "DARF e usado para que no imposto de renda?",
-      "resposta_referencia": "O DARF (Documento de Arrecadacao de Receitas Federais) e usado para pagar o imposto de renda apurado, o carne-leao mensal de autonomos, o ganho de capital sobre venda de bens, e outros tributos federais. O codigo do DARF indica o tipo de tributo que esta sendo pago.",
-      "keywords": ["DARF", "pagamento", "imposto", "carne-leao", "ganho de capital"],
+      "pergunta": "DARF é usado para que no imposto de renda?",
+      "resposta_referencia": "O DARF (Documento de Arrecadação de Receitas Federais) é usado para pagar o imposto de renda apurado, o carnê-leão mensal de autônomos, o ganho de capital sobre venda de bens, e outros tributos federais. O código do DARF indica o tipo de tributo que está sendo pago.",
+      "keywords": [
+        "DARF",
+        "pagamento",
+        "imposto",
+        "carnê-leão",
+        "ganho de capital"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 31,
       "categoria": "prazos",
-      "pergunta": "Qual e o prazo para entregar a declaracao de IR em 2024?",
-      "resposta_referencia": "O prazo para entrega da declaracao do IRPF 2024 (ano-base 2023) e de 15 de marco a 31 de maio de 2024. A declaracao pode ser entregue pelo programa IRPF, pelo aplicativo Meu Imposto de Renda ou pelo e-CAC.",
-      "keywords": ["prazo", "2024", "31 de maio", "entrega", "declaracao"],
+      "pergunta": "Qual é o prazo para entregar a declaração de IR em 2024?",
+      "resposta_referencia": "O prazo para entrega da declaração do IRPF 2024 (ano-base 2023) é de 15 de março a 31 de maio de 2024. A declaração pode ser entregue pelo programa IRPF, pelo aplicativo Meu Imposto de Renda ou pelo e-CAC.",
+      "keywords": [
+        "prazo",
+        "2024",
+        "31 de maio",
+        "entrega",
+        "declaração"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 32,
       "categoria": "prazos",
-      "pergunta": "Posso retificar a declaracao de IR depois de enviar?",
-      "resposta_referencia": "Sim. O contribuinte pode enviar uma declaracao retificadora para corrigir erros ou omissoes na declaracao original. A retificadora pode ser enviada ate 5 anos apos o prazo de entrega da declaracao original. A ultima declaracao retificadora entregue substitui a anterior.",
-      "keywords": ["retificadora", "corrigir", "5 anos", "prazo", "substituir"],
+      "pergunta": "Posso retificar a declaração de IR depois de enviar?",
+      "resposta_referencia": "Sim. O contribuinte pode enviar uma declaração retificadora para corrigir erros ou omissões na declaração original. A retificadora pode ser enviada até 5 anos após o prazo de entrega da declaração original. A última declaração retificadora entregue substitui a anterior.",
+      "keywords": [
+        "retificadora",
+        "corrigir",
+        "5 anos",
+        "prazo",
+        "substituir"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 33,
       "categoria": "deducoes_medicas",
       "pergunta": "Exames laboratoriais podem ser deduzidos do imposto de renda?",
-      "resposta_referencia": "Sim. Exames laboratoriais, de imagem (raio-x, ressonancia, tomografia) e outros exames diagnosticos sao dedutiveis sem limite no imposto de renda. O recibo ou nota fiscal deve identificar o laboratorio ou clinica e o valor pago.",
-      "keywords": ["exames", "laboratorio", "dedutivel", "diagnostico", "sem limite"],
+      "resposta_referencia": "Sim. Exames laboratoriais, de imagem (raio-x, ressonância, tomografia) e outros exames diagnósticos são dedutíveis sem limite no imposto de renda. O recibo ou nota fiscal deve identificar o laboratório ou clínica e o valor pago.",
+      "keywords": [
+        "exames",
+        "laboratório",
+        "dedutível",
+        "diagnostico",
+        "sem limite"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 34,
       "categoria": "deducoes_medicas",
-      "pergunta": "Cirurgia plastica e dedutivel no imposto de renda?",
-      "resposta_referencia": "Depende. Cirurgias plasticas com fins reparadores (reconstrucao apos acidente, cancer de mama) sao dedutiveis como despesas medicas. Cirurgias puramente esteticas, segundo entendimento da Receita Federal, tambem podem ser aceitas pois nao ha distincao na legislacao entre cirurgia estetica e cirurgia reparadora.",
-      "keywords": ["cirurgia plastica", "estetica", "reparadora", "dedutivel", "medica"],
+      "pergunta": "Cirurgia plástica é dedutível no imposto de renda?",
+      "resposta_referencia": "Depende. Cirurgias plásticas com fins reparadores (reconstrução após acidente, câncer de mama) são dedutíveis como despesas médicas. Cirurgias puramente estéticas, segundo entendimento da Receita Federal, também podem ser aceitas pois não há distinção na legislação entre cirurgia estética e cirurgia reparadora.",
+      "keywords": [
+        "cirurgia plastica",
+        "estética",
+        "reparadora",
+        "dedutível",
+        "médica"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 35,
       "categoria": "deducoes_educacao",
-      "pergunta": "Pre-escola ou creche para filho pequeno e dedutivel?",
-      "resposta_referencia": "Sim. Despesas com educacao infantil (creche e pre-escola) sao dedutiveis com limite anual. Em 2024, o limite e de R$ 3.561,50 por dependente. A creche deve emitir recibo ou nota fiscal com o CNPJ.",
-      "keywords": ["creche", "pre-escola", "educacao infantil", "dedutivel", "limite"],
+      "pergunta": "Pré-escola ou creche para filho pequeno é dedutível?",
+      "resposta_referencia": "Sim. Despesas com educação infantil (creche e pré-escola) são dedutíveis com limite anual. Em 2024, o limite é de R$ 3.561,50 por dependente. A creche deve emitir recibo ou nota fiscal com o CNPJ.",
+      "keywords": [
+        "creche",
+        "pré-escola",
+        "educação infantil",
+        "dedutível",
+        "limite"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 36,
       "categoria": "rendimentos",
-      "pergunta": "Dividendos recebidos de empresa sao tributaveis?",
-      "resposta_referencia": "Atualmente, dividendos pagos por empresas brasileiras a pessoas fisicas sao isentos de imposto de renda. Devem ser declarados na ficha de rendimentos isentos e nao tributaveis. Esse beneficio fiscal pode mudar com reformas tributarias futuras.",
-      "keywords": ["dividendos", "isento", "pessoa fisica", "nao tributavel"],
+      "pergunta": "Dividendos recebidos de empresa são tributáveis?",
+      "resposta_referencia": "Atualmente, dividendos pagos por empresas brasileiras a pessoas físicas são isentos de imposto de renda. Devem ser declarados na ficha de rendimentos isentos e não tributáveis. Esse benefício fiscal pode mudar com reformas tributárias futuras.",
+      "keywords": [
+        "dividendos",
+        "isento",
+        "pessoa física",
+        "não tributável"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 37,
       "categoria": "autonomos",
-      "pergunta": "Psicologos precisam emitir nota fiscal para deducao do imposto de renda do paciente?",
-      "resposta_referencia": "Psicologo e profissional de saude e seus atendimentos sao dedutiveis. O recibo ou nota fiscal deve conter o nome completo do profissional, numero do CRP (Conselho Regional de Psicologia), CPF ou CNPJ, e o valor pago. Recibo simples com esses dados e aceito.",
-      "keywords": ["psicologo", "CRP", "dedutivel", "recibo", "nota fiscal"],
+      "pergunta": "Psicólogos precisam emitir nota fiscal para dedução do imposto de renda do paciente?",
+      "resposta_referencia": "Psicólogo e profissional de saúde e seus atendimentos são dedutíveis. O recibo ou nota fiscal deve conter o nome completo do profissional, número do CRP (Conselho Regional de Psicologia), CPF ou CNPJ, e o valor pago. Recibo simples com esses dados é aceito.",
+      "keywords": [
+        "psicólogo",
+        "CRP",
+        "dedutível",
+        "recibo",
+        "nota fiscal"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 38,
       "categoria": "obrigatoriedade",
       "pergunta": "Trabalhador que ficou desempregado o ano todo precisa declarar?",
-      "resposta_referencia": "Depende. Se o total de rendimentos tributaveis (incluindo seguro-desemprego, rescisao) ficou abaixo de R$ 30.639,90, nao ha obrigatoriedade. Porem, pode ser vantajoso declarar para restituir imposto retido na fonte sobre a rescisao ou ferias.",
-      "keywords": ["desempregado", "seguro-desemprego", "rescisao", "obrigatoriedade", "restituicao"],
+      "resposta_referencia": "Depende. Se o total de rendimentos tributáveis (incluindo seguro-desemprego, rescisão) ficou abaixo de R$ 30.639,90, não há obrigatoriedade. Porém, pode ser vantajoso declarar para restituir imposto retido na fonte sobre a rescisão ou férias.",
+      "keywords": [
+        "desempregado",
+        "seguro-desemprego",
+        "rescisão",
+        "obrigatoriedade",
+        "restituição"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 39,
       "categoria": "dependentes",
-      "pergunta": "Filho que trabalha e tem renda propria ainda pode ser dependente?",
-      "resposta_referencia": "Filho com renda propria pode ser dependente se tiver ate 21 anos (ou ate 24 se em curso de nivel superior). Porem, os rendimentos do filho devem ser somados aos do titular na declaracao. Convem calcular se a deducao por dependente e maior que o imposto gerado pelos rendimentos do filho.",
-      "keywords": ["filho", "renda", "dependente", "21 anos", "24 anos", "somados"],
+      "pergunta": "Filho que trabalha e tem renda própria ainda pode ser dependente?",
+      "resposta_referencia": "Filho com renda própria pode ser dependente se tiver até 21 anos (ou até 24 se em curso de nível superior). Porém, os rendimentos do filho devem ser somados aos do titular na declaração. Convém calcular se a dedução por dependente é maior que o imposto gerado pelos rendimentos do filho.",
+      "keywords": [
+        "filho",
+        "renda",
+        "dependente",
+        "21 anos",
+        "24 anos",
+        "somados"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 40,
       "categoria": "previdencia_privada",
-      "pergunta": "Qual e a diferenca entre PGBL e VGBL para o imposto de renda?",
-      "resposta_referencia": "O PGBL permite deducao das contribuicoes na declaracao (limite de 12% da renda bruta), mas o resgate e totalmente tributado. O VGBL nao permite deducao das contribuicoes, mas no resgate o imposto incide apenas sobre os rendimentos, nao sobre o principal. PGBL e indicado para quem faz declaracao completa; VGBL para quem faz declaracao simplificada.",
-      "keywords": ["PGBL", "VGBL", "deducao", "resgate", "tributado", "simplificada"],
+      "pergunta": "Qual é a diferença entre PGBL e VGBL para o imposto de renda?",
+      "resposta_referencia": "O PGBL permite dedução das contribuições na declaração (limite de 12% da renda bruta), mas o resgate é totalmente tributado. O VGBL não permite dedução das contribuições, mas no resgate o imposto incide apenas sobre os rendimentos, não sobre o principal. PGBL é indicado para quem faz declaração completa; VGBL para quem faz declaração simplificada.",
+      "keywords": [
+        "PGBL",
+        "VGBL",
+        "dedução",
+        "resgate",
+        "tributado",
+        "simplificada"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 41,
       "categoria": "documentos_fiscais",
-      "pergunta": "Como verificar a autenticidade de uma nota fiscal eletronica?",
-      "resposta_referencia": "NF-e pode ser verificada no portal da Receita Federal usando a chave de acesso de 44 digitos. NFS-e deve ser verificada no portal da prefeitura do municipio emissor. A chave garante que a nota e autentica e nao foi cancelada.",
-      "keywords": ["autenticidade", "chave de acesso", "44 digitos", "portal", "verificar"],
+      "pergunta": "Como verificar a autenticidade de uma nota fiscal eletrônica?",
+      "resposta_referencia": "NF-e pode ser verificada no portal da Receita Federal usando a chave de acesso de 44 dígitos. NFS-e deve ser verificada no portal da prefeitura do município emissor. A chave garante que a nota é autêntica e não foi cancelada.",
+      "keywords": [
+        "autenticidade",
+        "chave de acesso",
+        "44 dígitos",
+        "portal",
+        "verificar"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 42,
       "categoria": "rendimentos",
-      "pergunta": "Heranca recebida precisa ser declarada no imposto de renda?",
-      "resposta_referencia": "Heranca recebida de pessoa falecida e isenta de imposto de renda. Deve ser declarada na ficha de rendimentos isentos e nao tributaveis, com descricao do bem recebido. O bem tambem deve ser incluido na ficha de bens e direitos pelo valor do inventario.",
-      "keywords": ["heranca", "isenta", "rendimentos isentos", "bens e direitos"],
+      "pergunta": "Herança recebida precisa ser declarada no imposto de renda?",
+      "resposta_referencia": "Herança recebida de pessoa falecida é isenta de imposto de renda. Deve ser declarada na ficha de rendimentos isentos e não tributáveis, com descrição do bem recebido. O bem também deve ser incluído na ficha de bens e direitos pelo valor do inventário.",
+      "keywords": [
+        "herança",
+        "isenta",
+        "rendimentos isentos",
+        "bens e direitos"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 43,
       "categoria": "penalidades",
-      "pergunta": "O que e malha fina no imposto de renda?",
-      "resposta_referencia": "Malha fina e o processo de revisao automatica da Receita Federal que identifica inconsistencias na declaracao, como divergencia de valores com notas fiscais, despesas medicas sem comprovacao, rendimentos nao declarados, ou deducoes acima dos limites. O contribuinte retido em malha recebe uma notificacao e deve apresentar documentos ou corrigir a declaracao.",
-      "keywords": ["malha fina", "inconsistencias", "revisao", "notificacao", "documentos"],
+      "pergunta": "O que é malha fina no imposto de renda?",
+      "resposta_referencia": "Malha fina é o processo de revisão automática da Receita Federal que identifica inconsistências na declaração, como divergência de valores com notas fiscais, despesas médicas sem comprovação, rendimentos não declarados, ou deduções acima dos limites. O contribuinte retido em malha recebe uma notificação e deve apresentar documentos ou corrigir a declaração.",
+      "keywords": [
+        "malha fina",
+        "inconsistências",
+        "revisão",
+        "notificação",
+        "documentos"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 44,
       "categoria": "alugueis",
-      "pergunta": "Pensao alimenticia pode ser deduzida no imposto de renda?",
-      "resposta_referencia": "Sim. A pensao alimenticia paga a beneficiarios que sejam dependentes do contribuinte, estabelecida por decisao judicial ou escritura publica, e totalmente dedutivel sem limite. O valor pago deve ser informado na ficha de pagamentos efetuados.",
-      "keywords": ["pensao alimenticia", "dedutivel", "sem limite", "judicial", "escritura"],
+      "pergunta": "Pensao alimentícia pode ser deduzida no imposto de renda?",
+      "resposta_referencia": "Sim. A pensão alimentícia paga a beneficiários que sejam dependentes do contribuinte, estabelecida por decisão judicial ou escritura pública, e totalmenté dedutível sem limite. O valor pago deve ser informado na ficha de pagamentos efetuados.",
+      "keywords": [
+        "pensão alimentícia",
+        "dedutível",
+        "sem limite",
+        "judicial",
+        "escritura"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 45,
       "categoria": "documentos_fiscais",
       "pergunta": "Holerite do empregado pode substituir o informe de rendimentos?",
-      "resposta_referencia": "Nao. O holerite (contracheque) e o documento do mes, enquanto o informe de rendimentos e o documento anual consolidado. Para a declaracao de IR, e necessario o informe de rendimentos, que contem o total anual dos rendimentos e o total de imposto retido, informacoes que nao constam nos holerites mensais.",
-      "keywords": ["holerite", "informe de rendimentos", "anual", "mensal", "contracheque"],
+      "resposta_referencia": "Não. O holerite (contracheque) é o documento do mês, enquanto o informe de rendimentos é o documento anual consolidado. Para a declaração de IR, é necessário o informe de rendimentos, que contém o total anual dos rendimentos e o total de imposto retido, informações que não constam nos holerites mensais.",
+      "keywords": [
+        "holerite",
+        "informe de rendimentos",
+        "anual",
+        "mensal",
+        "contracheque"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 46,
       "categoria": "obrigatoriedade",
       "pergunta": "Aposentado precisa declarar imposto de renda?",
-      "resposta_referencia": "Depende do valor recebido. Aposentados com rendimentos tributaveis (proventos do INSS acima do limite de isencao para maiores de 65 anos ou valor acima de R$ 30.639,90 para menores de 65) sao obrigados a declarar. Aposentados acima de 65 anos tem parcela isenta de imposto.",
-      "keywords": ["aposentado", "INSS", "65 anos", "isencao", "obrigatoriedade"],
+      "resposta_referencia": "Depende do valor recebido. Aposentados com rendimentos tributáveis (proventos do INSS acima do limite de isenção para maiores de 65 anos ou valor acima de R$ 30.639,90 para menores de 65) são obrigados a declarar. Aposentados acima de 65 anos têm parcela isenta de imposto.",
+      "keywords": [
+        "apósentado",
+        "INSS",
+        "65 anos",
+        "isenção",
+        "obrigatoriedade"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 47,
       "categoria": "deducoes_medicas",
-      "pergunta": "Despesas com psiquiatra sao dedutiveis?",
-      "resposta_referencia": "Sim. Consultas e tratamentos com psiquiatras sao dedutiveis sem limite no imposto de renda, pois psiquiatria e uma especialidade medica. O recibo deve ter o nome do medico, CRM e valor pago.",
-      "keywords": ["psiquiatra", "dedutivel", "sem limite", "CRM", "medico"],
+      "pergunta": "Despesas com psiquiatra são dedutíveis?",
+      "resposta_referencia": "Sim. Consultas e tratamentos com psiquiatras são dedutíveis sem limite no imposto de renda, pois psiquiatria é uma especialidade médica. O recibo deve ter o nome do médico, CRM e valor pago.",
+      "keywords": [
+        "psiquiatra",
+        "dedutível",
+        "sem limite",
+        "CRM",
+        "médico"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 48,
       "categoria": "deducoes_educacao",
-      "pergunta": "Material escolar pode ser deduzido do imposto de renda?",
-      "resposta_referencia": "Nao. Despesas com material escolar (livros, cadernos, uniformes) nao sao dedutiveis no imposto de renda. Apenas as mensalidades e taxas de matricula das instituicoes de ensino sao aceitas como deducao educacional.",
-      "keywords": ["material escolar", "nao dedutivel", "livros", "uniforme", "mensalidade"],
+      "pergunta": "Matérial escolar pode ser deduzido do imposto de renda?",
+      "resposta_referencia": "Não. Despesas com material escolar (livros, cadernos, uniformes) não são dedutíveis no imposto de renda. Apenas as mensalidades e taxas de matrícula das instituições de ensino são aceitas como dedução educacional.",
+      "keywords": [
+        "material escolar",
+        "não dedutível",
+        "livros",
+        "uniforme",
+        "mensalidade"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 49,
       "categoria": "rendimentos",
-      "pergunta": "Indenizacao trabalhista e tributavel no IR?",
-      "resposta_referencia": "Depende do tipo. Indenizacoes por dispensa sem justa causa (aviso previo indenizado, FGTS, multa de 40%) sao isentas de IR. Ferias e 13 salario proporcionais pagos na rescisao sao tributaveis. O informe de rendimentos da empresa detalha o que e tributavel e o que e isento.",
-      "keywords": ["indenizacao trabalhista", "dispensa", "FGTS", "isento", "rescisao"],
+      "pergunta": "Indenização trabalhista é tributável no IR?",
+      "resposta_referencia": "Depende do tipo. Indenizações por dispensa sem justa causa (aviso prévio indenizado, FGTS, multa de 40%) são isentas de IR. Férias e 13º salário proporcionais pagos na rescisão são tributáveis. O informe de rendimentos da empresa detalha o que é tributável e o que é isento.",
+      "keywords": [
+        "indenizacao trabalhista",
+        "dispensa",
+        "FGTS",
+        "isento",
+        "rescisão"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 50,
       "categoria": "prazos",
-      "pergunta": "Quando cai a restituicao do imposto de renda?",
-      "resposta_referencia": "A restituicao do IR e paga em lotes mensais de junho a dezembro. A prioridade e dada a idosos acima de 80 anos, deficientes, professores e quem declarou mais cedo. O contribuinte pode acompanhar a situacao pelo aplicativo Meu Imposto de Renda ou pelo e-CAC.",
-      "keywords": ["restituicao", "lotes", "junho", "dezembro", "prioridade", "idosos"],
+      "pergunta": "Quando cai a restituição do imposto de renda?",
+      "resposta_referencia": "A restituição do IR é paga em lotes mensais de junho a dezembro. A prioridade é dada a idosos acima de 80 anos, deficientes, professores e quem declarou mais cedo. O contribuinte pode acompanhar a situação pelo aplicativo Meu Imposto de Renda ou pelo e-CAC.",
+      "keywords": [
+        "restituição",
+        "lotes",
+        "junho",
+        "dezembro",
+        "prioridade",
+        "idosos"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 51,
       "categoria": "deducoes_medicas",
-      "pergunta": "Tratamento odontologico de aparelho ortopedico e dedutivel?",
-      "resposta_referencia": "Sim. Tratamentos odontologicos, incluindo aparelhos ortodonticos, sao dedutiveis sem limite no imposto de renda. O dentista ou clinica deve emitir recibo com nome do profissional, CRO e valor pago.",
-      "keywords": ["ortodontico", "aparelho", "dentista", "dedutivel", "CRO"],
+      "pergunta": "Tratamento odontológico de aparelho ortopédico é dedutível?",
+      "resposta_referencia": "Sim. Tratamentos odontológicos, incluindo aparelhos ortodônticos, são dedutíveis sem limite no imposto de renda. O dentista ou clínica deve emitir recibo com nome do profissional, CRO e valor pago.",
+      "keywords": [
+        "ortodontico",
+        "aparelho",
+        "dentista",
+        "dedutível",
+        "CRO"
+      ],
       "dificuldade": "facil"
     },
     {
       "id": 52,
       "categoria": "dependentes",
       "pergunta": "Conjuge pode ser dependente no imposto de renda?",
-      "resposta_referencia": "Sim. O conjuge pode ser incluido como dependente, desde que os rendimentos de ambos sejam somados em uma unica declaracao. Para ser vantajoso, a deducao pelo dependente deve superar o imposto gerado pelos rendimentos do conjuge.",
-      "keywords": ["conjuge", "dependente", "rendimentos", "declaracao conjunta"],
+      "resposta_referencia": "Sim. O cônjuge pode ser incluído como dependente, desde que os rendimentos de ambos sejam somados em uma única declaração. Para ser vantajoso, a dedução pelo dependente deve superar o imposto gerado pelos rendimentos do cônjuge.",
+      "keywords": [
+        "cônjuge",
+        "dependente",
+        "rendimentos",
+        "declaração conjunta"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 53,
       "categoria": "autonomos",
-      "pergunta": "Advogado autonomo pode deduzir despesas do escritorio?",
-      "resposta_referencia": "Sim. Profissionais autonomos, incluindo advogados, podem deduzir despesas necessarias ao exercicio da profissao por meio do livro caixa. Sao dedutiveis: aluguel do escritorio, internet, material de consumo, honorarios de auxiliares, etc.",
-      "keywords": ["advogado", "autonomo", "livro caixa", "escritorio", "despesas"],
+      "pergunta": "Advogado autônomo pode deduzir despesas do escritório?",
+      "resposta_referencia": "Sim. Profissionais autônomos, incluindo advogados, podem deduzir despesas necessárias ao exercício da profissão por meio do livro caixa. São dedutíveis: aluguel do escritório, internet, material de consumo, honorários de auxiliares, etc.",
+      "keywords": [
+        "advogado",
+        "autônomo",
+        "livro caixa",
+        "escritório",
+        "despesas"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 54,
       "categoria": "obrigatoriedade",
       "pergunta": "Menor de 18 anos precisa declarar imposto de renda?",
-      "resposta_referencia": "Se o menor de 18 anos recebeu rendimentos tributaveis acima do limite obrigatorio, sim. Nesse caso, o responsavel legal pode incluir o menor como dependente (somando os rendimentos na declaracao do responsavel) ou o menor pode fazer sua propria declaracao.",
-      "keywords": ["menor de 18", "dependente", "rendimentos", "responsavel legal"],
+      "resposta_referencia": "Se o menor de 18 anos recebeu rendimentos tributáveis acima do limite obrigatório, sim. Nesse caso, o responsável legal pode incluir o menor como dependente (somando os rendimentos na declaração do responsável) ou o menor pode fazer sua própria declaração.",
+      "keywords": [
+        "menor de 18",
+        "dependente",
+        "rendimentos",
+        "responsável legal"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 55,
       "categoria": "documentos_fiscais",
-      "pergunta": "Comprovante de pagamento do cartao de credito serve para declarar despesas?",
-      "resposta_referencia": "Nao. O comprovante de pagamento do cartao de credito nao serve como documento fiscal para deducao. E necessario o recibo ou nota fiscal emitido pelo prestador do servico (medico, escola, etc.), que identifica quem prestou o servico e o valor.",
-      "keywords": ["cartao de credito", "comprovante", "nao serve", "recibo", "nota fiscal"],
+      "pergunta": "Comprovante de pagamento do cartão de crédito serve para declarar despesas?",
+      "resposta_referencia": "Não. O comprovante de pagamento do cartão de crédito não serve como documento fiscal para dedução. É necessário o recibo ou nota fiscal emitido pelo prestador do serviço (médico, escola, etc.), que identifica quem prestou o serviço e o valor.",
+      "keywords": [
+        "cartão de crédito",
+        "comprovante",
+        "não serve",
+        "recibo",
+        "nota fiscal"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 56,
       "categoria": "rendimentos",
-      "pergunta": "Bolsa de estudos e tributavel no imposto de renda?",
-      "resposta_referencia": "Depende. Bolsas de estudo e pesquisa pagas por instituicoes de ensino ou orgaos oficiais (CAPES, CNPq) a estudantes sao isentas de IR, desde que o beneficiario nao preste servicos em troca. Se houver prestacao de servicos, o valor pode ser tributavel como rendimento do trabalho.",
-      "keywords": ["bolsa de estudos", "isenta", "CAPES", "CNPq", "prestacao de servicos"],
+      "pergunta": "Bolsa de estudos é tributável no imposto de renda?",
+      "resposta_referencia": "Depende. Bolsas de estudo e pesquisa pagas por instituições de ensino ou órgãos oficiais (CAPES, CNPq) a estudantes são isentas de IR, desde que o beneficiário não preste serviços em troca. Se houver prestação de serviços, o valor pode ser tributável como rendimento do trabalho.",
+      "keywords": [
+        "bolsa de estudos",
+        "isenta",
+        "CAPES",
+        "CNPq",
+        "prestação de serviços"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 57,
       "categoria": "alugueis",
       "pergunta": "Posso deduzir o IPTU do aluguel recebido?",
-      "resposta_referencia": "Sim, mas apenas se o IPTU for pago pelo proprietario (locador) e nao repassado ao inquilino. Nesse caso, o IPTU pode ser deduzido dos rendimentos de aluguel antes de calcular o imposto devido no carne-leao.",
-      "keywords": ["IPTU", "aluguel", "deduzir", "locador", "carne-leao"],
+      "resposta_referencia": "Sim, mas apenas se o IPTU for pago pelo proprietário (locador) e não repassado ao inquilino. Nesse caso, o IPTU pode ser deduzido dos rendimentos de aluguel antes de calcular o imposto devido no carnê-leão.",
+      "keywords": [
+        "IPTU",
+        "aluguel",
+        "deduzir",
+        "locador",
+        "carnê-leão"
+      ],
       "dificuldade": "dificil"
     },
     {
       "id": 58,
       "categoria": "previdencia_privada",
       "pergunta": "Posso deduzir mais de 12% em PGBL?",
-      "resposta_referencia": "Nao. O limite de deducao para contribuicoes ao PGBL e exatamente 12% da renda bruta tributavel anual. Contribuicoes acima desse percentual nao sao dedutiveis. O limite se aplica ao total de contribuicoes ao PGBL somadas as contribuicoes ao regime proprio de previdencia (RPPS) para servidores publicos.",
-      "keywords": ["PGBL", "12%", "limite", "renda bruta", "RPPS"],
+      "resposta_referencia": "Não. O limite de dedução para contribuições ao PGBL é exatamente 12% da renda bruta tributável anual. Contribuições acima desse percentual não são dedutíveis. O limite se aplica ao total de contribuições ao PGBL somadas às contribuições ao regime próprio de previdência (RPPS) para servidores públicos.",
+      "keywords": [
+        "PGBL",
+        "12%",
+        "limite",
+        "renda bruta",
+        "RPPS"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 59,
       "categoria": "penalidades",
-      "pergunta": "O que e omissao de rendimentos no imposto de renda?",
-      "resposta_referencia": "Omissao de rendimentos e nao declarar ou subdeclarar valores recebidos. A Receita Federal cruza dados com empregadores, bancos e pagadores. Se detectada omissao, o contribuinte pode ser autuado com cobranca do imposto nao pago, multa de 75% a 150% e juros SELIC.",
-      "keywords": ["omissao", "rendimentos", "multa", "75%", "SELIC", "autuado"],
+      "pergunta": "O que é omissão de rendimentos no imposto de renda?",
+      "resposta_referencia": "Omissão de rendimentos é não declarar ou subdeclarar valores recebidos. A Receita Federal cruza dados com empregadores, bancos e pagadores. Se detectada omissão, o contribuinte pode ser autuado com cobrança do imposto não pago, multa de 75% a 150% e juros SELIC.",
+      "keywords": [
+        "omissão",
+        "rendimentos",
+        "multa",
+        "75%",
+        "SELIC",
+        "autuado"
+      ],
       "dificuldade": "media"
     },
     {
       "id": 60,
       "categoria": "documentos_fiscais",
       "pergunta": "Quanto tempo devo guardar os documentos do imposto de renda?",
-      "resposta_referencia": "Os documentos comprobatorios das deducoes declaradas devem ser guardados por 5 anos, que e o prazo prescricional para fiscalizacao da Receita Federal. Documentos de bens (escritura de imovel, documentos de veiculo) devem ser guardados pelo tempo em que o bem for de sua propriedade, mais 5 anos apos a venda.",
-      "keywords": ["guardar documentos", "5 anos", "prazo", "fiscalizacao", "prescricional"],
+      "resposta_referencia": "Os documentos comprobatórios das deduções declaradas devem ser guardados por 5 anos, que é o prazo prescricional para fiscalização da Receita Federal. Documentos de bens (escritura de imóvel, documentos de veículo) devem ser guardados pelo tempo em que o bem for de sua propriedade, mais 5 anos após a venda.",
+      "keywords": [
+        "guardar documentos",
+        "5 anos",
+        "prazo",
+        "fiscalização",
+        "prescricional"
+      ],
       "dificuldade": "media"
     }
   ]

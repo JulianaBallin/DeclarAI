@@ -6,9 +6,9 @@ semântica e das respostas geradas, seguindo princípios inspirados no RAGAS.
 
 Métricas implementadas:
     1. Relevância Semântica do Contexto: média dos scores de similaridade
-       cosseno retornados pelo ChromaDB (0–1, quanto maior melhor).
+       cosseno retornados pelo ChromaDB (0-1, quanto maior melhor).
     2. Cobertura de Palavras-Chave: percentual dos termos esperados
-       encontrados na resposta gerada (0–100%).
+       encontrados na resposta gerada (0-100%).
     3. Taxa de Recuperação: proporção de perguntas para as quais ao menos
        um chunk relevante foi encontrado no banco vetorial.
     4. Análise de Casos de Falha: identifica perguntas onde a cobertura
@@ -21,7 +21,9 @@ Referência metodológica:
       requerem um LLM-juiz externo, tornando a avaliação autossuficiente.
 """
 
+import json
 import re
+from pathlib import Path
 from typing import List
 from app.rag.retriever import Recuperador
 from app.rag.vector_store import BancoVetorial
@@ -33,12 +35,12 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Conjunto de casos de teste para o domínio IRPF
 # ---------------------------------------------------------------------------
-# Cada caso possui palavras-chave esperadas na resposta — usadas para calcular
+# Cada caso possui palavras-chave esperadas na resposta - usadas para calcular
 # a métrica de cobertura. Foram escolhidas perguntas representativas das
 # principais categorias do IRPF para validar a amplitude da base de conhecimento.
 # ---------------------------------------------------------------------------
 
-CASOS_TESTE: List[dict] = [
+CASOS_TESTE_PADRAO: List[dict] = [
     {
         "id": 1,
         "pergunta": "Quem é obrigado a declarar o imposto de renda?",
@@ -89,6 +91,42 @@ CASOS_TESTE: List[dict] = [
     },
 ]
 
+CAMINHO_DATASET = Path(__file__).resolve().parents[3] / "data" / "eval" / "perguntas.json"
+
+
+def carregar_casos_teste() -> List[dict]:
+    """
+    Carrega o dataset anotado de avaliação.
+
+    Se o arquivo não estiver disponível, usa um conjunto mínimo embutido para
+    manter a API funcional em ambientes de teste.
+    """
+    if not CAMINHO_DATASET.exists():
+        logger.warning("Dataset de avaliação não encontrado. Usando casos padrão.")
+        return CASOS_TESTE_PADRAO
+
+    try:
+        with open(CAMINHO_DATASET, encoding="utf-8") as arquivo:
+            dados = json.load(arquivo)
+
+        casos = []
+        for item in dados.get("perguntas", []):
+            casos.append({
+                "id": item["id"],
+                "pergunta": item["pergunta"],
+                "categoria": item["categoria"],
+                "palavras_chave": item.get("keywords", []),
+                "dificuldade": item.get("dificuldade", "nao_informada"),
+                "resposta_referencia": item.get("resposta_referencia", ""),
+            })
+
+        if casos:
+            return casos
+    except Exception as erro:
+        logger.warning("Falha ao ler dataset de avaliação: %s", erro)
+
+    return CASOS_TESTE_PADRAO
+
 
 class ServicoAvaliacao:
     """
@@ -104,6 +142,7 @@ class ServicoAvaliacao:
         self.banco_vetorial = BancoVetorial()
         self.recuperador = Recuperador(banco_vetorial=self.banco_vetorial)
         self.servico_rag = ServicoRAG(banco_vetorial=self.banco_vetorial)
+        self.casos_teste = carregar_casos_teste()
 
     # -----------------------------------------------------------------------
     # Avaliação de Recuperação (sem LLM)
@@ -124,20 +163,23 @@ class ServicoAvaliacao:
         logger.info("Iniciando avaliação de recuperação...")
         resultados: List[dict] = []
 
-        for caso in CASOS_TESTE:
-            chunks = self.recuperador.recuperar(caso["pergunta"])
-            scores = [c.get("score", 0.0) for c in chunks]
-            score_medio = round(sum(scores) / len(scores), 4) if scores else 0.0
+        for caso in self.casos_teste:
+            resultado = self.avaliar_pergunta(caso["pergunta"])
 
             resultados.append({
                 "id": caso["id"],
                 "pergunta": caso["pergunta"],
                 "categoria": caso["categoria"],
-                "chunks_recuperados": len(chunks),
-                "score_medio_contexto": score_medio,
-                "score_maximo": round(max(scores), 4) if scores else 0.0,
-                "fontes_encontradas": list({c.get("fonte", "") for c in chunks}),
-                "contexto_encontrado": len(chunks) > 0,
+                "dificuldade": caso.get("dificuldade", "nao_informada"),
+                "chunks_recuperados": resultado["chunks_recuperados"],
+                "score_medio_contexto": resultado["score_medio_contexto"],
+                "score_maximo": resultado["score_maximo"],
+                "fontes_encontradas": resultado["fontes"],
+                "contexto_encontrado": resultado["contexto_encontrado"],
+                "cobertura_keywords_pct": self._calcular_cobertura_keywords(
+                    " ".join(resultado["contextos"]),
+                    caso.get("palavras_chave", []),
+                ),
             })
 
         # Métricas agregadas
@@ -192,7 +234,7 @@ class ServicoAvaliacao:
         logger.info("Iniciando avaliação completa do pipeline RAG...")
         resultados: List[dict] = []
 
-        for caso in CASOS_TESTE:
+        for caso in self.casos_teste:
             logger.info(f"Avaliando caso {caso['id']}: {caso['pergunta'][:60]}...")
 
             resultado_rag = await self.servico_rag.responder_pergunta(caso["pergunta"])
@@ -207,6 +249,7 @@ class ServicoAvaliacao:
                 "id": caso["id"],
                 "pergunta": caso["pergunta"],
                 "categoria": caso["categoria"],
+                "dificuldade": caso.get("dificuldade", "nao_informada"),
                 "chunks_recuperados": resultado_rag["chunks_recuperados"],
                 "score_medio_contexto": score_medio,
                 "cobertura_keywords_pct": cobertura_kw,
@@ -280,6 +323,27 @@ class ServicoAvaliacao:
         )
         return round(encontradas / len(palavras_chave) * 100, 1)
 
+    def avaliar_pergunta(self, pergunta: str) -> dict:
+        """
+        Avalia a recuperação de uma única pergunta.
+
+        Usado pelos scripts de experimentos para comparar chunking e modelos sem
+        recalcular todo o dataset a cada chamada.
+        """
+        chunks = self.recuperador.recuperar(pergunta)
+        scores = [c.get("score", 0.0) for c in chunks]
+        score_medio = round(sum(scores) / len(scores), 4) if scores else 0.0
+
+        return {
+            "pergunta": pergunta,
+            "chunks_recuperados": len(chunks),
+            "score_medio_contexto": score_medio,
+            "score_maximo": round(max(scores), 4) if scores else 0.0,
+            "fontes": list({c.get("fonte", "") for c in chunks}),
+            "contextos": [c.get("texto", "") for c in chunks],
+            "contexto_encontrado": len(chunks) > 0,
+        }
+
     def _interpretar_recuperacao(self, taxa: float, score: float) -> str:
         """Gera interpretação textual das métricas de recuperação."""
         if taxa >= 0.9 and score >= 0.7:
@@ -313,5 +377,5 @@ class ServicoAvaliacao:
                 "categoria": c["categoria"],
                 "total_keywords": len(c["palavras_chave"]),
             }
-            for c in CASOS_TESTE
+            for c in self.casos_teste
         ]
