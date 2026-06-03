@@ -1,258 +1,192 @@
-# Roadmap Consolidado — DeclaraAI: Artigo Academico
-
-Versao unificada do roadmap original (v1) e do roadmap expandido (v2).
-Itens marcados com **Novo** nao existiam no roadmap original.
+# Roadmap Consolidado do Artigo DeclaraAI
 
-## Status geral
+Este roadmap unifica os planejamentos anteriores do artigo e organiza as próximas etapas de pesquisa, avaliação e escrita. As versões antigas foram removidas para manter uma única fonte de planejamento.
 
-| Item | Status |
-|------|--------|
-| Pipeline RAG funcional | Concluido |
-| Classificacao LLM-first com fallback por regras | Concluido |
-| Singleton ServicoRAG com warmup | Concluido |
-| Dataset de avaliacao (perguntas.json) | Pendente |
-| RAGAS instalado e configurado (Novo) | Pendente |
-| Experimentos de chunking (5 estrategias) | Pendente |
-| Experimentos de retrieval hibrido (Novo) | Pendente |
-| Experimentos com LLMs + ablation study | Pendente |
-| Comparacao de modelos de embedding (Novo) | Pendente |
-| Dataset anotado para classificacao | Pendente |
-| Notebooks de graficos | Pendente |
-| Frontend React (Vite + shadcn/ui) | Pendente |
-| Secao Privacidade/LGPD no artigo (Novo) | Pendente |
-| Artigo no Overleaf | Pendente |
+## Status Geral
 
----
+| Item | Status | Observação |
+|---|---|---|
+| Pipeline RAG funcional | Concluído | FastAPI, ChromaDB, embeddings, re-ranking e Ollama |
+| Classificação LLM-first | Concluído | Fallback por regras mantido |
+| Frontend React | Concluído | Chat, upload, base, histórico, avaliação e status |
+| Dataset de avaliação | Concluído | `data/eval/perguntas.json` com 60 perguntas |
+| Scripts de avaliação | Concluído | LLMs, chunking e RAGAS |
+| Workflow Agentic RAG | Concluído | `docs/roadmap_agentic/workflow.md` |
+| Relatório técnico | Concluído | `docs/reports/relatorio_declaraai.tex` |
+| Busca híbrida BM25 + vetorial | Futuro | Boa contribuição para artigo |
+| Comparação de embeddings | Futuro | Avaliar MiniLM, E5 e nomic |
+| Dataset anotado de documentos | Futuro | Necessário para medir classificação |
+| Notebooks de gráficos | Futuro | Úteis para visualização final |
+| Artigo em formato SBC ou IEEE | Futuro | Depende dos resultados experimentais |
 
-## 1. Experimentos de Chunking
+## 1. Objetivo do Artigo
 
-**Por que entra no artigo:** A segmentacao do texto afeta diretamente a qualidade das respostas.
-A literatura de 2025 exige comparacao entre familias diferentes de chunking, nao apenas variacoes
-de tamanho dentro de uma mesma familia.
+Demonstrar que um Micro SaaS com Agentic RAG pode apoiar contribuintes brasileiros na organização de documentos e na consulta a regras do IRPF, preservando privacidade por execução local.
 
-### 1.1 Estrategias a testar
+Contribuições previstas:
 
-| Estrategia | Descricao | Status |
-|------------|-----------|--------|
-| Fixo por tokens | Baseline: chunk_size 200/400/600/800, overlap 0/40/80/120 | Existe |
-| Por sentenca (Novo) | Split em limites semanticos naturais (NLTK/spaCy) | A criar |
-| Semantico (Novo) | Split por mudanca de embedding (SemanticChunker) | A criar |
-| Contextual Retrieval (Novo) | Adiciona resumo de contexto a cada chunk antes de indexar | A criar |
-| Late chunking (Novo) | Embed documento inteiro, segmentar depois | A criar |
+- Pipeline RAG especializado em documentos fiscais brasileiros.
+- Classificação de documentos com LLM-first e fallback por regras.
+- Justificativa enriquecida por RAG após upload.
+- Interface web profissional para uso externo ao grupo.
+- Avaliação com dataset anotado, ablation study e métricas inspiradas no RAGAS.
+- Discussão de privacidade e LGPD em um sistema local.
 
-Referencia: Bennani et al., arXiv 2601.14123 (2025)
+## 2. Experimentos de Chunking
 
-### 1.2 Metricas de avaliacao
+Objetivo: medir como o tamanho e a sobreposição dos chunks afetam a recuperação.
 
-- **Faithfulness** (RAGAS): a resposta esta apoiada no contexto?
-- **Answer Relevancy** (RAGAS): a resposta enderedaca a pergunta?
-- **Context Precision** (RAGAS): chunks relevantes chegam no topo?
-- **Context Recall** (RAGAS): tudo necessario foi recuperado?
-- **Precisao@K**: dos K chunks, quantos sao relevantes?
-- **MRR (Mean Reciprocal Rank)**: posicao do primeiro chunk relevante
-- **Tempo de indexacao e busca**
+| Estratégia | Status | Arquivo |
+|---|---|---|
+| Fixo 200/0 | Disponível via API experimental | `scripts/avaliar_chunking.py` |
+| Fixo 400/40 | Disponível via API experimental | `scripts/avaliar_chunking.py` |
+| Fixo 600/80 | Baseline do sistema | `backend/app/rag/chunker.py` |
+| Fixo 800/120 | Disponível via API experimental | `scripts/avaliar_chunking.py` |
+| Fixo 1000/200 | Disponível via API experimental | `scripts/avaliar_chunking.py` |
+| Por sentença | Futuro | Implementar split dedicado |
+| Semântico | Futuro | Implementar split por mudança de embedding |
 
-### 1.3 Arquivos
+Métricas:
 
-- [ ] `data/eval/perguntas.json` -- 50-80 perguntas IRPF com respostas de referencia
-- [ ] `scripts/avaliar_chunking.py` -- itera as 5 estrategias e salva metricas RAGAS
-- [ ] `data/eval/resultados_chunking.csv` -- saida dos experimentos
-- [ ] `notebooks/01_experimentos_chunking.ipynb` -- heatmaps e graficos
+- Taxa de recuperação.
+- Score médio de contexto.
+- Cobertura de palavras-chave.
+- Latência média.
 
----
+## 3. Comparação de LLMs
 
-## 2. Experimentos de Estrategia de Recuperacao (Novo)
+Objetivo: comparar custo, latência e qualidade entre modelos abertos executados via Ollama.
 
-**Por que entra no artigo:** Documentos de IRPF tem terminologia exata (NF-e, DARF, CNPJ).
-Busca hibrida BM25 + vetorial supera busca vetorial pura em documentos fiscais.
-Referencia: arXiv 2604.01733 (2025) -- Recall@5 de 0.816 vs 0.587 com busca vetorial pura.
+| Modelo | Perfil |
+|---|---|
+| `mistral` | Baseline atual |
+| `llama3.2:3b` | Modelo leve |
+| `phi4-mini` | Saída estruturada e baixo custo |
+| `gemma3:4b` | Raciocínio em modelo compacto |
+| `qwen2.5:7b` | Bom suporte multilíngue |
+| `vanilla_sem_rag` | Baseline sem recuperação |
 
-### 2.1 Configuracoes a comparar
+Arquivo principal: `scripts/avaliar_llm.py`.
 
-| Configuracao | Implementacao |
-|--------------|---------------|
-| Vetorial puro | ChromaDB atual (baseline) |
-| BM25 puro | `rank_bm25` library |
-| Hibrido RRF | ChromaDB + BM25 + Reciprocal Rank Fusion |
-| Hibrido + Reranking | Hibrido + cross-encoder ms-marco-MiniLM-L-6-v2 |
+## 4. Ablation Study
 
-### 2.2 Arquivos
+Comparação necessária para provar que o RAG agrega valor:
 
-- [ ] `backend/app/rag/retrieval/hybrid_retriever.py`
-- [ ] `backend/app/rag/retrieval/reranker.py`
-- [ ] `scripts/avaliar_retrieval.py`
-- [ ] `data/eval/resultados_retrieval.csv`
-- [ ] `notebooks/01b_retrieval_strategies.ipynb`
+| Condição | Como executar |
+|---|---|
+| LLM com RAG | `python scripts/avaliar_llm.py --modelo mistral` |
+| LLM sem RAG | `python scripts/avaliar_llm.py --modelo mistral --no-rag` |
 
----
+Métricas:
 
-## 3. Experimentos com Diferentes LLMs (com ablation study)
+- Cobertura de palavras-chave.
+- Latência.
+- Chunks recuperados.
+- Casos sem suporte documental.
 
-**Por que entra no artigo:** Sem ablation study (vanilla LLM vs RAG), o artigo nao prova
-que o pipeline de recuperacao agrega valor. Revisores vao exigir essa comparacao.
+## 5. RAGAS
 
-### 3.1 Modelos
+Objetivo: avaliar respostas de ponta a ponta com métricas aceitas pela comunidade RAG.
 
-| Modelo | Tamanho | Notas |
-|--------|---------|-------|
-| Vanilla LLM sem RAG (Novo) | -- | Baseline obrigatorio -- ablation study |
-| `mistral` | 4.1 GB | Baseline RAG atual |
-| `llama3.2:3b` | 2.0 GB | Rapido, leve |
-| `phi4-mini` | 2.5 GB | Excelente em saida estruturada |
-| `gemma3:4b` | 3.3 GB | Forte em raciocinio |
-| `qwen2.5:7b` | 4.7 GB | Melhor suporte multilingual e portugues |
+Métricas planejadas:
 
-### 3.2 Metricas
+- Faithfulness.
+- Answer relevancy.
+- Context precision.
+- Context recall.
 
-- 4 scores RAGAS: faithfulness, answer relevancy, context precision, context recall
-- Taxa de alucinacao: % de respostas onde Faithfulness < 0.5
-- Latencia: TTFT e tempo total de geracao
-- Curva de Pareto: tamanho do modelo vs score de qualidade
+Arquivo principal: `scripts/avaliar_ragas.py`.
 
-### 3.3 Arquivos
+## 6. Busca Híbrida
 
-- [ ] `scripts/avaliar_llm.py` -- modo `no_rag=True` para ablation study
-- [ ] `data/eval/resultados_llm.csv`
-- [ ] `notebooks/02_comparacao_llm.ipynb`
+Objetivo futuro: combinar busca vetorial e busca por palavras-chave, pois documentos fiscais têm termos exatos como NF-e, NFS-e, DARF, CPF, CNPJ e carnê-leão.
 
----
+Implementações planejadas:
 
-## 4. Comparacao de Modelos de Embedding (Novo)
+- BM25 puro com `rank_bm25`.
+- Fusão por Reciprocal Rank Fusion.
+- Re-ranking final com CrossEncoder.
+- Script `scripts/avaliar_retrieval.py`.
 
-**Por que entra no artigo:** O modelo de embedding pode ser o gargalo de qualidade do RAG.
-Modelos treinados em ingles podem ter dificuldade com terminologia fiscal em portugues.
-Referencia: Amiri e Bocklitz, arXiv 2506.17277 (2025)
+## 7. Comparação de Embeddings
 
-### 4.1 Modelos a testar
+Objetivo futuro: medir se o modelo de embedding atual é o gargalo da recuperação.
 
-| Modelo | Dimensoes | Como usar |
-|--------|-----------|-----------|
-| `all-MiniLM-L6-v2` | 384 | sentence-transformers (baseline provavel) |
-| `nomic-embed-text` | 768 | `ollama pull nomic-embed-text` |
-| `multilingual-e5-large` | 1024 | sentence-transformers (treinado em multiplos idiomas) |
+| Modelo | Motivo |
+|---|---|
+| `paraphrase-multilingual-MiniLM-L12-v2` | Baseline atual |
+| `multilingual-e5-large` | Melhor cobertura multilíngue |
+| `nomic-embed-text` | Alternativa local via Ollama |
 
-### 4.2 Arquivos
+## 8. Classificação de Documentos
 
-- [ ] `scripts/avaliar_embeddings.py`
-- [ ] `data/eval/resultados_embeddings.csv`
+O sistema já usa LLM-first com fallback por regras. Para artigo, ainda falta um dataset anotado de documentos.
 
----
+Dataset futuro:
 
-## 5. Migracao da Classificacao: LLM-first (concluido)
+- 50 a 100 documentos por categoria.
+- Rótulos de tipo, categoria, dedutibilidade e validade fiscal.
+- Casos com OCR ruim, documentos ambíguos e recibos sem nota fiscal.
 
-A arquitetura atual ja implementa LLM-first com fallback por regras.
-O campo `origem` registra se a classificacao veio do LLM ou do fallback.
+Métricas:
 
-### 5.1 Dataset anotado (pendente)
+- Acurácia.
+- Precisão, recall e F1 por categoria.
+- Taxa de fallback.
+- Matriz de confusão.
 
-Para reportar a comparacao com dados concretos no artigo:
-- 50-100 documentos por categoria com anotacao manual
-- Campos: `tipo_documento`, `categoria_irpf`, `dedutivel`
-- Incluir casos dificeis: documentos ambiguos, OCR ruim
+## 9. Notebooks
 
-### 5.2 Arquivos
+Notebooks recomendados:
 
-- [ ] `data/eval/documentos_anotados.json`
-- [ ] `scripts/avaliar_classificacao.py`
-- [ ] `notebooks/03_classificacao_documentos.ipynb`
+| Notebook | Objetivo |
+|---|---|
+| `01_experimentos_chunking.ipynb` | Gráficos de chunking |
+| `01b_retrieval_strategies.ipynb` | Busca vetorial, BM25 e híbrida |
+| `02_comparacao_llm.ipynb` | Modelos, latência e ablation study |
+| `03_classificacao_documentos.ipynb` | Classificação e matriz de confusão |
+| `04_visao_geral_sistema.ipynb` | Arquitetura, dados e métricas gerais |
 
----
+## 10. Privacidade e LGPD
 
-## 6. Avaliacao com RAGAS (Novo)
+Seção obrigatória do artigo:
 
-**Por que entra no artigo:** Padrao da industria para avaliacao RAG de ponta a ponta.
-Publicado em 2023 (Es et al.), apresentado no EACL 2024.
-Pode usar Ollama local como juiz -- sem custo de API.
+- Dados de IRPF podem conter CPF, renda, informações de saúde e dados de dependentes.
+- O DeclaraAI executa LLM localmente via Ollama.
+- Vetores ficam no ChromaDB local.
+- Histórico fica em SQLite local.
+- Nenhum documento precisa ser enviado a APIs externas.
 
-### 6.1 Configuracao
+## 11. Estrutura Sugerida do Artigo
 
-```python
-from ragas import evaluate
-from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
-from langchain_community.llms import Ollama
+1. Resumo.
+2. Introdução.
+3. Trabalhos relacionados.
+4. Arquitetura do sistema.
+5. Metodologia de avaliação.
+6. Experimentos e resultados.
+7. Interface e usabilidade.
+8. Privacidade e LGPD.
+9. Limitações.
+10. Conclusão e trabalhos futuros.
 
-llm_judge = Ollama(model="mistral")
+## 12. Referências Recomendadas
 
-results = evaluate(
-    dataset=eval_dataset,
-    metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
-    llm=llm_judge,
-)
-```
+| Referência | Uso no artigo |
+|---|---|
+| Lewis et al. (2020) | Fundamento do RAG |
+| Es et al. (2023), RAGAS | Avaliação de RAG |
+| Bennani et al. (2025) | Comparação de chunking |
+| Singh et al. (2024), ChunkRAG | Filtragem e chunking orientados por LLM |
+| Amiri e Bocklitz (2025) | Comparação de embeddings |
 
-### 6.2 Arquivos
+## 13. Ordem de Execução Recomendada
 
-- [ ] `scripts/avaliar_ragas.py`
-- [ ] `data/eval/resultados_ragas.csv`
-- [ ] `requirements-dev.txt` -- adicionar `ragas`, `deepeval`
-
----
-
-## 7. Notebooks de Graficos
-
-- [ ] `notebooks/01_experimentos_chunking.ipynb` -- heatmap estrategia x RAGAS scores
-- [ ] `notebooks/01b_retrieval_strategies.ipynb` (Novo) -- barras vetorial vs BM25 vs Hibrido
-- [ ] `notebooks/02_comparacao_llm.ipynb` -- Pareto tamanho vs qualidade
-- [ ] `notebooks/03_classificacao_documentos.ipynb` -- matriz de confusao, F1 por classe
-- [ ] `notebooks/04_visao_geral_sistema.ipynb` -- diagrama do pipeline, distribuicao de chunks
-
----
-
-## 8. Frontend React (Vite + shadcn/ui)
-
-Substituir o Streamlit por um frontend React mais profissional.
-
-### 8.1 Paginas a implementar
-
-- [ ] Chat RAG: input + historico + indicador de fontes
-- [ ] Upload: drag-and-drop, progresso, resultado da classificacao
-- [ ] Base de Conhecimento: listar/remover arquivos indexados
-- [ ] Historico: documentos salvos com filtros por categoria
-- [ ] Status do sistema: modelo carregado, chunks indexados, Ollama disponivel
-
----
-
-## 9. Secao de Privacidade / LGPD (Novo)
-
-**Por que entra no artigo:** Documentos de IRPF contem dados sensiveis (CPF, renda, saude).
-O DeclaraAI resolve por arquitetura: tudo roda localmente, nenhum dado sai da maquina.
-Posicionar como "privacy-by-design RAG" e um diferencial publicavel.
-
-### 9.1 Conteudo para o artigo
-
-- Subsecao "Consideracoes de Privacidade e LGPD" na secao de Arquitetura
-- Dados fiscais sao dados sensiveis conforme LGPD Art. 5, II
-- Tabela: Cloud LLM vs Local LLM (custo, latencia, privacidade, dependencia)
-- Argumento: Ollama + ChromaDB local = zero data leaving the machine
-
----
-
-## 10. Artigo no Overleaf
-
-### 10.1 Estrutura (8-10 paginas, SBC ou IEEE)
-
-- [ ] Resumo / Abstract
-- [ ] 1. Introducao: problema do contribuinte leigo, IRPF brasileiro
-- [ ] 2. Trabalhos Relacionados: RAG, assistentes fiscais, benchmarks de chunking
-- [ ] 3. Arquitetura do Sistema: pipeline, componentes, execucao local (LGPD)
-- [ ] 4. Metodologia de Avaliacao: dataset, metricas RAGAS, modelos comparados
-- [ ] 5. Experimentos e Resultados
-  - 5.1 Ablation study: RAG vs Vanilla LLM
-  - 5.2 Impacto da estrategia de chunking (5 familias)
-  - 5.3 Comparacao de estrategias de recuperacao (busca hibrida + reranking)
-  - 5.4 Comparacao de LLMs e modelos de embedding
-  - 5.5 Classificacao: regras vs LLM-first
-- [ ] 6. Interface e Usabilidade
-- [ ] 7. Conclusao e Trabalhos Futuros
-- [ ] Referencias
-
-### 10.2 Referencias-chave
-
-| Referencia | Por que citar |
-|------------|---------------|
-| Lewis et al. (2020) -- RAG original | Fundacao teorica do paradigma |
-| Es et al. (2023) -- RAGAS, EACL 2024 | Framework de avaliacao usado |
-| Bennani et al. (2025) -- arXiv 2601.14123 | Justifica comparacao sistematica de chunking |
-| arXiv 2604.01733 (2025) | Justifica busca hibrida em documentos financeiros |
-| Amiri e Bocklitz (2025) -- arXiv 2506.17277 | Justifica comparacao de embedding models |
-| Singh et al. (2024) -- ChunkRAG arXiv 2410.19572 | LLM-driven chunk filtering |
+1. Rodar avaliação de recuperação com o dataset completo.
+2. Rodar comparação de LLMs com limite inicial de 10 perguntas.
+3. Rodar ablation study sem RAG.
+4. Executar avaliação de chunking com o baseline 600/80.
+5. Gerar CSVs finais.
+6. Criar notebooks de gráficos.
+7. Atualizar relatório técnico.
+8. Redigir artigo final em formato definido pelo professor.
