@@ -23,7 +23,7 @@
   <rect width="900" height="480" fill="none" stroke="#FF6B35" stroke-width="1.2" opacity="0.3"/>
 
   <!-- Title -->
-  <text x="450" y="30" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="16" font-weight="700" fill="#FFD700">Avaliação do Pipeline RAG — DeclaraAI</text>
+  <text x="450" y="30" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="16" font-weight="700" fill="#FFD700">Avaliação do Pipeline RAG - DeclaraAI</text>
   <line x1="50" y1="40" x2="850" y2="40" stroke="#FF6B35" stroke-width="0.8" opacity="0.4"/>
 
   <!-- Subtitle -->
@@ -50,7 +50,7 @@
   <rect x="40" y="156" width="810" height="68" rx="8" fill="#1a1a1a" stroke="#FF6B35" stroke-width="1.6"/>
 
   <text x="62" y="180" font-family="'Segoe UI',Arial,sans-serif" font-size="12" font-weight="700" fill="#FF6B35">Score Médio de Contexto</text>
-  <text x="62" y="196" font-family="'Segoe UI',Arial,sans-serif" font-size="9.5" fill="#777">Similaridade cosseno média dos chunks retornados (0–1)</text>
+  <text x="62" y="196" font-family="'Segoe UI',Arial,sans-serif" font-size="9.5" fill="#777">Similaridade cosseno média dos chunks retornados (0-1)</text>
 
   <!-- Bar track -->
   <rect x="290" y="166" width="440" height="22" rx="4" fill="#111" stroke="#333" stroke-width="1"/>
@@ -124,5 +124,5 @@
 
   <!-- Footer note -->
   <rect x="40" y="450" width="810" height="18" rx="4" fill="#111" stroke="#2a2a2a" stroke-width="0.8"/>
-  <text x="450" y="463" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#555">Avaliação executada via POST /evaluation/recuperacao (sem LLM) e POST /evaluation/completa (com LLM) — endpoint disponível na interface</text>
+  <text x="450" y="463" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#555">Avaliação executada via POST /evaluation/recuperacao (sem LLM) e POST /evaluation/completa (com LLM) - endpoint disponível na interface</text>
 </svg>

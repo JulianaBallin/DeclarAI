@@ -1,12 +1,12 @@
 ================================================================
-         INFORME DE RENDIMENTOS – ANO-CALENDÁRIO 2024
+         INFORME DE RENDIMENTOS - ANO-CALENDÁRIO 2024
                    (para declaração IRPF 2025)
 ================================================================
 
 FONTE PAGADORA
 Razão Social: TECH AMAZÔNIA SISTEMAS LTDA
 CNPJ: 33.444.555/0001-66
-Endereço: Av. André Araújo, 550 – Aleixo – Manaus/AM
+Endereço: Av. André Araújo, 550 - Aleixo - Manaus/AM
 
 BENEFICIÁRIO
 Nome: CARLOS EDUARDO MENDES FIGUEIREDO
@@ -45,7 +45,7 @@ Base de cálculo IRRF:                       R$  75.525,99
 ================================================================
 Manaus, 28 de fevereiro de 2025.
 
-Responsável: Departamento Pessoal – Tech Amazônia Sistemas Ltda
+Responsável: Departamento Pessoal - Tech Amazônia Sistemas Ltda
 CNPJ: 33.444.555/0001-66
 
 ATENÇÃO: Este documento é para uso exclusivo na declaração do

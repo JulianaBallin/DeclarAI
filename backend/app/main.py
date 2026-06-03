@@ -69,7 +69,7 @@ async def ciclo_de_vida(app: FastAPI):
 
         servico_rag = get_servico_rag()
         if servico_rag.banco_vetorial.total_chunks() == 0:
-            logger.info("ChromaDB vazio — iniciando ingestão automática da base de conhecimento...")
+            logger.info("ChromaDB vazio - iniciando ingestão automática da base de conhecimento...")
             total = servico_rag.ingerir_base_conhecimento()
             if total > 0:
                 logger.info(f"Ingestão automática concluída: {total} chunk(s) indexado(s).")
@@ -115,7 +115,7 @@ app = FastAPI(
     title=configuracoes.NOME_APP,
     version=configuracoes.VERSAO_APP,
     description=(
-        "API do DeclaraAI — assistente inteligente com RAG para organização de "
+        "API do DeclaraAI - assistente inteligente com RAG para organização de "
         "documentos e apoio à declaração do imposto de renda pessoa física."
     ),
     lifespan=ciclo_de_vida,

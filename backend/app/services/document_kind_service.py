@@ -57,7 +57,7 @@ def texto_eh_recibo_aluguel(texto: str) -> bool:
 def texto_recibo_comprovante_que_nao_e_nfs_e(texto: str) -> bool:
     """
     Recibo/comprovante cujo rodapé ou título nega tratar-se de nota (NFS-e) emitida
-    em prefeitura, ou título de consulta médica — evita falso 'NFS-e' por menção '(NFS-e)'.
+    em prefeitura, ou título de consulta médica - evita falso 'NFS-e' por menção '(NFS-e)'.
     """
     t = (texto or "")[:20000].lower()
     if not re.search(r"\brecibo\b", t):
@@ -107,26 +107,26 @@ def _texto_eh_informe_rendimentos(texto: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# M3 — Referências às fichas e códigos oficiais do programa IRPF
+# M3 - Referências às fichas e códigos oficiais do programa IRPF
 # Cada entry: texto descritivo com ficha, código e limite quando aplicável
 # ---------------------------------------------------------------------------
 _REF_IRPF_POR_CATEGORIA: dict[str, dict] = {
     "Recibo Médico": {
         "ficha": "Pagamentos Efetuados",
-        "codigo": "09 — Médico (inclusive residente) / 10 — Dentista / "
-                  "11 — Psicólogo / 12 — Fisioterapeuta / 13 — Fonoaudiólogo / "
-                  "21 — Médico no exterior",
+        "codigo": "09 - Médico (inclusive residente) / 10 - Dentista / "
+                  "11 - Psicólogo / 12 - Fisioterapeuta / 13 - Fonoaudiólogo / "
+                  "21 - Médico no exterior",
         "dedutivel": True,
         "limite": None,
         "observacao": (
             "Despesas médicas são dedutíveis sem limite de valor. "
             "O documento deve estar em nome do titular ou de dependente incluído na declaração. "
-            "Recibos e declarações não têm validade fiscal direta — prefira NF-e ou NFS-e."
+            "Recibos e declarações não têm validade fiscal direta - prefira NF-e ou NFS-e."
         ),
     },
     "Comprovante Educacional": {
         "ficha": "Pagamentos Efetuados",
-        "codigo": "01 — Instrução (ensino regular reconhecido pelo MEC)",
+        "codigo": "01 - Instrução (ensino regular reconhecido pelo MEC)",
         "dedutivel": True,
         "limite": 3561.50,
         "observacao": (
@@ -139,18 +139,18 @@ _REF_IRPF_POR_CATEGORIA: dict[str, dict] = {
     "Informe de Rendimentos": {
         "ficha": "Rendimentos Tributáveis Recebidos de PJ / Rendimentos Isentos / "
                  "Rendimentos Tributados Exclusivamente na Fonte",
-        "codigo": "N/A — preencher conforme natureza dos rendimentos",
+        "codigo": "N/A - preencher conforme natureza dos rendimentos",
         "dedutivel": False,
         "limite": None,
         "observacao": (
-            "Não é dedução — é rendimento a declarar. "
+            "Não é dedução - é rendimento a declarar. "
             "Lance os valores nas fichas correspondentes: Rendimentos Tributáveis (empregador, "
             "aluguéis), Isentos (FGTS, herança) ou Tributados Exclusivamente na Fonte (PLR, etc.)."
         ),
     },
     "Nota Fiscal": {
         "ficha": "Pagamentos Efetuados (varia conforme natureza)",
-        "codigo": "Conforme natureza: 09–13 (saúde) / 01 (educação) / outros",
+        "codigo": "Conforme natureza: 09-13 (saúde) / 01 (educação) / outros",
         "dedutivel": True,
         "limite": None,
         "observacao": (
@@ -161,20 +161,20 @@ _REF_IRPF_POR_CATEGORIA: dict[str, dict] = {
     },
     "Previdência Privada": {
         "ficha": "Pagamentos Efetuados",
-        "codigo": "36 — Previdência Privada (PGBL) / VGBL não é dedutível",
+        "codigo": "36 - Previdência Privada (PGBL) / VGBL não é dedutível",
         "dedutivel": True,
-        "limite": None,  # 12% da renda bruta — calculado dinamicamente
+        "limite": None,  # 12% da renda bruta - calculado dinamicamente
         "observacao": (
             "PGBL (código 36): dedutível até 12% da renda bruta tributável no ano. "
-            "VGBL: NÃO dedutível — é tratado como seguro de vida. "
+            "VGBL: NÃO dedutível - é tratado como seguro de vida. "
             "Confira o tipo no contrato antes de lançar."
         ),
     },
     "Doações": {
         "ficha": "Doações Efetuadas",
-        "codigo": "60 a 80 — conforme entidade e modalidade (ECA, FIA, PRONAC, etc.)",
+        "codigo": "60 a 80 - conforme entidade e modalidade (ECA, FIA, PRONAC, etc.)",
         "dedutivel": True,
-        "limite": None,  # percentual da renda — varia por modalidade
+        "limite": None,  # percentual da renda - varia por modalidade
         "observacao": (
             "Doações para entidades habilitadas têm limite percentual sobre o imposto devido. "
             "Apenas doações incentivadas (ex.: Fundo da Criança, PRONAC, Lei Rouanet) são dedutíveis. "
@@ -183,7 +183,7 @@ _REF_IRPF_POR_CATEGORIA: dict[str, dict] = {
     },
     "Pensão Alimentícia": {
         "ficha": "Pagamentos Efetuados",
-        "codigo": "30 — Pensão alimentícia",
+        "codigo": "30 - Pensão alimentícia",
         "dedutivel": True,
         "limite": None,
         "observacao": (
@@ -194,26 +194,26 @@ _REF_IRPF_POR_CATEGORIA: dict[str, dict] = {
     },
     "Aluguel": {
         "ficha": "Pagamentos Efetuados (aluguel pago) / Rendimentos Tributáveis (aluguel recebido)",
-        "codigo": "70 — Aluguéis (pago a PF) / rendimento tributável quando recebido",
+        "codigo": "70 - Aluguéis (pago a PF) / rendimento tributável quando recebido",
         "dedutivel": None,  # depende: pago pode ser custo; recebido é rendimento
         "limite": None,
         "observacao": (
             "ALUGUEL PAGO: pode ser lançado como pagamento quando o locador é PF "
             "(gera obrigação de carnê-leão para o recebedor). "
-            "ALUGUEL RECEBIDO: é rendimento tributável, não despesa dedutível — "
+            "ALUGUEL RECEBIDO: é rendimento tributável, não despesa dedutível - "
             "deve ser declarado na ficha de Rendimentos Tributáveis."
         ),
     },
     "Documento Não Classificado": {
         "ficha": "Indeterminado",
-        "codigo": "—",
+        "codigo": "-",
         "dedutivel": None,
         "limite": None,
         "observacao": "Revise o documento e escolha a categoria correta antes de lançar no IRPF.",
     },
     "Requer Revisão": {
         "ficha": "Indeterminado",
-        "codigo": "—",
+        "codigo": "-",
         "dedutivel": None,
         "limite": None,
         "observacao": "Classifique manualmente para saber em qual quadro do IRPF o comprovante se enquadra.",
@@ -221,7 +221,7 @@ _REF_IRPF_POR_CATEGORIA: dict[str, dict] = {
 }
 
 # ---------------------------------------------------------------------------
-# M1 — Tipos de documento com validade fiscal direta (NF-e / NFC-e / NFSe)
+# M1 - Tipos de documento com validade fiscal direta (NF-e / NFC-e / NFSe)
 # ---------------------------------------------------------------------------
 _TIPOS_COM_VALIDADE_FISCAL = {
     "NF-e",
@@ -330,13 +330,13 @@ def legenda_validade_fiscal(
             )
         if "informe" in t and "rendimento" in t:
             return (
-                "Informe de rendimentos emitido pela fonte pagadora — documento "
+                "Informe de rendimentos emitido pela fonte pagadora - documento "
                 "comprobatório do empregador para preenchimento do IRPF (rendimentos e "
                 "retenções/deduções na fonte), sem chave de NF-e."
             )
         if "recibo" in t and "nfe" not in t and "nf-e" not in t:
             return (
-                "Comprovante simples — sem chave/validade fiscal eletrônica direta na Receita. "
+                "Comprovante simples - sem chave/validade fiscal eletrônica direta na Receita. "
                 "Pode comprovar pagamento, mas não substitui NF-e/NFS-e."
             )
         return (
@@ -370,7 +370,7 @@ def inferir_tipo_documento(texto: str, nome_arquivo: str = "") -> str:
         return "Recibo de aluguel"
 
     if texto_eh_recibo_pensao_alimenticia(texto):
-        return "Recibo de pensão alimentícia (processo / beneficiário — conferir documentação)"
+        return "Recibo de pensão alimentícia (processo / beneficiário - conferir documentação)"
 
     if texto_recibo_comprovante_que_nao_e_nfs_e(texto):
         if re.search(
@@ -393,23 +393,23 @@ def inferir_tipo_documento(texto: str, nome_arquivo: str = "") -> str:
         r"comprovante\s+de\s+contribui[çc][aã]o\s+previdenci|contribui[çc][aã]o\s+previdenci[aá]ria\s+privad",
         b,
     ) or (re.search(r"\bpgbl\b", b) and re.search(r"previd|contrib", b)):
-        return "Comprovante de contribuição à previdência privada (PGBL — confirmar no contrato)"
+        return "Comprovante de contribuição à previdência privada (PGBL - confirmar no contrato)"
 
     if re.search(r"\bnfc[\s-]?e\b", b) or "nota fiscal de consumidor" in b:
         if re.search(r"\bdanfe\b", b):
             return "NFC-e + DANFE (cupom / documento auxiliar)"
-        return "NFC-e — Nota Fiscal de Consumidor Eletrônica"
+        return "NFC-e - Nota Fiscal de Consumidor Eletrônica"
     if re.search(r"\bnf[\s-]?se\b", b) or re.search(
         r"\bnfse\b", b
     ) or (re.search(r"nfs-?e", b) and not texto_recibo_comprovante_que_nao_e_nfs_e(texto)):
-        return "NFSe — Nota Fiscal de Serviços Eletrônica"
+        return "NFSe - Nota Fiscal de Serviços Eletrônica"
     if re.search(r"\bnf[\s-]?e\b", b) or re.search(r"\bnfe\b", b):
-        return "NF-e — Nota Fiscal Eletrônica (modelo 55)"
+        return "NF-e - Nota Fiscal Eletrônica (modelo 55)"
     if re.search(r"\bdanfe\b", b) or "documento auxiliar da nota fiscal" in b:
         return "DANFE / documento auxiliar de NF-e ou NFC-e"
     digitos = re.sub(r"\D", "", texto + nome_arquivo)
     if re.search(r"\d{44}", digitos) and "chave" in b:
-        return "Documento com chave de acesso (44 dígitos) — típico de NF-e / NFC-e"
+        return "Documento com chave de acesso (44 dígitos) - típico de NF-e / NFC-e"
 
     if "informe de rendimentos" in b or "dirf" in b:
         return "Informe de rendimentos / DIRF"
@@ -446,17 +446,17 @@ def inferir_tipo_documento(texto: str, nome_arquivo: str = "") -> str:
             "ccaa",
         )
     ):
-        return "Recibo de pagamento — curso de idiomas"
+        return "Recibo de pagamento - curso de idiomas"
 
-    return "Tipo não identificado automaticamente — verifique o PDF ou a categoria escolhida"
+    return "Tipo não identificado automaticamente - verifique o PDF ou a categoria escolhida"
 
 
 def rotulo_leiaute_fiscal(texto: str, nome_arquivo: str = "") -> str:
     b = f"{texto}\n{nome_arquivo}".lower()
     if texto_eh_recibo_aluguel(texto):
-        return "—"
+        return "-"
     if texto_recibo_comprovante_que_nao_e_nfs_e(texto):
-        return "—"
+        return "-"
     if re.search(
         r"nota\s+fiscal\s+de\s+servi[çc]os|nfs-?e|\bnfse\b",
         b,
@@ -476,7 +476,7 @@ def rotulo_leiaute_fiscal(texto: str, nome_arquivo: str = "") -> str:
         r"chave\s+(de\s+)?acesso|chave\s+de\s+acesso|danfe|nf-?e|nfce|nfs-?e", b
     ):
         return "NF-e / NFC-e (chave 44)"
-    return "—"
+    return "-"
 
 
 def inferir_tipo_documento_resumido(texto: str, nome_arquivo: str = "") -> str:
@@ -495,7 +495,7 @@ def inferir_tipo_documento_resumido(texto: str, nome_arquivo: str = "") -> str:
     r = rotulo_leiaute_fiscal(texto, nome_arquivo)
     if r in ("NFS-e", "NFC-e"):
         return r
-    if r and r != "—" and (r.startswith("NF-e") or "chave 44" in r):
+    if r and r != "-" and (r.startswith("NF-e") or "chave 44" in r):
         return "NF-e"
     if re.search(r"\brecibo\b|recibo\s+de", b) and not re.search(
         r"nota\s+fiscal\s+de\s+servi[çc]os|nfs-?e|\bnfse\b",
@@ -528,7 +528,7 @@ def inferir_tipo_documento_resumido(texto: str, nome_arquivo: str = "") -> str:
 def inferir_categoria_conteudo(texto: str) -> str:
     t = texto.lower()
     if not t.strip():
-        return "—"
+        return "-"
     if _texto_eh_informe_rendimentos(texto):
         return "Rendimentos de trabalho / fonte pagadora"
     if re.search(
@@ -548,7 +548,7 @@ def inferir_categoria_conteudo(texto: str) -> str:
         return "Pensão alimentícia"
     if _texto_parece_previdencia_pgbl(texto):
         if re.search(r"\bpgbl\b", t):
-            return "Previdência privada — PGBL"
+            return "Previdência privada - PGBL"
         return "Previdência privada"
     if re.search(
         r"(cultura inglesa|ensino de idiomas|curso de idiomas|curso de ingl[êe]s|"
@@ -587,7 +587,7 @@ _MOT_IRPF_NAO = (
 )
 _MOT_IRPF_NAO_CURSO_LIVRE_IDIOMAS = (
     "Curso de idiomas identificado como curso livre. Cursos livres e de idiomas "
-    "não se enquadram como dedução de instrução no IRPF (código 01 do programa — ensino regular "
+    "não se enquadram como dedução de instrução no IRPF (código 01 do programa - ensino regular "
     "reconhecido pelo MEC), por isso o documento foi classificado como não dedutível nesse sentido."
 )
 _MOT_IRPF_POTENCIAL_SAUDE = (
@@ -616,7 +616,7 @@ _MOT_IRPF_ALUGUEL_PF = (
 )
 _LAUDO_REF_ALUGUEL_PAGO = (
     "**Ficha:** Pagamentos Efetuados  \n"
-    "**Código 70** — aluguéis (pagos a pessoa física)  \n"
+    "**Código 70** - aluguéis (pagos a pessoa física)  \n"
     "Aluguel pago a PF **não é “dedução”** no mesmo sentido de saúde/instrução: costuma ser "
     "**informação declaratória** em Pagamentos Efetuados, conforme o caso.  \n"
     "O **locador** pessoa física recolhe **carnê-leão** (ou tributação aplicável) sobre o "
@@ -826,7 +826,7 @@ def resumir_status_irpf(
     nb = (nome_beneficiario or "").strip()
     if categoria_conteudo == "Aluguel" or texto_eh_recibo_aluguel(texto):
         return par(
-            "Lançar em Pagamentos Efetuados (código 70) — aluguel pago a pessoa física",
+            "Lançar em Pagamentos Efetuados (código 70) - aluguel pago a pessoa física",
             _MOT_IRPF_ALUGUEL_PF,
         )
     if categoria_conteudo == "Pensão alimentícia" or (
@@ -834,19 +834,19 @@ def resumir_status_irpf(
     ) or texto_eh_recibo_pensao_alimenticia(texto):
         if _texto_tem_sinais_pensao_judicial(texto):
             return par(
-                "Potencialmente dedutível — confirmar decisão judicial e "
+                "Potencialmente dedutível - confirmar decisão judicial e "
                 "lançamento no código 30 (Pagamentos Efetuados)",
                 _MOT_IRPF_PENSAO_JUD,
             )
         return par(
-            "Potencialmente dedutível — confirmar título e documentação de pensão",
+            "Potencialmente dedutível - confirmar título e documentação de pensão",
             _MOT_IRPF_PENSAO_SEM,
         )
     if _texto_parece_previdencia_pgbl(texto) or categoria_conteudo.startswith(
         "Previdência"
     ) or categoria_interna == "Previdência Privada":
         return par(
-            "Potencialmente dedutível — confirmar limite global de 12% e plano PGBL",
+            "Potencialmente dedutível - confirmar limite global de 12% e plano PGBL",
             _MOT_IRPF_PGBL,
         )
     alvo_sau = categoria_conteudo == "Saúde" or _texto_parece_saude(texto)
@@ -856,22 +856,22 @@ def resumir_status_irpf(
         and _texto_parece_odontologia(texto)
     ):
         return par(
-            "Potencialmente dedutível — confirmar titular/dependente",
+            "Potencialmente dedutível - confirmar titular/dependente",
             _MOT_IRPF_ODO,
         )
     if len(nb) >= 3 and alvo_sau:
         return par(
-            "Potencialmente dedutível — requer conferência",
+            "Potencialmente dedutível - requer conferência",
             _MOT_IRPF_POTENCIAL_SAUDE,
         )
     if alvo_sau and len(nb) < 3 and _texto_tem_sinais_fortes_despesa_medica(texto):
         if _texto_parece_odontologia(texto):
             return par(
-                "Potencialmente dedutível — confirmar titular/dependente",
+                "Potencialmente dedutível - confirmar titular/dependente",
                 _MOT_IRPF_ODO,
             )
         return par(
-            "Potencialmente dedutível — confirmar titular/dependente",
+            "Potencialmente dedutível - confirmar titular/dependente",
             _MOT_IRPF_POTENCIAL_MED,
         )
     alvo_edu = categoria_conteudo.startswith("Educação") or _texto_parece_educacao(
@@ -880,7 +880,7 @@ def resumir_status_irpf(
     if alvo_edu and _sinais_educacao_instrucao_dedutivel(texto):
         if _layout_nfs_e_no_texto(texto) and len(nb) >= 3:
             return par(
-                "Potencialmente dedutível — confirmar titular/dependente",
+                "Potencialmente dedutível - confirmar titular/dependente",
                 _MOT_IRPF_POTENCIAL_EDU,
             )
         if len(nb) >= 3 or re.search(
@@ -889,7 +889,7 @@ def resumir_status_irpf(
             re.IGNORECASE,
         ):
             return par(
-                "Potencialmente dedutível — confirmar titular/dependente",
+                "Potencialmente dedutível - confirmar titular/dependente",
                 _MOT_IRPF_POTENCIAL_EDU_COMP,
             )
     if avaliacao.get("aviso"):
@@ -1019,7 +1019,7 @@ def referencia_irpf(categoria: str, texto: str = "") -> str:
         if _texto_parece_odontologia(texto):
             return (
                 "Ficha: **Pagamentos Efetuados**  \n"
-                "Código: **10 — Dentista**  \n\n"
+                "Código: **10 - Dentista**  \n\n"
                 "Despesas odontológicas costumam seguir a mesma lógica de despesas médicas "
                 "(sem limite de valor no conjunto das despesas elegíveis), desde que o "
                 "beneficiário seja titular ou dependente. Confira o programa e o ano-calendário."
@@ -1160,7 +1160,7 @@ _PADROES_NAO_DEDUTIVEIS: list[tuple[list[str], str, list[str]]] = [
         (
             "Academia e atividades físicas NÃO são dedutíveis como despesa médica no IRPF. "
             "Exceção: se prescrita por médico como tratamento de saúde, com laudo e CID, "
-            "pode ser dedutível — consulte um contador."
+            "pode ser dedutível - consulte um contador."
         ),
         ["prescrição médica", "prescricao medica", "laudo médico", "fisioterapia", "reabilitação"],
     ),
@@ -1200,7 +1200,7 @@ _PADROES_NAO_DEDUTIVEIS: list[tuple[list[str], str, list[str]]] = [
     (
         ["vgbl", "vida gerador de benefício"],
         (
-            "VGBL NÃO é dedutível no IRPF — é tratado como seguro de vida. "
+            "VGBL NÃO é dedutível no IRPF - é tratado como seguro de vida. "
             "Apenas PGBL (código 36) é dedutível, até 12% da renda bruta tributável."
         ),
         ["pgbl", "p g b l", "plano pgbl", "plano pgb", "plano gerador de benefício livre"],
@@ -1215,7 +1215,7 @@ def avaliar_dedutibilidade_conteudo(texto: str, categoria: str) -> dict:
 
     Complementa a classificação por categoria: um documento classificado como
     'Nota Fiscal' pode conter roupas (não dedutível) ou serviços médicos (dedutível).
-    A categoria por si só não garante dedutibilidade — o conteúdo decide.
+    A categoria por si só não garante dedutibilidade - o conteúdo decide.
 
     Args:
         texto: Texto extraído do documento.

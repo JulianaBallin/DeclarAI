@@ -3,7 +3,7 @@ Geração de embeddings vetoriais com sentence-transformers.
 
 Modelo padrão: paraphrase-multilingual-MiniLM-L12-v2
 - Suporte nativo a português e outros idiomas
-- 384 dimensões — bom equilíbrio entre qualidade e eficiência
+- 384 dimensões - bom equilíbrio entre qualidade e eficiência
 - Leve o suficiente para rodar em CPU durante protótipos acadêmicos
 - Desempenho comprovado em tarefas de similaridade semântica
 

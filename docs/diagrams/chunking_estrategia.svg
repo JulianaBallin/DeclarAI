@@ -7,7 +7,7 @@
   <!-- ===== TITULO ===== -->
   <text x="450" y="26" text-anchor="middle"
         font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="bold" fill="#C04A00">
-    Estrategia de Chunking — DeclaraAI
+    Estrategia de Chunking - DeclaraAI
   </text>
   <line x1="30" y1="36" x2="870" y2="36" stroke="#FF6B35" stroke-width="1"/>
 
@@ -54,7 +54,7 @@
   <!-- Header solido laranja (clipado visualmente pelo card acima) -->
   <rect x="32" y="164" width="264" height="20" rx="4" fill="#FF6B35"/>
   <text x="164" y="178" text-anchor="middle"
-        font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">CHUNK 1 — 600 chars</text>
+        font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">CHUNK 1 - 600 chars</text>
   <!-- Linhas de conteudo simulado -->
   <rect x="46" y="194" width="230" height="8" rx="2" fill="#DDDDDD"/>
   <rect x="46" y="208" width="210" height="8" rx="2" fill="#DDDDDD"/>
@@ -66,7 +66,7 @@
   <rect x="316" y="162" width="268" height="88" rx="6" fill="#FFF3E0" stroke="#E07B00" stroke-width="2"/>
   <rect x="318" y="164" width="264" height="20" rx="4" fill="#E07B00"/>
   <text x="450" y="178" text-anchor="middle"
-        font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">CHUNK 2 — 600 chars</text>
+        font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">CHUNK 2 - 600 chars</text>
   <rect x="332" y="194" width="230" height="8" rx="2" fill="#DDDDDD"/>
   <rect x="332" y="208" width="210" height="8" rx="2" fill="#DDDDDD"/>
   <rect x="332" y="222" width="185" height="8" rx="2" fill="#DDDDDD"/>
@@ -77,7 +77,7 @@
   <rect x="602" y="162" width="268" height="88" rx="6" fill="#FFF8F4" stroke="#FF6B35" stroke-width="2"/>
   <rect x="604" y="164" width="264" height="20" rx="4" fill="#FF6B35"/>
   <text x="736" y="178" text-anchor="middle"
-        font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">CHUNK 3 — 600 chars</text>
+        font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">CHUNK 3 - 600 chars</text>
   <rect x="618" y="194" width="230" height="8" rx="2" fill="#DDDDDD"/>
   <rect x="618" y="208" width="210" height="8" rx="2" fill="#DDDDDD"/>
   <rect x="618" y="222" width="185" height="8" rx="2" fill="#DDDDDD"/>
@@ -120,7 +120,7 @@
         font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#8B4500">sobreposicao: 80 chars</text>
 
   <!-- ========================================================= -->
-  <!-- CAIXA — POR QUE 600 CHARS (y=304 a y=432)                -->
+  <!-- CAIXA - POR QUE 600 CHARS (y=304 a y=432)                -->
   <!-- ========================================================= -->
   <!-- Card de fundo -->
   <rect x="30" y="304" width="400" height="128" rx="6" fill="#FFF8F4" stroke="#FF6B35" stroke-width="1.5"/>
@@ -146,7 +146,7 @@
   </text>
 
   <!-- ========================================================= -->
-  <!-- CAIXA — POR QUE 80 CHARS OVERLAP (y=304 a y=432)         -->
+  <!-- CAIXA - POR QUE 80 CHARS OVERLAP (y=304 a y=432)         -->
   <!-- ========================================================= -->
   <rect x="470" y="304" width="400" height="128" rx="6" fill="#FFF3E0" stroke="#E07B00" stroke-width="1.5"/>
   <rect x="472" y="306" width="396" height="22" rx="4" fill="#E07B00"/>

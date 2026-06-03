@@ -1,5 +1,5 @@
 # ============================================================
-# DeclaraAI — Frontend Dockerfile
+# DeclaraAI - Frontend Dockerfile
 # Multi-stage: Node.js (build) + Nginx (serve)
 # ============================================================
 

@@ -7,7 +7,7 @@ multilíngue e formata o contexto para envio ao modelo gerador (LLM).
 Re-ranking:
     Modelo: cross-encoder/mmarco-mMiniLMv2-L12-H384-v1
     Justificativa: treinado em MS MARCO multilíngue (inclui português), avalia
-    o par (consulta, trecho) de forma conjunta — captura relações semânticas
+    o par (consulta, trecho) de forma conjunta - captura relações semânticas
     mais finas que o bi-encoder e melhora a precisão para perguntas complexas.
 """
 
@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 # Singleton do cross-encoder carregado na primeira chamada ao re-ranking
 _cross_encoder_global: CrossEncoder | None = None
 
-# Modelo multilíngue treinado no MS MARCO — suporta português nativamente
+# Modelo multilíngue treinado no MS MARCO - suporta português nativamente
 _MODELO_CROSS_ENCODER = "cross-encoder/mmarco-mMiniLMv2-L12-H384-v1"
 
 

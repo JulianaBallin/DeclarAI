@@ -1,11 +1,11 @@
 ================================================================
        SUPERMERCADOS NASCIMENTO LTDA
     CNPJ: 12.345.678/0001-90
-  Rua Recife, 500 – Adrianópolis – Manaus/AM – CEP 69057-001
+  Rua Recife, 500 - Adrianópolis - Manaus/AM - CEP 69057-001
        Fone: (92) 3200-5500 | rh@nascimentoltda.com.br
 ================================================================
 
-         INFORME DE RENDIMENTOS – ANO-CALENDÁRIO 2024
+         INFORME DE RENDIMENTOS - ANO-CALENDÁRIO 2024
 
 Empregado(a): ANA CLARA RODRIGUES NASCIMENTO
 CPF: 071.234.567-18
@@ -42,7 +42,7 @@ TOTAL IRRF RETIDO:               R$  9.850,00
 Manaus, 28 de fevereiro de 2025.
 
 _________________________________________
-RH – Supermercados Nascimento Ltda
+RH - Supermercados Nascimento Ltda
 
 DOCUMENTO FICTÍCIO PARA FINS DE TESTE DE SISTEMA.
 ================================================================

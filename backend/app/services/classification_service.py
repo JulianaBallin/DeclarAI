@@ -1,9 +1,9 @@
 """
-Classificação por regras de documentos fiscais — fallback do pipeline LLM-first.
+Classificação por regras de documentos fiscais - fallback do pipeline LLM-first.
 
 Este serviço é chamado pelo ServicoClassificacaoLLM (llm_classification_service.py)
 quando o LLM falha ou retorna JSON inválido. Não deve ser usado como classificador
-primário — para isso, use ServicoClassificacaoLLM.
+primário - para isso, use ServicoClassificacaoLLM.
 
 Arquitetura de chamada:
     ServicoClassificacaoLLM.classificar()
@@ -237,7 +237,7 @@ class ServicoClassificacao:
         return categoria_vencedora
 
     def _classificar_com_llm(self, texto: str) -> tuple[Optional[str], str]:
-        """Chamada LLM interna — mantida para compatibilidade com código legado."""
+        """Chamada LLM interna - mantida para compatibilidade com código legado."""
         texto_limitado = texto[:3000] if len(texto) > 3000 else texto
         prompt = PROMPT_CLASSIFICACAO.format(texto=texto_limitado)
         payload = {

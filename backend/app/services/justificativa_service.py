@@ -69,7 +69,7 @@ Você é o DeclaraAI, especialista em imposto de renda para pessoas físicas no 
 Analise as informações do documento abaixo e produza uma justificativa técnica de 2 a 4 \
 linhas explicando a classificação e o que o contribuinte deve fazer na declaração do IRPF.
 
-PROIBIÇÕES ABSOLUTAS — leia com atenção:
+PROIBIÇÕES ABSOLUTAS - leia com atenção:
 1. NUNCA escreva "Trecho 1", "Trecho 2", "Trecho 3" nem qualquer referência numerada a fontes.
 2. NUNCA invente valores, limites ou percentuais que não estejam explicitamente no texto de referência.
 3. NUNCA use introduções como "Com base em...", "De acordo com...", "Conforme as informações...".
@@ -87,7 +87,7 @@ DOCUMENTO:
 INFORMAÇÕES DE REFERÊNCIA (base de conhecimento DeclaraAI):
 {contexto}
 
-JUSTIFICATIVA (2–4 linhas, português, técnico, direto):"""
+JUSTIFICATIVA (2-4 linhas, português, técnico, direto):"""
 
 
 class ServicoJustificativa:
@@ -188,10 +188,10 @@ class ServicoJustificativa:
                 return texto
 
         except httpx.ConnectError:
-            logger.warning("Justificativa: Ollama indisponível — justificativa omitida.")
+            logger.warning("Justificativa: Ollama indisponível - justificativa omitida.")
             return ""
         except httpx.TimeoutException:
-            logger.warning("Justificativa: timeout ao aguardar Ollama — justificativa omitida.")
+            logger.warning("Justificativa: timeout ao aguardar Ollama - justificativa omitida.")
             return ""
         except Exception as erro:
             logger.error("Justificativa: erro inesperado: %s", erro, exc_info=True)

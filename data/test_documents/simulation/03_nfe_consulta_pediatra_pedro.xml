@@ -54,7 +54,7 @@
       <det nItem="1">
         <prod>
           <cProd>CONS-PED-001</cProd>
-          <xProd>Consulta Pediátrica – Pedro Henrique Rodrigues Nascimento (dependente)</xProd>
+          <xProd>Consulta Pediátrica - Pedro Henrique Rodrigues Nascimento (dependente)</xProd>
           <NCM>98191200</NCM>
           <CFOP>9301</CFOP>
           <uCom>UN</uCom>
@@ -76,8 +76,8 @@
         </ICMSTot>
       </total>
       <infAdic>
-        <infCpl>Despesa médica dedutível no IRPF – código 21 (Médicos).
-Paciente: Pedro Henrique Rodrigues Nascimento – dependente da declarante.
+        <infCpl>Despesa médica dedutível no IRPF - código 21 (Médicos).
+Paciente: Pedro Henrique Rodrigues Nascimento - dependente da declarante.
 Data: 20/06/2024. DOCUMENTO FICTÍCIO PARA FINS DE TESTE.</infCpl>
       </infAdic>
     </infNFe>

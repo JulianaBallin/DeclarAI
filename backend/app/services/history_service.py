@@ -16,14 +16,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
-# M7 — Limites de dedução anuais por categoria (valores vigentes IRPF 2024)
+# M7 - Limites de dedução anuais por categoria (valores vigentes IRPF 2024)
 # ---------------------------------------------------------------------------
 LIMITES_DEDUCAO: dict[str, float | None] = {
     "Comprovante Educacional": 3561.50,   # por pessoa (titular + cada dependente)
     "Recibo Médico": None,                 # sem limite
     "Nota Fiscal": None,                   # depende do conteúdo
-    "Previdência Privada": None,           # 12% da renda bruta — calculado dinamicamente
-    "Doações": None,                       # % do imposto — variável
+    "Previdência Privada": None,           # 12% da renda bruta - calculado dinamicamente
+    "Doações": None,                       # % do imposto - variável
     "Pensão Alimentícia": None,            # sem limite (dedução integral)
     "Aluguel": None,
     "Informe de Rendimentos": None,
@@ -207,7 +207,7 @@ class ServicoHistorico:
             if doc.valor_detectado:
                 resumo["categorias"][categoria]["valores"].append(doc.valor_detectado)
 
-        # M7 — Calcula totais, verifica limites e estima economia
+        # M7 - Calcula totais, verifica limites e estima economia
         total_deducoes = 0.0
         for categoria, dados_cat in resumo["categorias"].items():
             total_num = sum(_parse_valor(v) for v in dados_cat["valores"])

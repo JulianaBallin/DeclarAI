@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 roteador = APIRouter()
 
-# Armazenamento em memória (session-level — adequado para uso single-user/local)
+# Armazenamento em memória (session-level - adequado para uso single-user/local)
 _perfil_sessao: dict = {}
 
 

@@ -21,7 +21,7 @@ ISORT            := $(PYTHON) -m isort
 
 # ── Ajuda ─────────────────────────────────────────────────────────────────────
 help: ## Mostra esta mensagem de ajuda
-	@printf "\n\033[1;33mDeclaraAI — Comandos disponíveis\033[0m\n"
+	@printf "\n\033[1;33mDeclaraAI - Comandos disponíveis\033[0m\n"
 
 	@printf "\n\033[1;36mCiclo da Stack\033[0m\n"
 	@printf "  make up                - sobe todos os servicos em background\n"

@@ -48,7 +48,7 @@ PADROES_EMITENTE = [
     r"([A-ZÀ-Ú][A-Za-zÀ-ú\s]{3,}(?:Ltda|LTDA|S\.A\.|SA|ME|EPP|EIRELI|LTDA\.))",
     r"(?i)(?:emitente|empresa|prestador|fornecedor|clínica|hospital|escola|"
     r"universidade|colégio|laboratório|farmácia|odontologia)[:\s]+([A-ZÀ-Ú][A-Za-zÀ-ú\s]+)",
-    r"(?i)(?:CNPJ|CPF)[:\s]*[\d.\/\-]+\s*[-–]?\s*([A-ZÀ-Ú][A-Za-zÀ-ú\s]+)",
+    r"(?i)(?:CNPJ|CPF)[:\s]*[\d.\/\-]+\s*-?\s*([A-ZÀ-Ú][A-Za-zÀ-ú\s]+)",
 ]
 
 # Chave de acesso NF-e: 44 dígitos, possivelmente com espaços/pontos entre grupos
@@ -96,7 +96,7 @@ def _linha_limpa_nome_locacao(s: str) -> str:
     s = re.sub(
         r"(?i)(cpf|cnpj|endere[çc]o|rua|cep|residen)\b.*$", "", s
     ).strip()
-    s = re.sub(r"^[\s,;:—–-]+", "", s)
+    s = re.sub(r"^[\s,;:-]+", "", s)
     return re.sub(r"\s+", " ", s) if s else ""
 
 
@@ -310,7 +310,7 @@ class ServicoExtracao:
                 return g
             return None
 
-        # INSS, IRRF, plano de saúde, FGTS, vale — alternativas por rótulo (leiautes variam).
+        # INSS, IRRF, plano de saúde, FGTS, vale - alternativas por rótulo (leiautes variam).
         blocos: list[tuple[str, tuple[str, ...]]] = [
             (
                 "INSS",
@@ -464,7 +464,7 @@ class ServicoExtracao:
             n,
         )
         n = re.sub(r"(?i)^recebi(?:emos)?\s+de\s+", "", n)
-        n = re.sub(r"\s+", " ", n).strip(" -–—")
+        n = re.sub(r"\s+", " ", n).strip(" -")
         if len(n) < 3:
             return original
         return n

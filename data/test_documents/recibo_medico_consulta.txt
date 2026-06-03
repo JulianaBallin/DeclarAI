@@ -1,7 +1,7 @@
 ================================================================
              CLÍNICA MÉDICA SÃO LUCAS LTDA
          CNPJ: 12.345.678/0001-90  CRM: 54321-AM
-   Rua das Flores, 200 – Centro – Manaus/AM – CEP 69010-100
+   Rua das Flores, 200 - Centro - Manaus/AM - CEP 69010-100
         Fone: (92) 3333-4444 | clinica@saolucas.com.br
 ================================================================
 
@@ -13,7 +13,7 @@ CPF: 987.654.321-00
 o valor de R$ 350,00 (trezentos e cinquenta reais)
 
 referente à consulta médica em CARDIOLOGIA realizada em
-12/03/2024 com o Dr. Roberto Alves Souza – CRM 54321-AM.
+12/03/2024 com o Dr. Roberto Alves Souza - CRM 54321-AM.
 
 Forma de pagamento: Transferência bancária
 
@@ -23,7 +23,7 @@ Manaus, 12 de março de 2024.
 
 _________________________________________
 Dr. Roberto Alves Souza
-CRM 54321-AM – Cardiologista
+CRM 54321-AM - Cardiologista
 
 
 ================================================================

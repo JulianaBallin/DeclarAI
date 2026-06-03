@@ -1,4 +1,4 @@
-# DeclaraAI — runtime data (nao versionar)
+# DeclaraAI - runtime data (nao versionar)
 data/uploads/*
 !data/uploads/.gitkeep
 data/chroma_db/*

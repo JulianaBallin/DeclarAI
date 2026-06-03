@@ -46,7 +46,7 @@ EXTENSOES_PERMITIDAS = {".pdf", ".txt", ".html", ".htm", ".xml", ".jpg", ".jpeg"
     description=(
         "Recebe um arquivo (PDF, TXT ou HTML), extrai o texto e os metadados "
         "(data, valor, emitente) e sugere uma categoria tributária. "
-        "Não salva automaticamente — o usuário decide após ver os resultados."
+        "Não salva automaticamente - o usuário decide após ver os resultados."
     ),
 )
 async def upload_documento(arquivo: UploadFile = File(...)):

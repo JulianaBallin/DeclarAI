@@ -2,10 +2,10 @@
 Classificação LLM-first de documentos fiscais.
 
 Arquitetura:
-    1. LLM (primário)  — chama Ollama com prompt estruturado, retorna JSON.
-    2. Regras (fallback) — aciona ServicoClassificacao apenas se o LLM falhar
+    1. LLM (primário)  - chama Ollama com prompt estruturado, retorna JSON.
+    2. Regras (fallback) - aciona ServicoClassificacao apenas se o LLM falhar
        ou retornar JSON inválido/categoria desconhecida.
-    3. "Requer Revisão" — último recurso quando ambos são inconclusivos.
+    3. "Requer Revisão" - último recurso quando ambos são inconclusivos.
 
 O campo `origem` no resultado rastreia qual caminho foi usado:
     "llm"             → LLM classificou com sucesso
@@ -184,7 +184,7 @@ class ServicoClassificacaoLLM:
                 )
                 return None
             except Exception as e:
-                logger.error("Tentativa %d: erro inesperado — %s", tentativa, e, exc_info=True)
+                logger.error("Tentativa %d: erro inesperado - %s", tentativa, e, exc_info=True)
 
         return None
 

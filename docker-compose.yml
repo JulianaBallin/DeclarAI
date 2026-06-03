@@ -1,6 +1,6 @@
 
 # ============================================================
-# DeclaraAI — Docker Compose
+# DeclaraAI - Docker Compose
 #
 # Servicos:
 #   - backend  : API FastAPI com pipeline RAG (porta 8000)
@@ -15,7 +15,7 @@
 services:
 
   # ----------------------------------------------------------
-  # Backend — FastAPI + RAG
+  # Backend - FastAPI + RAG
   # ----------------------------------------------------------
   backend:
     build:
@@ -47,7 +47,7 @@ services:
       - declaraai-net
 
   # ----------------------------------------------------------
-  # Frontend — React + Vite (build) + Nginx (serve)
+  # Frontend - React + Vite (build) + Nginx (serve)
   # ----------------------------------------------------------
   frontend:
     build:
@@ -67,7 +67,7 @@ services:
       - declaraai-net
 
   # ----------------------------------------------------------
-  # Ollama — Servidor de LLM local
+  # Ollama - Servidor de LLM local
   # ----------------------------------------------------------
   ollama:
     image: ollama/ollama:latest

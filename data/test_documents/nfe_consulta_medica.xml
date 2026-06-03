@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- DOCUMENTO FICTÍCIO PARA TESTES — NÃO TEM VALIDADE FISCAL -->
+<!-- DOCUMENTO FICTÍCIO PARA TESTES - NÃO TEM VALIDADE FISCAL -->
 <nfeProc xmlns="http://www.portalfiscal.inf.br/nfe" versao="4.00">
   <NFe>
     <infNFe Id="NFe35240312345678000190550010000012341234567890" versao="4.00">
@@ -107,8 +107,8 @@
       </pag>
 
       <infAdic>
-        <infCpl>Médico responsável: Dr. Roberto Alves Souza – CRM 54321-AM.
-Paciente: Carlos Eduardo Mendes Figueiredo – CPF: 987.654.321-00.
+        <infCpl>Médico responsável: Dr. Roberto Alves Souza - CRM 54321-AM.
+Paciente: Carlos Eduardo Mendes Figueiredo - CPF: 987.654.321-00.
 DOCUMENTO FICTÍCIO PARA FINS DE TESTE DE SISTEMA.
 Chave de acesso: 3524 0312 3456 7800 0190 5500 1000 0012 3412 3456 7890</infCpl>
       </infAdic>

@@ -162,6 +162,6 @@
   <!-- Bottom bar -->
   <rect x="0" y="640" width="1200" height="35" fill="#0a0a0a"/>
   <line x1="0" y1="640" x2="1200" y2="640" stroke="#FF6B35" stroke-width="0.8" opacity="0.4"/>
-  <text x="90" y="661" font-family="'Segoe UI',Arial,sans-serif" font-size="10" fill="#555">Disciplina de RAG — UEA · 2026</text>
+  <text x="90" y="661" font-family="'Segoe UI',Arial,sans-serif" font-size="10" fill="#555">Disciplina de RAG - UEA · 2026</text>
   <text x="1110" y="661" text-anchor="end" font-family="'Segoe UI',Arial,sans-serif" font-size="10" fill="#FF6B35" opacity="0.7">github.com/declaraai</text>
 </svg>

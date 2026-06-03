@@ -35,7 +35,7 @@ def separador(draw, y, largura=900):
 
 
 # ---------------------------------------------------------------------------
-# PNG 1 – Recibo de consulta médica (Ana Clara)
+# PNG 1 - Recibo de consulta médica (Ana Clara)
 # ---------------------------------------------------------------------------
 
 def gerar_png_recibo_medico():
@@ -44,19 +44,19 @@ def gerar_png_recibo_medico():
     y = linha(draw, y, "RECIBO DE CONSULTA MÉDICA", x=180, size=22, bold=True, cor=(20, 80, 160))
     y = separador(draw, y + 8)
     y += 10
-    y = linha(draw, y, "Dra. Fernanda Costa Oliveira  –  CRM/AM 18.765", size=17, bold=True)
-    y = linha(draw, y, "Av. Djalma Batista, 1010, Sala 305 – Chapada – Manaus/AM", size=14)
+    y = linha(draw, y, "Dra. Fernanda Costa Oliveira  -  CRM/AM 18.765", size=17, bold=True)
+    y = linha(draw, y, "Av. Djalma Batista, 1010, Sala 305 - Chapada - Manaus/AM", size=14)
     y = linha(draw, y, "Fone: (92) 3888-4422  |  contato@dracosta.med.br", size=14)
     y = separador(draw, y + 8)
     y += 10
     campos = [
         ("Paciente:",      "ANA CLARA RODRIGUES NASCIMENTO"),
         ("CPF:",           "071.234.567-18"),
-        ("Especialidade:", "Clínica Médica – Consulta de Rotina"),
+        ("Especialidade:", "Clínica Médica - Consulta de Rotina"),
         ("Data:",          "14/03/2024"),
         ("Recibo Nº:",     "002341"),
         ("Valor Pago:",    "R$ 350,00  (trezentos e cinquenta reais)"),
-        ("Pagamento:",     "PIX – 14/03/2024"),
+        ("Pagamento:",     "PIX - 14/03/2024"),
     ]
     for label, valor in campos:
         draw.text((50, y), label, fill=(80, 80, 80), font=fonte(15, bold=True))
@@ -65,14 +65,14 @@ def gerar_png_recibo_medico():
 
     y = separador(draw, y + 10)
     y += 10
-    y = linha(draw, y, "IRPF: Despesas médicas são dedutíveis – código 21 (Médicos).", size=14, cor=(0, 120, 0))
+    y = linha(draw, y, "IRPF: Despesas médicas são dedutíveis - código 21 (Médicos).", size=14, cor=(0, 120, 0))
     y = linha(draw, y, "Ficha: Pagamentos Efetuados.", size=14, cor=(0, 120, 0))
     y += 30
     draw.text((50, y), "Manaus, 14 de março de 2024.", fill=(60, 60, 60), font=fonte(14))
     y += 50
     draw.line([(50, y), (400, y)], fill=(80, 80, 80), width=1)
     y += 8
-    draw.text((50, y), "Dra. Fernanda Costa Oliveira  –  CRM/AM 18.765", fill=(60, 60, 60), font=fonte(13))
+    draw.text((50, y), "Dra. Fernanda Costa Oliveira  -  CRM/AM 18.765", fill=(60, 60, 60), font=fonte(13))
     y += 40
     draw.text((50, y), "DOCUMENTO FICTÍCIO PARA FINS DE TESTE DE SISTEMA", fill=(180, 0, 0), font=fonte(12, bold=True))
 
@@ -81,7 +81,7 @@ def gerar_png_recibo_medico():
 
 
 # ---------------------------------------------------------------------------
-# PNG 2 – Comprovante de plano de saúde (Ana Clara)
+# PNG 2 - Comprovante de plano de saúde (Ana Clara)
 # ---------------------------------------------------------------------------
 
 def gerar_png_plano_saude():
@@ -92,7 +92,7 @@ def gerar_png_plano_saude():
     y += 10
     y = linha(draw, y, "UNIMED MANAUS COOPERATIVA DE TRABALHO MÉDICO", size=17, bold=True)
     y = linha(draw, y, "CNPJ: 05.703.282/0001-70", size=14)
-    y = linha(draw, y, "Av. Mário Ypiranga, 4220 – Adrianópolis – Manaus/AM", size=14)
+    y = linha(draw, y, "Av. Mário Ypiranga, 4220 - Adrianópolis - Manaus/AM", size=14)
     y = separador(draw, y + 8)
     y += 10
     campos = [
@@ -112,7 +112,7 @@ def gerar_png_plano_saude():
 
     y = separador(draw, y + 10)
     y += 10
-    y = linha(draw, y, "IRPF: Planos de saúde são dedutíveis – código 26 (Planos de Saúde).", size=14, cor=(0, 120, 0))
+    y = linha(draw, y, "IRPF: Planos de saúde são dedutíveis - código 26 (Planos de Saúde).", size=14, cor=(0, 120, 0))
     y = linha(draw, y, "Inclua também os valores pagos pelos dependentes.", size=14, cor=(0, 120, 0))
     y += 30
     draw.text((50, y), "DOCUMENTO FICTÍCIO PARA FINS DE TESTE DE SISTEMA", fill=(180, 0, 0), font=fonte(12, bold=True))
@@ -122,7 +122,7 @@ def gerar_png_plano_saude():
 
 
 # ---------------------------------------------------------------------------
-# PDF 1 – Recibo de mensalidade escolar (Pedro Henrique)
+# PDF 1 - Recibo de mensalidade escolar (Pedro Henrique)
 # ---------------------------------------------------------------------------
 
 def gerar_pdf_mensalidade_pedro():

@@ -1,11 +1,11 @@
 ================================================================
          ITAÚ VIDA E PREVIDÊNCIA S.A.
-     CNPJ: 74.267.170/0001-73 – SUSEP: 10.0492.6
-   Praça Alfredo Egydio de Souza Aranha, 100 – São Paulo/SP
+     CNPJ: 74.267.170/0001-73 - SUSEP: 10.0492.6
+   Praça Alfredo Egydio de Souza Aranha, 100 - São Paulo/SP
 ================================================================
 
        COMPROVANTE DE CONTRIBUIÇÃO PREVIDENCIÁRIA PRIVADA
-                 PLANO PGBL – ANO-CALENDÁRIO 2024
+                 PLANO PGBL - ANO-CALENDÁRIO 2024
 
 Participante: ANA CLARA RODRIGUES NASCIMENTO
 CPF: 071.234.567-18
@@ -16,18 +16,18 @@ Regime de Tributação: Progressivo
 ----------------------------------------------------------------
               CONTRIBUIÇÕES REALIZADAS EM 2024
 ----------------------------------------------------------------
-Janeiro/2024:     R$   650,00   – pago em 10/01/2024
-Fevereiro/2024:   R$   650,00   – pago em 10/02/2024
-Março/2024:       R$   650,00   – pago em 10/03/2024
-Abril/2024:       R$   650,00   – pago em 10/04/2024
-Maio/2024:        R$   650,00   – pago em 10/05/2024
-Junho/2024:       R$   650,00   – pago em 10/06/2024
-Julho/2024:       R$   650,00   – pago em 10/07/2024
-Agosto/2024:      R$   650,00   – pago em 10/08/2024
-Setembro/2024:    R$   650,00   – pago em 10/09/2024
-Outubro/2024:     R$   650,00   – pago em 10/10/2024
-Novembro/2024:    R$   650,00   – pago em 10/11/2024
-Dezembro/2024:    R$   650,00   – pago em 10/12/2024
+Janeiro/2024:     R$   650,00   - pago em 10/01/2024
+Fevereiro/2024:   R$   650,00   - pago em 10/02/2024
+Março/2024:       R$   650,00   - pago em 10/03/2024
+Abril/2024:       R$   650,00   - pago em 10/04/2024
+Maio/2024:        R$   650,00   - pago em 10/05/2024
+Junho/2024:       R$   650,00   - pago em 10/06/2024
+Julho/2024:       R$   650,00   - pago em 10/07/2024
+Agosto/2024:      R$   650,00   - pago em 10/08/2024
+Setembro/2024:    R$   650,00   - pago em 10/09/2024
+Outubro/2024:     R$   650,00   - pago em 10/10/2024
+Novembro/2024:    R$   650,00   - pago em 10/11/2024
+Dezembro/2024:    R$   650,00   - pago em 10/12/2024
 
 ----------------------------------------------------------------
 TOTAL CONTRIBUÍDO EM 2024:        R$  7.800,00
@@ -46,6 +46,6 @@ CNPJ: 74.267.170/0001-73
 
 IRPF: PGBL é dedutível até 12% da renda bruta tributável.
 Lance na ficha "Pagamentos Efetuados", código 36.
-VGBL NÃO é dedutível – não confunda os planos.
+VGBL NÃO é dedutível - não confunda os planos.
 DOCUMENTO FICTÍCIO PARA FINS DE TESTE DE SISTEMA.
 ================================================================

@@ -18,7 +18,7 @@ Deve entregar a Declaração de Ajuste Anual (DAA) toda pessoa física que,
 no ano-calendário anterior:
 
 - Recebeu rendimentos tributáveis (salários, aluguéis, etc.) acima de
-  R$ 30.639,90 (valor de referência — confirme o limite atual na Receita Federal);
+  R$ 30.639,90 (valor de referência - confirme o limite atual na Receita Federal);
 
 - Recebeu rendimentos isentos, não tributáveis ou tributados exclusivamente
   na fonte em valor superior a R$ 200.000,00;
@@ -87,7 +87,7 @@ NÃO são dedutíveis:
 3.3. CONTRIBUIÇÕES PREVIDENCIÁRIAS
 ---------------------------------
 
-- INSS: contribuição ao Instituto Nacional do Seguro Social — dedução integral
+- INSS: contribuição ao Instituto Nacional do Seguro Social - dedução integral
 - INSS doméstico: contribuições como empregador doméstico
 - PGBL (Plano Gerador de Benefício Livre): até 12% da renda bruta tributável
 
@@ -138,7 +138,7 @@ Profissionais autônomos e liberais podem deduzir despesas necessárias
 ---------------------------------
 4.2. INFORMES DE RENDIMENTOS
 ---------------------------------
-- Informe de rendimentos do empregador (DIRF) — emitido até fevereiro
+- Informe de rendimentos do empregador (DIRF) - emitido até fevereiro
 - Informe do INSS (aposentados e pensionistas)
 - Informe de rendimentos de bancos e corretoras
 - Informe de fundos de investimento
@@ -217,7 +217,7 @@ R$ 2.826,66 a R$ 3.751,05   |  15%     | R$ 381,44
 R$ 3.751,06 a R$ 4.664,68   |  22,5%   | R$ 662,77
 Acima de R$ 4.664,68        |  27,5%   | R$ 896,00
 
-Nota: A tabela é atualizada anualmente — consulte sempre a versão vigente
+Nota: A tabela é atualizada anualmente - consulte sempre a versão vigente
 no site da Receita Federal (receita.fazenda.gov.br).
 
 ---------------------------------
@@ -229,7 +229,7 @@ no site da Receita Federal (receita.fazenda.gov.br).
 - Lucros e dividendos recebidos de empresas (legislação vigente)
 - Herança e doação recebidas
 - Bolsas de estudo oficiais (CAPES, CNPq, etc.)
-- Aposentadoria para maiores de 65 anos — parcela isenta
+- Aposentadoria para maiores de 65 anos - parcela isenta
 
 =============================================================
 7. RENDIMENTOS ESPECIAIS
@@ -286,7 +286,7 @@ Imposto a pagar:
 =============================================================
 
 - Atraso na entrega: multa de 1% ao mês sobre o imposto devido
-  (mínimo R$ 165,74 — máximo 20% do imposto)
+  (mínimo R$ 165,74 - máximo 20% do imposto)
 - Omissão de rendimentos: multa de 75% sobre o imposto não declarado
 - Declaração com erros graves: multa de 150% em casos de fraude
 - Não recolhimento do carnê-leão: multa + juros SELIC
@@ -301,7 +301,7 @@ Imposto a pagar:
 2. UTILIZE A DECLARAÇÃO PRÉ-PREENCHIDA disponível no e-CAC da Receita
    Federal. Ela já contém dados de bancos, planos de saúde e empregadores.
 
-3. INFORME DEPENDENTES CORRETAMENTE — incluindo todos os gastos
+3. INFORME DEPENDENTES CORRETAMENTE - incluindo todos os gastos
    com saúde e educação de cada dependente.
 
 4. COMPARE OS DOIS MODELOS (simplificado x completo) antes de enviar.
@@ -309,7 +309,7 @@ Imposto a pagar:
 
 5. ENTREGUE DENTRO DO PRAZO (normalmente até 31 de maio) para evitar multa.
 
-6. GUARDE A DECLARAÇÃO por 5 anos após o prazo de entrega — a Receita
+6. GUARDE A DECLARAÇÃO por 5 anos após o prazo de entrega - a Receita
    pode questionar declarações dentro desse período.
 
 7. CONSULTE UM CONTADOR para casos complexos: venda de imóvel, herança,

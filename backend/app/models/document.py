@@ -58,7 +58,7 @@ class Documento(Base):
     # Localização do arquivo no servidor
     caminho_arquivo = Column(String(500), nullable=True)
 
-    # Timestamp automático de criação (sem timezone — SQLite armazena como TEXT ISO)
+    # Timestamp automático de criação (sem timezone - SQLite armazena como TEXT ISO)
     criado_em = Column(
         DateTime(),
         server_default=func.now(),

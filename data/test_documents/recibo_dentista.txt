@@ -1,7 +1,7 @@
 ================================================================
         INFINITY ODONTOLOGIA LTDA
     CNPJ: 98.765.432/0001-11  CRO: 7890-AM
-  Av. Djalma Batista, 1500, Sala 305 – Chapada – Manaus/AM
+  Av. Djalma Batista, 1500, Sala 305 - Chapada - Manaus/AM
        Fone: (92) 3222-5555 | contato@infinityodonto.com.br
 ================================================================
 
@@ -30,10 +30,10 @@ Manaus, 05 de agosto de 2024.
 
 _________________________________________
 Dra. Fernanda Lima Costa
-CRO 7890-AM – Odontóloga Clínica Geral
+CRO 7890-AM - Odontóloga Clínica Geral
 
 ================================================================
 Nota: despesas odontológicas são dedutíveis integralmente
-no IRPF (ficha "Pagamentos Efetuados", código 10 – Dentista),
+no IRPF (ficha "Pagamentos Efetuados", código 10 - Dentista),
 sem limite de valor, desde que em nome do titular ou dependente.
 ================================================================

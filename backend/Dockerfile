@@ -1,5 +1,5 @@
 # ============================================================
-# DeclaraAI — Backend Dockerfile
+# DeclaraAI - Backend Dockerfile
 # Python 3.11-slim para imagem menor
 # ============================================================
 

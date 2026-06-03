@@ -334,7 +334,7 @@ def extrair_texto_imagem(caminho: str) -> str:
         if not texto.strip():
             raise RuntimeError(
                 "O OCR não conseguiu extrair texto desta imagem. "
-                "A qualidade pode estar baixa — converta para PDF com texto ou tente uma foto com melhor iluminação."
+                "A qualidade pode estar baixa - converta para PDF com texto ou tente uma foto com melhor iluminação."
             )
         return texto.strip()
     except RuntimeError:

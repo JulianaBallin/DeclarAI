@@ -1,7 +1,7 @@
 ================================================================
          DRA. FERNANDA COSTA OLIVEIRA
-         CRM/AM 18.765 – Clínica Médica
-   Av. Djalma Batista, 1010, Sala 305 – Chapada – Manaus/AM
+         CRM/AM 18.765 - Clínica Médica
+   Av. Djalma Batista, 1010, Sala 305 - Chapada - Manaus/AM
       Fone: (92) 3888-4422 | contato@dracosta.med.br
 ================================================================
 
@@ -11,7 +11,7 @@
 Paciente: ANA CLARA RODRIGUES NASCIMENTO
 CPF: 071.234.567-18
 
-Especialidade: Clínica Médica – Consulta de Rotina
+Especialidade: Clínica Médica - Consulta de Rotina
 Data da consulta: 14/03/2024
 
 Valor cobrado: R$ 350,00 (trezentos e cinquenta reais)
@@ -28,6 +28,6 @@ Dra. Fernanda Costa Oliveira
 CRM/AM 18.765
 
 IRPF: Despesas médicas são dedutíveis (Ficha "Pagamentos Efetuados",
-código 21 – Médicos).
+código 21 - Médicos).
 DOCUMENTO FICTÍCIO PARA FINS DE TESTE DE SISTEMA.
 ================================================================
