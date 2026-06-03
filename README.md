@@ -24,9 +24,36 @@
 
 ---
 
-<h2 align="center">📝 Descrição do Projeto</h2>
+<h2 align="center">Definicao do Problema e Publico-Alvo</h2>
 
-O **DeclaraAI** é um Micro SaaS com pipeline **RAG (Retrieval-Augmented Generation)** que auxilia usuários leigos na organização de documentos fiscais e na compreensão do processo de declaração do IRPF. O sistema processa documentos enviados (recibos, notas fiscais, informes), classifica-os automaticamente por categoria tributária e responde dúvidas com base em uma base de conhecimento estruturada.
+### Problema
+
+A declaracao do Imposto de Renda Pessoa Fisica (IRPF) e obrigatoria para milhoes de brasileiros anualmente, mas o processo e complexo e repleto de erros comuns:
+
+- Contribuintes nao sabem quais documentos guardar durante o ano
+- Nao identificam quais gastos sao dedutiveis ou quais os limites de cada categoria
+- Nao diferenciam tipos de documentos fiscais (NF-e, NFS-e, recibo simples)
+- Declaram despesas de terceiros ou perdem deducoes validas por falta de organizacao
+
+Esses erros podem resultar em multas, retencao em malha fina ou pagamento de imposto a maior.
+
+### Publico-Alvo
+
+Contribuintes pessoas fisicas brasileiros que:
+- Sao obrigados a declarar o IRPF anualmente
+- Nao possuem conhecimento tecnico sobre legislacao tributaria
+- Acumulam documentos ao longo do ano sem organizacao sistematica
+- Nao possuem contador ou nao querem pagar honorarios para duvidas simples
+
+### Relevancia Pratica
+
+O sistema nao substitui um contador, mas reduz o tempo de organizacao de documentos e previne os erros mais comuns antes da consulta profissional. E especialmente util para contribuintes com perfil simples (assalariados com deducoes medicas e educacionais).
+
+---
+
+<h2 align="center">📝 Descricao do Projeto</h2>
+
+O **DeclaraAI** e um Micro SaaS com pipeline **RAG (Retrieval-Augmented Generation)** que auxilia usuarios leigos na organizacao de documentos fiscais e na compreensao do processo de declaracao do IRPF. O sistema processa documentos enviados (recibos, notas fiscais, informes), classifica-os automaticamente por categoria tributaria e responde duvidas com base em uma base de conhecimento estruturada.
 
 ---
 
@@ -161,21 +188,38 @@ DeclaraAI/
 │   ├── requirements.txt
 │   └── Dockerfile
 ├── data/
-│   ├── uploads/                          # Documentos enviados pelos usuários
+│   ├── uploads/                          # Documentos enviados pelos usuarios
 │   ├── knowledge_base/
-│   │   └── guia_imposto_renda.txt        # Base de conhecimento IRPF incluída
+│   │   ├── guia_imposto_renda.txt        # Base de conhecimento IRPF
+│   │   └── pr-irpf-2024.pdf             # Perguntas e Respostas IRPF 2024 (Receita Federal)
 │   ├── chroma_db/                        # Banco vetorial persistente
-│   └── test_documents/                   # Documentos fictícios para testes
-│       └── simulation/                   # Simulação de persona real (Ana Clara + dependentes)
+│   ├── eval/
+│   │   ├── perguntas.json               # 60 perguntas anotadas para avaliacao
+│   │   ├── resultados_llm.csv           # Comparacao entre modelos LLM
+│   │   ├── resultados_chunking.csv      # Comparacao entre estrategias de chunking
+│   │   └── resultados_ragas.csv         # Metricas RAGAS
+│   └── test_documents/                   # Documentos ficticios para testes
+│       └── simulation/                   # Simulacao de persona real (Ana Clara + dependentes)
 ├── docs/
-│   └── diagrams/
-│       ├── logo.svg                      # Logo do sistema (leão + IA)
-│       ├── pipeline_rag.svg              # Diagrama do pipeline RAG
-│       ├── c4_contexto.svg               # Diagrama C4 - Contexto
-│       └── c4_containers.svg             # Diagrama C4 - Contêineres
+│   ├── diagrams/
+│   │   ├── logo.svg                     # Logo do sistema
+│   │   ├── pipeline_rag.svg             # Diagrama do pipeline RAG
+│   │   ├── c4_contexto.svg              # Diagrama C4 - Contexto
+│   │   └── c4_containers.svg            # Diagrama C4 - Conteineres
+│   ├── roadmap_artigo/
+│   │   ├── roadmap_v1.md               # Roadmap original do artigo
+│   │   ├── roadmap_v2.md               # Roadmap expandido com RAGAS e busca hibrida
+│   │   └── roadmap_consolidado.md      # Versao unificada com ordem de execucao
+│   └── roadmap_agentic/
+│       └── workflow.md                  # Workflow agentico detalhado (ferramentas e fluxos)
+├── scripts/
+│   ├── avaliar_llm.py                   # Comparacao de LLMs + ablation study
+│   ├── avaliar_chunking.py              # Comparacao de estrategias de chunking
+│   └── avaliar_ragas.py                 # Avaliacao RAGAS com Ollama local
 ├── Makefile                              # Comandos de gerenciamento da stack
 ├── docker-compose.yml
 ├── .env.example
+├── requirements-dev.txt                  # Dependencias de analise (ragas, jupyter, etc.)
 └── README.md
 ```
 
@@ -425,23 +469,66 @@ O sistema implementa métricas quantitativas inspiradas no **RAGAS** (Es et al.,
 | **Cobertura de Keywords** | % de termos esperados encontrados na resposta gerada | `/evaluation/completa` |
 | **Análise de Falhas** | Casos com cobertura abaixo de 50%, indica lacunas na base | ambos |
 
-### Casos de teste
+### Dataset de avaliacao
 
-8 perguntas sobre o domínio IRPF cobrindo:
-obrigatoriedade, deduções médicas, deduções educacionais, modalidades de declaração,
-previdência privada, penalidades, autônomos (carnê-leão) e dependentes.
+`data/eval/perguntas.json` contem **60 perguntas** anotadas manualmente sobre o dominio IRPF,
+cobrindo 12 categorias:
 
-### Como avaliar
+| Categoria | Perguntas | Exemplos |
+|-----------|-----------|---------|
+| Obrigatoriedade | 6 | Quem deve declarar, limites de renda |
+| Deducoes medicas | 10 | Consultas, plano de saude, farmacia |
+| Deducoes educacao | 6 | Mensalidade, MBA, material escolar |
+| Previdencia privada | 4 | PGBL vs VGBL, limite de 12% |
+| Rendimentos | 6 | Informe, poupanca, dividendos |
+| Dependentes | 5 | Quem pode ser dependente, valor |
+| Autonomos | 4 | Carne-leao, livro caixa |
+| Alugueis | 4 | Receber aluguel, IPTU, pensao |
+| Doacoes | 2 | ECA, Rouanet |
+| Penalidades | 4 | Multa, malha fina, omissao |
+| Documentos fiscais | 8 | NF-e, recibo, DARF, holerite |
+| Prazos | 3 | Prazo de entrega, retificadora, restituicao |
+
+Cada pergunta tem: `resposta_referencia`, `keywords` para medir cobertura e `dificuldade` (facil/media/dificil).
+
+### Scripts de avaliacao
 
 ```bash
-# Avaliação rápida de recuperação (não requer Ollama)
+# Avaliar todos os modelos LLM (salva em data/eval/resultados_llm.csv)
+python scripts/avaliar_llm.py
+
+# Ablation study: vanilla LLM vs RAG
+python scripts/avaliar_llm.py --no-rag
+
+# Avaliar apenas um modelo
+python scripts/avaliar_llm.py --modelo qwen2.5:7b
+
+# Avaliar estrategias de chunking (salva em data/eval/resultados_chunking.csv)
+python scripts/avaliar_chunking.py
+
+# Avaliacao RAGAS completa (requer: pip install ragas langchain-community)
+python scripts/avaliar_ragas.py --modelo mistral
+```
+
+### Metricas implementadas (API)
+
+```bash
+# Avaliacao rapida de recuperacao (nao requer Ollama)
 curl -X POST http://localhost:8000/evaluation/recuperacao
 
-# Avaliação completa com LLM
+# Avaliacao completa com LLM
 curl -X POST http://localhost:8000/evaluation/completa
 ```
 
-Ou use a aba **Avaliação** na interface Streamlit.
+Ou use a aba **Avaliacao** na interface Streamlit.
+
+### Resultados salvos em CSV
+
+| Arquivo | Conteudo |
+|---------|---------|
+| `data/eval/resultados_llm.csv` | Comparacao entre modelos LLM |
+| `data/eval/resultados_chunking.csv` | Comparacao entre estrategias de chunking |
+| `data/eval/resultados_ragas.csv` | Metricas RAGAS (faithfulness, relevancy, precision, recall) |
 
 ---
 
@@ -467,13 +554,94 @@ O projeto segue o modelo **C4** para representação arquitetural:
 
 ---
 
-<h2 align="center">⚠️ Limitações</h2>
+<h2 align="center">Base de Conhecimento</h2>
 
-- Não substitui contador ou validação oficial da Receita Federal
-- A qualidade das respostas depende do modelo Ollama configurado
-- Extração de metadados por heurísticas pode falhar em documentos não padronizados
-- Base de conhecimento deve ser atualizada manualmente com novas regras fiscais
-- PDFs baseados em imagem (scan) não têm texto extraível sem OCR
+### Documentos indexados
+
+| Arquivo | Tipo | Fonte | Relevancia para o dominio |
+|---------|------|-------|--------------------------|
+| `guia_imposto_renda.txt` | TXT | Elaborado pela equipe com base em fontes oficiais da Receita Federal | Regras gerais do IRPF, categorias de deducao, limites, obrigatoriedade |
+| `pr-irpf-2024.pdf` | PDF | Perguntas e Respostas IRPF 2024 -- Receita Federal do Brasil | Respostas oficiais para as duvidas mais frequentes de contribuintes |
+
+### Justificativa da escolha dos documentos
+
+Esses documentos foram escolhidos por cobrir o espectro de duvidas mais comuns do publico-alvo
+(contribuinte leigo) e por serem fontes primarias da Receita Federal. O "Perguntas e Respostas
+IRPF" e o documento oficial que a propria Receita Federal disponibiliza para esclarecer duvidas
+dos contribuintes, tornando-o a fonte mais adequada para um sistema de apoio a declaracao.
+
+### Pre-processamento e ingestao
+
+A ingestao de documentos segue o pipeline:
+
+```
+Documento
+    |
+[Loader] -- detecta formato: PDF (PyMuPDF), TXT, HTML (BeautifulSoup),
+    |        XML/NF-e (parser especifico), Imagem (Tesseract OCR)
+    |
+[Limpeza textual]
+    | * remove cabecalhos/rodapes repetidos
+    | * normaliza espacos e quebras de linha
+    | * remove caracteres de controle e artefatos de OCR
+    |
+[Chunker] -- divide em trechos de 600 tokens com overlap de 80
+    | * separadores: paragrafo > linha > palavra
+    | * preserva valores monetarios e numeros de documentos
+    |
+[Embedder] -- paraphrase-multilingual-MiniLM-L12-v2
+    | * 384 dimensoes, suporte nativo ao portugues
+    | * executado localmente via sentence-transformers
+    |
+[ChromaDB] -- armazena vetores com metadados (nome do arquivo, chunk_id)
+```
+
+---
+
+<h2 align="center">Workflow Agentico</h2>
+
+O sistema implementa **Agentic RAG** com as seguintes ferramentas:
+
+| Ferramenta | Quando o agente aciona |
+|-----------|----------------------|
+| `busca_vetorial` | Perguntas abertas sobre regras do IRPF |
+| `busca_documento_usuario` | Perguntas sobre documentos enviados pelo usuario |
+| `classificar_documento` | Ao receber novo documento para analise |
+| `gerar_justificativa` | Apos classificar, enriquece com contexto da base |
+| `verificar_titularidade` | Verifica se beneficiario e declarante ou dependente |
+| `consulta_banco_dados` | Resumo anual, totais por categoria |
+
+Fluxo detalhado: [docs/roadmap_agentic/workflow.md](docs/roadmap_agentic/workflow.md)
+
+---
+
+<h2 align="center">Privacidade e LGPD</h2>
+
+O DeclaraAI implementa **privacy-by-design**:
+
+- **Ollama** roda o modelo no proprio computador do usuario
+- **ChromaDB** armazena os vetores localmente
+- **SQLite** armazena o banco local
+- **Nenhum documento e nenhuma pergunta saem da maquina**
+
+Isso e especialmente relevante para o contexto de IRPF, onde os documentos contem
+dados sensiveis protegidos pela LGPD (Lei 13.709/2018, Art. 5, II): CPF, renda anual,
+dados bancarios, informacoes de saude e dados de dependentes.
+
+---
+
+<h2 align="center">Limitacoes Conhecidas</h2>
+
+| Limitacao | Impacto | Mitigacao |
+|-----------|---------|-----------|
+| Nao substitui contador | Risco legal se usado como fonte unica | Aviso legal obrigatorio na interface |
+| Qualidade dependente do modelo Ollama | Respostas variam conforme o modelo | Testes comparativos documentados em `data/eval/` |
+| Metadados por heuristicas | Falha em documentos muito atipicos | Usuario pode corrigir no formulario de confirmacao |
+| Base de conhecimento manual | Regras fiscais mudam anualmente | Instrutor de gerenciamento de arquivos na aba Base de Conhecimento |
+| Latencia de geracao | 10-30s por resposta em CPU | Warmup no startup, indicador de carregamento |
+| OCR em imagens ruins | Perda de informacao em scans de baixa qualidade | Alerta para usuario revisar dados extraidos |
+| Dataset de avaliacao pequeno | Metricas podem nao ser representativas | Dataset expandido para 60 perguntas; RAGAS planejado |
+| Sem busca hibrida | Termos exatos (CNPJ, NF-e) podem nao ser localizados | BM25 + vetorial planejado para versao 2 |
 
 ---
 

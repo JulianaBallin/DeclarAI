@@ -1,9 +1,14 @@
-# DeclaraAI — runtime data (não versionar)
+# DeclaraAI — runtime data (nao versionar)
 data/uploads/*
 !data/uploads/.gitkeep
 data/chroma_db/*
 !data/chroma_db/.gitkeep
 data/*.db
+
+# Arquivos de atividade e instrucoes internas
+Atividade.pdf
+AGENTE.md
+.history/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
