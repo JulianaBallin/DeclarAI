@@ -1,8 +1,23 @@
 import { useState, useEffect } from "react";
-import { BookOpen, Trash2, Upload, RefreshCw, CheckCircle, AlertCircle } from "lucide-react";
+import {
+  AlertCircle,
+  BookOpen,
+  CheckCircle,
+  FileCode2,
+  FileText,
+  FileType,
+  RefreshCw,
+  Trash2,
+  Upload,
+} from "lucide-react";
 import { listarArquivosBase, uploadArquivoBase, removerArquivoBase } from "../services/api";
 
-const ICONES = { pdf: "📕", txt: "📄", html: "🌐", htm: "🌐" };
+const ICONES = { pdf: FileType, txt: FileText, html: FileCode2, htm: FileCode2 };
+
+function IconeArquivo({ tipo }) {
+  const Icone = ICONES[tipo] || FileText;
+  return <Icone size={18} aria-hidden="true" />;
+}
 
 export default function BaseConhecimento() {
   const [dados, setDados] = useState(null);
@@ -65,15 +80,17 @@ export default function BaseConhecimento() {
         </button>
       </div>
       <p className="page-desc">
-        Gerencie os documentos de referencia que o assistente usa para responder perguntas.
-        Adicione PDFs, TXTs ou HTMLs com conteudo fiscal.
+        Gerencie os documentos de referência que o assistente usa para responder perguntas.
+        Adicione PDFs, TXTs ou HTMLs com conteúdo fiscal.
       </p>
 
       {mensagem && (
         <div className={`alert alert-${mensagem.tipo}`}>
           {mensagem.tipo === "success" ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
           {mensagem.texto}
-          <button className="alert-close" onClick={() => setMensagem(null)}>x</button>
+          <button className="alert-close" onClick={() => setMensagem(null)} aria-label="Fechar alerta">
+            x
+          </button>
         </div>
       )}
 
@@ -90,7 +107,7 @@ export default function BaseConhecimento() {
             onClick={enviar}
             disabled={!arquivo || enviando}
           >
-            <Upload size={14} /> {enviando ? "Enviando..." : "Adicionar a Base"}
+            <Upload size={14} /> {enviando ? "Enviando..." : "Adicionar à Base"}
           </button>
         </div>
         {arquivo && (
@@ -117,13 +134,13 @@ export default function BaseConhecimento() {
           <div className="empty-state">
             <BookOpen size={40} />
             <p>Nenhum arquivo na base de conhecimento.</p>
-            <p>Use o formulario acima para adicionar o primeiro documento.</p>
+            <p>Use o formulário acima para adicionar o primeiro documento.</p>
           </div>
         )}
 
         {dados?.arquivos?.map((arq) => (
           <div key={arq.nome} className="file-row">
-            <span className="file-icon">{ICONES[arq.tipo] || "📁"}</span>
+            <span className="file-icon"><IconeArquivo tipo={arq.tipo} /></span>
             <span className="file-name">{arq.nome}</span>
             <span className="file-type">{arq.tipo.toUpperCase()}</span>
             <span className="file-size">{arq.tamanho_kb} KB</span>

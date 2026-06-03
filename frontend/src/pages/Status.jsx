@@ -49,7 +49,7 @@ export default function Status() {
               ) : (
                 <XCircle size={16} className="icon-red" />
               )}
-              <span>RAG {status.rag_inicializado ? "inicializado" : "nao inicializado"}</span>
+              <span>RAG {status.rag_inicializado ? "inicializado" : "não inicializado"}</span>
             </div>
             <div className="status-item">
               <span className="status-label">Modelo LLM:</span>
@@ -87,21 +87,21 @@ export default function Status() {
               ) : (
                 <XCircle size={16} className="icon-red" />
               )}
-              <span>Ollama {status.ollama_disponivel ? "disponivel" : "indisponivel"}</span>
+              <span>Ollama {status.ollama_disponivel ? "disponível" : "indisponível"}</span>
             </div>
           </div>
         </div>
       )}
 
       <div className="card">
-        <h2>Informacoes do Sistema</h2>
+        <h2>Informações do Sistema</h2>
         <div className="info-list">
           <div className="info-row">
             <span>API URL</span>
             <code>{import.meta.env.VITE_API_URL || "http://localhost:8000"}</code>
           </div>
           <div className="info-row">
-            <span>Documentacao da API</span>
+            <span>Documentação da API</span>
             <a href="http://localhost:8000/docs" target="_blank" rel="noopener noreferrer">
               /docs (Swagger UI)
             </a>

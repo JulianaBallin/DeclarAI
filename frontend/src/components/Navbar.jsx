@@ -5,8 +5,8 @@ const abas = [
   { path: "/chat",       label: "Chat",             icon: MessageSquare },
   { path: "/upload",     label: "Upload",            icon: Upload },
   { path: "/base",       label: "Base de Conhecimento", icon: BookOpen },
-  { path: "/historico",  label: "Historico",         icon: History },
-  { path: "/avaliacao",  label: "Avaliacao",         icon: TestTube },
+  { path: "/historico",  label: "Histórico",         icon: History },
+  { path: "/avaliacao",  label: "Avaliação",         icon: TestTube },
   { path: "/status",     label: "Status",            icon: BarChart2 },
 ];
 

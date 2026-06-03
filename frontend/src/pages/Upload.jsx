@@ -72,8 +72,8 @@ export default function Upload() {
     <div className="page">
       <h1>Upload de Documento Fiscal</h1>
       <p className="page-desc">
-        Envie recibos medicos, notas fiscais, comprovantes de educacao, informes de rendimentos
-        e outros documentos para organizacao automatica.
+        Envie recibos médicos, notas fiscais, comprovantes de educação, informes de rendimentos
+        e outros documentos para organização automática.
       </p>
 
       <div
@@ -130,7 +130,7 @@ export default function Upload() {
         <div className="card">
           <div className="card-header">
             <h2>Dados Extraidos</h2>
-            <span className="badge">{dados.categoria || "Nao classificado"}</span>
+            <span className="badge">{dados.categoria || "Não classificado"}</span>
           </div>
 
           <div className="dados-grid">
@@ -139,11 +139,11 @@ export default function Upload() {
               <span>{dados.tipo_documento || "-"}</span>
             </div>
             <div className="dado-item">
-              <label>Natureza do conteudo</label>
+              <label>Natureza do conteúdo</label>
               <span>{dados.natureza_conteudo || "-"}</span>
             </div>
             <div className="dado-item">
-              <label>Situacao no IRPF</label>
+              <label>Situação no IRPF</label>
               <span className={`status-${(dados.status_irpf || "").toLowerCase().replace(/\s/g, "-")}`}>
                 {dados.status_irpf || "-"}
               </span>
@@ -165,14 +165,14 @@ export default function Upload() {
               <span>{dados.valor_detectado || "-"}</span>
             </div>
             <div className="dado-item">
-              <label>Beneficiario</label>
+              <label>Beneficiário</label>
               <span>{dados.nome_beneficiario || "-"}</span>
             </div>
           </div>
 
           {dados.justificativa_enriquecida && (
             <div className="justificativa">
-              <strong>Analise do assistente:</strong>
+              <strong>Análise do assistente:</strong>
               <p>{dados.justificativa_enriquecida}</p>
             </div>
           )}
@@ -191,7 +191,7 @@ export default function Upload() {
                 checked={confirmado}
                 onChange={(e) => setConfirmado(e.target.checked)}
               />
-              Confirmo que revisei os dados acima e estao corretos
+              Confirmo que revisei os dados acima e estão corretos
             </label>
           </div>
 

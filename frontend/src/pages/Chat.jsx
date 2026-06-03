@@ -5,20 +5,20 @@ import { enviarPergunta } from "../services/api";
 const MENSAGEM_BOAS_VINDAS = {
   papel: "assistant",
   conteudo:
-    "Ola! Sou o DecAI, seu assistente para o Imposto de Renda.\n\nPode me perguntar sobre deducoes, documentos necessarios, prazos, categorias tributarias, rendimentos isentos... estou aqui para ajudar!",
+    "Olá! Sou o DecAI, seu assistente para o Imposto de Renda.\n\nPode me perguntar sobre deduções, documentos necessários, prazos, categorias tributárias, rendimentos isentos... estou aqui para ajudar.",
   fontes: [],
 };
 
 const SAUDACOES = new Set([
   "oi", "ola", "olá", "hey", "hello", "hi", "e ai", "e aí", "eai",
   "bom dia", "boa tarde", "boa noite", "tudo bem", "tudo bom",
-  "obrigado", "obrigada", "valeu", "tchau", "ate mais", "ate logo",
+  "obrigado", "obrigada", "valeu", "tchau", "ate mais", "até mais", "ate logo", "até logo",
 ]);
 
 function respostaLocal(pergunta) {
   const norm = pergunta.toLowerCase().trim().replace(/[!.,?]$/, "");
   if (SAUDACOES.has(norm)) {
-    return "Ola! Como posso te ajudar com o Imposto de Renda hoje?";
+    return "Olá! Como posso te ajudar com o Imposto de Renda hoje?";
   }
   return null;
 }
@@ -67,7 +67,7 @@ export default function Chat() {
         ...prev,
         {
           papel: "assistant",
-          conteudo: `Erro ao contatar o servidor: ${err.message}. Verifique se o backend esta em execucao.`,
+          conteudo: `Erro ao contatar o servidor: ${err.message}. Verifique se o backend está em execução.`,
           fontes: [],
           erro: true,
         },
@@ -139,7 +139,8 @@ export default function Chat() {
         <input
           className="chat-input"
           type="text"
-          placeholder="Digite sua duvida sobre IR..."
+          placeholder="Digite sua dúvida sobre IR..."
+          aria-label="Digite sua dúvida sobre Imposto de Renda"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={carregando}

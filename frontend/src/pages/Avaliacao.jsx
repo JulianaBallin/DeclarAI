@@ -41,29 +41,29 @@ export default function Avaliacao() {
 
   return (
     <div className="page">
-      <h1>Avaliacao do Pipeline RAG</h1>
+      <h1>Avaliação do Pipeline RAG</h1>
       <p className="page-desc">
-        Metricas quantitativas para validar a qualidade da recuperacao semantica
+        Métricas quantitativas para validar a qualidade da recuperação semântica
         e das respostas geradas pelo DeclaraAI.
       </p>
 
       <div className="card">
-        <h2>Metricas implementadas (inspiradas no RAGAS)</h2>
+        <h2>Métricas implementadas (inspiradas no RAGAS)</h2>
         <table className="metrics-table">
           <thead>
             <tr>
-              <th>Metrica</th>
-              <th>Descricao</th>
+              <th>Métrica</th>
+              <th>Descrição</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>Taxa de Recuperacao</strong></td>
+              <td><strong>Taxa de Recuperação</strong></td>
               <td>% de perguntas com ao menos 1 chunk recuperado</td>
             </tr>
             <tr>
-              <td><strong>Score Medio de Contexto</strong></td>
-              <td>Similaridade cosseno media dos chunks retornados (0-1)</td>
+              <td><strong>Score Médio de Contexto</strong></td>
+              <td>Similaridade cosseno média dos chunks retornados (0-1)</td>
             </tr>
             <tr>
               <td><strong>Cobertura de Keywords</strong></td>
@@ -75,17 +75,17 @@ export default function Avaliacao() {
 
       <div className="card">
         <div className="card-header">
-          <h2>Avaliar Recuperacao Semantica</h2>
-          <span className="badge-secondary">Nao requer Ollama</span>
+          <h2>Avaliar Recuperação Semântica</h2>
+          <span className="badge-secondary">Não requer Ollama</span>
         </div>
-        <p>Testa o retriever com 8 perguntas do dominio IRPF sem chamar o LLM.</p>
+        <p>Testa o retriever com o dataset anotado do domínio IRPF sem chamar o LLM.</p>
         <button
           className="btn-primary"
           onClick={avaliar}
           disabled={carregando}
         >
           <TestTube size={16} />
-          {carregando ? "Avaliando..." : "Avaliar Recuperacao"}
+          {carregando ? "Avaliando..." : "Avaliar Recuperação"}
         </button>
 
         {erro && <div className="alert alert-error">{erro}</div>}
@@ -93,11 +93,11 @@ export default function Avaliacao() {
         {resultado && (
           <div className="resultado-avaliacao">
             <div className="alert alert-success">
-              <CheckCircle size={16} /> Avaliacao concluida!
+              <CheckCircle size={16} /> Avaliação concluída!
             </div>
 
             <GaugeBarra
-              label="Taxa de Recuperacao (%)"
+              label="Taxa de Recuperação (%)"
               valor={resultado.taxa_recuperacao_pct || 0}
             />
 
@@ -106,7 +106,7 @@ export default function Avaliacao() {
                 <span className="metrica-valor">
                   {(resultado.score_medio_contexto || 0).toFixed(4)}
                 </span>
-                <span className="metrica-label">Score Medio de Contexto</span>
+                <span className="metrica-label">Score Médio de Contexto</span>
               </div>
               <div className="metrica-card">
                 <span className="metrica-valor">{resultado.chunks_indexados || 0}</span>
@@ -161,8 +161,8 @@ export default function Avaliacao() {
       </div>
 
       <div className="card">
-        <h2>Avaliacao com Scripts (linha de comando)</h2>
-        <p>Para comparacao completa entre modelos e estrategias de chunking:</p>
+        <h2>Avaliação com Scripts (linha de comando)</h2>
+        <p>Para comparação completa entre modelos e estratégias de chunking:</p>
         <div className="code-block">
           <pre>{`# Comparar modelos LLM (salva em data/eval/resultados_llm.csv)
 python scripts/avaliar_llm.py
@@ -170,10 +170,10 @@ python scripts/avaliar_llm.py
 # Ablation study: vanilla LLM vs RAG
 python scripts/avaliar_llm.py --no-rag
 
-# Comparar estrategias de chunking
+# Comparar estratégias de chunking
 python scripts/avaliar_chunking.py
 
-# Avaliacao RAGAS (requer: pip install ragas)
+# Avaliação RAGAS (requer: pip install ragas)
 python scripts/avaliar_ragas.py --modelo mistral`}</pre>
         </div>
       </div>
