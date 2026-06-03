@@ -1,676 +1,248 @@
-<p align="center">
-  <img src="docs/diagrams/logo.svg" alt="DeclaraAI" width="420">
-</p>
+# DeclaraAI
 
-<p align="center">
-  Assistente inteligente com <strong>RAG</strong> para organização de documentos e apoio à declaração do imposto de renda pessoa física.<br>
-  <em>Projeto Acadêmico - UEA • Oficina e Desenvolvimento de Sistemas I</em>
-</p>
+Assistente inteligente para organização de documentos e apoio à declaração do Imposto de Renda Pessoa Física no Brasil. O projeto é um Micro SaaS acadêmico com Agentic RAG, LLM aberto executado localmente e uma base de conhecimento própria sobre IRPF.
 
----
+## Problema e Público-Alvo
 
-<h2 align="center">🤖 Tecnologias Utilizadas</h2>
+A declaração do IRPF exige documentos corretos, classificação adequada de despesas e atenção a limites legais. Contribuintes leigos costumam perder deduções válidas, guardar documentos incompletos ou lançar despesas que não são aceitas pela Receita Federal.
 
-<p align="center">
-  <img alt="Python" src="https://img.shields.io/badge/python-3.11-blue?style=for-the-badge&logo=python&logoColor=white">
-  <img alt="FastAPI" src="https://img.shields.io/badge/FastAPI-0.111-009688?style=for-the-badge&logo=fastapi&logoColor=white">
-  <img alt="Streamlit" src="https://img.shields.io/badge/Streamlit-1.35-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white">
-  <img alt="Docker" src="https://img.shields.io/badge/Docker-✔-2496ED?style=for-the-badge&logo=docker&logoColor=white">
-  <img alt="ChromaDB" src="https://img.shields.io/badge/ChromaDB-0.5-orange?style=for-the-badge&logo=databricks&logoColor=white">
-  <img alt="HuggingFace" src="https://img.shields.io/badge/sentence--transformers-multilingual-FFD21E?style=for-the-badge&logo=huggingface&logoColor=black">
-  <img alt="Ollama" src="https://img.shields.io/badge/Ollama-Mistral-black?style=for-the-badge&logo=ollama&logoColor=white">
-  <img alt="SQLite" src="https://img.shields.io/badge/SQLite-SQLAlchemy-003B57?style=for-the-badge&logo=sqlite&logoColor=white">
-</p>
+O DeclaraAI atende pessoas físicas brasileiras que precisam organizar recibos, notas fiscais, informes de rendimentos e comprovantes ao longo do ano. O sistema não substitui contador, mas ajuda a reduzir erros antes da entrega ou revisão profissional.
 
----
+## Funcionalidades
 
-<h2 align="center">Definicao do Problema e Publico-Alvo</h2>
-
-### Problema
-
-A declaracao do Imposto de Renda Pessoa Fisica (IRPF) e obrigatoria para milhoes de brasileiros anualmente, mas o processo e complexo e repleto de erros comuns:
-
-- Contribuintes nao sabem quais documentos guardar durante o ano
-- Nao identificam quais gastos sao dedutiveis ou quais os limites de cada categoria
-- Nao diferenciam tipos de documentos fiscais (NF-e, NFS-e, recibo simples)
-- Declaram despesas de terceiros ou perdem deducoes validas por falta de organizacao
-
-Esses erros podem resultar em multas, retencao em malha fina ou pagamento de imposto a maior.
-
-### Publico-Alvo
-
-Contribuintes pessoas fisicas brasileiros que:
-- Sao obrigados a declarar o IRPF anualmente
-- Nao possuem conhecimento tecnico sobre legislacao tributaria
-- Acumulam documentos ao longo do ano sem organizacao sistematica
-- Nao possuem contador ou nao querem pagar honorarios para duvidas simples
-
-### Relevancia Pratica
-
-O sistema nao substitui um contador, mas reduz o tempo de organizacao de documentos e previne os erros mais comuns antes da consulta profissional. E especialmente util para contribuintes com perfil simples (assalariados com deducoes medicas e educacionais).
-
----
-
-<h2 align="center">📝 Descricao do Projeto</h2>
-
-O **DeclaraAI** e um Micro SaaS com pipeline **RAG (Retrieval-Augmented Generation)** que auxilia usuarios leigos na organizacao de documentos fiscais e na compreensao do processo de declaracao do IRPF. O sistema processa documentos enviados (recibos, notas fiscais, informes), classifica-os automaticamente por categoria tributaria e responde duvidas com base em uma base de conhecimento estruturada.
-
----
-
-<h2 align="center">🎯 Funcionalidades</h2>
-
-| Funcionalidade | Descrição |
+| Área | Funcionalidade |
 |---|---|
-| **Chat RAG** | Perguntas em linguagem natural respondidas com base na base de conhecimento tributário |
-| **Upload de documentos** | Processamento de PDF, TXT, HTML, XML, JPG e PNG com extração automática de dados |
-| **Classificação tributária** | Categorização inteligente por tipo de documento fiscal (8 categorias) |
-| **Justificativa enriquecida por RAG** | Após a classificação, a LLM recupera trechos relevantes da base de conhecimento e gera uma explicação personalizada e fundamentada sobre a classificação e o que verificar na declaração |
-| **Validação de dedutibilidade** | Detecta automaticamente gastos não dedutíveis (roupas, eletrônicos, farmácia, academia etc.) e alerta o usuário |
-| **Verificação de titularidade** | Identifica se o beneficiário do documento é o declarante ou um dependente |
-| **Base de Conhecimento** | Gerenciamento dos documentos de referência do assistente diretamente pela interface |
-| **Histórico** | Armazenamento e consulta com filtros por categoria, nome e período |
-| **Resumo anual** | Organização por categoria para facilitar o preenchimento da declaração |
-| **Avaliação RAG** | Métricas quantitativas de qualidade da recuperação e das respostas |
+| Chat RAG | Responde perguntas sobre IRPF com base nos documentos indexados |
+| Upload | Processa PDF, TXT, HTML, XML, JPG e PNG |
+| Classificação | Classifica documentos por categoria tributária com LLM-first e fallback por regras |
+| Justificativa | Gera explicação fundamentada com RAG após a classificação |
+| Titularidade | Verifica se o beneficiário é titular, dependente provável ou terceiro |
+| Histórico | Salva documentos revisados e permite consulta por categoria |
+| Base de conhecimento | Lista, adiciona e remove documentos de referência |
+| Avaliação | Mede recuperação, cobertura de palavras-chave e comparação de modelos |
 
----
+## Arquitetura
 
-<h2 align="center">🧠 Pipeline RAG</h2>
+```text
+Usuário
+  |
+Frontend React + Vite
+  |
+API FastAPI
+  |
+  +-- Chat RAG
+  |     +-- Retriever semântico
+  |     +-- ChromaDB
+  |     +-- Re-ranking com CrossEncoder
+  |     +-- Ollama com LLM aberto
+  |
+  +-- Upload de documentos
+  |     +-- Extração por tipo de arquivo
+  |     +-- Classificação LLM-first
+  |     +-- Fallback por regras
+  |     +-- Justificativa enriquecida por RAG
+  |
+  +-- Histórico e resumo anual
+        +-- SQLite
+```
 
-<p align="center">
-  <img src="docs/diagrams/pipeline_rag.svg" alt="Pipeline RAG" width="900">
-</p>
+## Tecnologias
 
-### Decisões Técnicas Justificadas
+| Camada | Tecnologia |
+|---|---|
+| Backend | Python 3.11, FastAPI, Pydantic, SQLAlchemy |
+| Frontend | React, Vite, Nginx, Lucide React |
+| LLM | Ollama com `mistral` por padrão |
+| Embeddings | `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2` |
+| Recuperação | ChromaDB com similaridade cosseno |
+| Re-ranking | `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` |
+| Documentos | PyMuPDF, pdfplumber, BeautifulSoup, OCR com Tesseract |
+| Avaliação | Scripts próprios, RAGAS opcional e CSVs em `data/eval/` |
+
+## Base de Conhecimento
+
+| Arquivo | Tipo | Relevância |
+|---|---|---|
+| `data/knowledge_base/guia_imposto_renda.txt` | TXT | Regras resumidas de obrigatoriedade, deduções e documentos |
+| `data/knowledge_base/pr-irpf-2024.pdf` | PDF | Perguntas e respostas oficiais da Receita Federal |
+
+Esses documentos foram escolhidos por cobrirem dúvidas recorrentes sobre saúde, educação, previdência privada, rendimentos, dependentes, aluguéis, prazos e penalidades. A base também pode ser expandida pela interface em `Base de Conhecimento`.
+
+## Pipeline RAG
+
+1. O carregador lê documentos da base e arquivos enviados pelo usuário.
+2. O texto é limpo, normalizado e enriquecido com metadados.
+3. O chunker divide o conteúdo em trechos de 600 caracteres com 80 caracteres de sobreposição.
+4. O gerador de embeddings cria vetores semânticos.
+5. O ChromaDB armazena chunks, fontes e metadados.
+6. O recuperador busca candidatos e aplica re-ranking.
+7. O LLM gera resposta usando apenas o contexto recuperado.
+8. A resposta apresenta fontes e indica ausência de informação quando a base não sustenta a pergunta.
+
+## Comportamento Agentic RAG
+
+O agente escolhe ferramentas conforme a intenção do usuário:
+
+| Ferramenta | Quando é usada |
+|---|---|
+| `busca_vetorial` | Perguntas abertas sobre regras do IRPF |
+| `busca_documento_usuario` | Perguntas sobre documentos enviados |
+| `classificar_documento` | Upload de um novo documento |
+| `verificar_titularidade` | Checagem de titular ou dependente |
+| `gerar_justificativa` | Explicação fundamentada após classificação |
+| `consulta_banco_dados` | Histórico, resumo anual e totais por categoria |
+
+O workflow completo está em [docs/roadmap_agentic/workflow.md](docs/roadmap_agentic/workflow.md).
+
+## Decisões Técnicas
 
 | Decisão | Justificativa |
 |---|---|
-| **chunk_size = 600 chars** | Suficiente para capturar contexto fiscal completo sem diluir relevância semântica |
-| **overlap = 80 chars** | Preserva frases e valores monetários cortados na fronteira entre chunks |
-| **paraphrase-multilingual-MiniLM-L12-v2** | Suporte nativo ao português, 384 dims, leve para CPU, bom desempenho em similaridade |
-| **cosine similarity** | Mais robusta para documentos de comprimentos variados vs. distância euclidiana |
-| **Mistral 7B via Ollama** | Multilíngue, excelente em tarefas factuais/técnicas, open-source (Apache 2.0), auto-hospedado |
-| **temperatura = 0.3** | Respostas conservadoras e precisas, domínio fiscal exige mínimo de alucinação |
-| **Singleton embeddings** | Evita recarregar o modelo (~110 MB) a cada requisição |
-| **SQLite** | Zero configuração, suficiente para protótipo sem dados distribuídos |
+| Mistral via Ollama | Modelo aberto, execução local, bom equilíbrio entre qualidade e custo |
+| Embedding multilíngue MiniLM | Leve, compatível com português e adequado para CPU |
+| ChromaDB | Persistência simples para protótipo local |
+| SQLite | Banco relacional sem configuração externa |
+| Chunking 600/80 | Preserva contexto fiscal sem gerar trechos longos demais |
+| Re-ranking CrossEncoder | Melhora a ordem dos trechos em perguntas complexas |
+| LLM-first na classificação | Reduz rigidez das regras e mantém fallback seguro |
 
----
-
-<h2 align="center">📝 Justificativa Enriquecida por RAG</h2>
-
-Ao processar um documento fiscal, o sistema executa um segundo pipeline RAG exclusivo para gerar uma **justificativa personalizada e fundamentada** na base de conhecimento:
-
-```
-Documento enviado
-       │
-       ▼
-Classificação tributária (regras + LLM)
-       │
-       ▼
-Consulta semântica à base de conhecimento
-  (query otimizada por categoria tributária)
-       │
-       ▼
-Re-ranking com cross-encoder multilíngue
-  (top-3 chunks mais relevantes)
-       │
-       ▼
-Prompt estruturado → Mistral 7B
-  (documento + contexto RAG → justificativa)
-       │
-       ▼
-Justificativa exibida na interface
-  com ficha/código da Receita Federal
-```
-
-**Por que isso importa:** as classificações baseadas em regras retornam motivos estáticos e genéricos. A justificativa enriquecida é gerada de forma dinâmica com o contexto real da legislação indexada, produzindo explicações específicas para cada documento — emitente, valor, beneficiário e situação no IRPF.
-
-**Implementação:** `backend/app/services/justificativa_service.py`
-
----
-
-<h2 align="center">🔍 Justificativa do Modelo LLM</h2>
-
-**Mistral 7B** foi escolhido para o DeclaraAI pelos seguintes motivos:
-
-1. **Domínio fiscal e português**: o Mistral 7B apresenta desempenho sólido em tarefas de compreensão e geração em português, idioma do domínio da aplicação.
-2. **Factualidade**: modelos de instrução como o Mistral tendem a seguir o contexto fornecido no prompt com menor taxa de alucinação que modelos maiores sem RAG.
-3. **Auto-hospedado via Ollama**: elimina dependência de APIs externas, garantindo privacidade dos documentos fiscais do usuário.
-4. **Licença aberta**: Apache 2.0, permite uso acadêmico e comercial sem restrições.
-5. **Eficiência**: 7B parâmetros rodam em CPU (4 a 8 GB RAM), viabilizando execução em hardware comum.
-
-**Alternativas consideradas:**
-- `llama3`: maior qualidade mas requer mais RAM
-- `phi3`: muito pequeno para contextos fiscais longos
-- APIs externas (OpenAI, Anthropic): não open-source, dependência de conectividade
-
----
-
-<h2 align="center">📁 Estrutura do Projeto</h2>
-
-```
-DeclaraAI/
-├── backend/
-│   ├── app/
-│   │   ├── main.py                       # FastAPI app + lifespan (auto-ingest)
-│   │   ├── api/
-│   │   │   ├── routes_chat.py            # POST /chat, POST /ingest, GET /status
-│   │   │   ├── routes_documents.py       # POST /documents/upload, /save, /referencia-irpf
-│   │   │   ├── routes_history.py         # GET /history, /history/summary
-│   │   │   ├── routes_evaluation.py      # POST /evaluation/recuperacao, /completa
-│   │   │   ├── routes_knowledge.py       # GET /knowledge/files, POST /knowledge/upload
-│   │   │   └── routes_perfil.py          # POST /declarante/perfil, /verificar-titularidade
-│   │   ├── core/
-│   │   │   ├── config.py                 # Configurações via pydantic-settings
-│   │   │   └── database.py               # SQLAlchemy + SQLite
-│   │   ├── models/document.py            # ORM: tabela documentos
-│   │   ├── schemas/document.py           # Schemas Pydantic (request/response)
-│   │   ├── services/
-│   │   │   ├── extraction_service.py     # Extração de texto e metadados (regex)
-│   │   │   ├── classification_service.py # Classificação tributária (8 categorias)
-│   │   │   ├── document_kind_service.py  # Tipo de doc, validade fiscal e dedutibilidade
-│   │   │   ├── history_service.py        # CRUD histórico + resumo anual
-│   │   │   ├── rag_service.py            # Orquestrador do pipeline RAG
-│   │   │   ├── titularidade_service.py   # Verifica declarante vs. dependente
-│   │   │   └── evaluation_service.py     # Métricas de avaliação do pipeline
-│   │   ├── rag/
-│   │   │   ├── loader.py                 # Carregamento de documentos
-│   │   │   ├── chunker.py                # Fragmentação 600 chars / overlap 80
-│   │   │   ├── embeddings.py             # Singleton paraphrase-multilingual-MiniLM
-│   │   │   ├── vector_store.py           # ChromaDB (cosine similarity)
-│   │   │   ├── retriever.py              # Busca semântica + re-ranking CrossEncoder
-│   │   │   └── generator.py              # Geração de resposta via Ollama
-│   │   └── utils/file_parsers.py         # Parsers PDF/TXT/HTML/XML/imagem
-│   ├── requirements.txt
-│   └── Dockerfile
-├── frontend/                             # Interface React + Vite (servida por Nginx)
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── Chat.jsx                 # Chat RAG com historico e fontes
-│   │   │   ├── Upload.jsx               # Upload com drag-and-drop e confirmacao
-│   │   │   ├── BaseConhecimento.jsx     # Gerenciar arquivos indexados
-│   │   │   ├── Historico.jsx            # Documentos salvos com filtros
-│   │   │   ├── Avaliacao.jsx            # Metricas do pipeline RAG
-│   │   │   └── Status.jsx               # Status do sistema (Ollama, chunks)
-│   │   ├── components/
-│   │   │   └── Navbar.jsx               # Barra de navegacao fixa
-│   │   ├── services/
-│   │   │   └── api.js                   # Wrapper das chamadas ao backend
-│   │   ├── App.jsx                      # Rotas (react-router-dom)
-│   │   └── index.css                    # Design system (paleta laranja/preto)
-│   ├── nginx.conf                        # Nginx: SPA fallback + proxy /api
-│   ├── vite.config.js                    # Dev proxy: /api -> localhost:8000
-│   ├── package.json
-│   └── Dockerfile                        # Multi-stage: Node (build) + Nginx (serve)
-├── data/
-│   ├── uploads/                          # Documentos enviados pelos usuarios
-│   ├── knowledge_base/
-│   │   ├── guia_imposto_renda.txt        # Base de conhecimento IRPF
-│   │   └── pr-irpf-2024.pdf             # Perguntas e Respostas IRPF 2024 (Receita Federal)
-│   ├── chroma_db/                        # Banco vetorial persistente
-│   ├── eval/
-│   │   ├── perguntas.json               # 60 perguntas anotadas para avaliacao
-│   │   ├── resultados_llm.csv           # Comparacao entre modelos LLM
-│   │   ├── resultados_chunking.csv      # Comparacao entre estrategias de chunking
-│   │   └── resultados_ragas.csv         # Metricas RAGAS
-│   └── test_documents/                   # Documentos ficticios para testes
-│       └── simulation/                   # Simulacao de persona real (Ana Clara + dependentes)
-├── docs/
-│   ├── diagrams/
-│   │   ├── logo.svg                     # Logo do sistema
-│   │   ├── pipeline_rag.svg             # Diagrama do pipeline RAG
-│   │   ├── c4_contexto.svg              # Diagrama C4 - Contexto
-│   │   └── c4_containers.svg            # Diagrama C4 - Conteineres
-│   ├── roadmap_artigo/
-│   │   ├── roadmap_v1.md               # Roadmap original do artigo
-│   │   ├── roadmap_v2.md               # Roadmap expandido com RAGAS e busca hibrida
-│   │   └── roadmap_consolidado.md      # Versao unificada com ordem de execucao
-│   └── roadmap_agentic/
-│       └── workflow.md                  # Workflow agentico detalhado (ferramentas e fluxos)
-├── scripts/
-│   ├── avaliar_llm.py                   # Comparacao de LLMs + ablation study
-│   ├── avaliar_chunking.py              # Comparacao de estrategias de chunking
-│   └── avaliar_ragas.py                 # Avaliacao RAGAS com Ollama local
-├── Makefile                              # Comandos de gerenciamento da stack
-├── docker-compose.yml
-├── .env.example
-├── requirements-dev.txt                  # Dependencias de analise (ragas, jupyter, etc.)
-└── README.md
-```
-
----
-
-<h2 align="center">🖥️ Interface — Abas do Sistema</h2>
-
-A interface e construida com **React + Vite**, servida por **Nginx**, na paleta laranja (`#FF6B35`), amarelo (`#FFD700`), preto e branco.
-
-| Pagina | Rota | Descricao |
-|---|---|---|
-| **Chat** | `/chat` | Perguntas em linguagem natural respondidas pelo pipeline RAG com exibicao das fontes consultadas |
-| **Upload** | `/upload` | Envio de documentos pessoais com drag-and-drop, extracao automatica e formulario de confirmacao |
-| **Base de Conhecimento** | `/base` | Adicao e remocao de arquivos de referencia com re-indexacao automatica no ChromaDB |
-| **Historico** | `/historico` | Documentos salvos com filtros por categoria e opcao de exclusao |
-| **Avaliacao** | `/avaliacao` | Metricas do pipeline RAG + instrucoes para rodar scripts de comparacao |
-| **Status** | `/status` | Status em tempo real: Ollama, chunks indexados, modelo carregado |
-
----
-
-<h2 align="center">🐳 Como Executar com Docker</h2>
-
-### 1. Clonar o repositório
+## Execução com Docker
 
 ```bash
-git clone https://github.com/JulianaBallin/DeclaraAI.git
-cd DeclaraAI
-```
-
-### 2. Subir os contêineres
-
-```bash
-# Com Docker Compose diretamente
 docker compose up -d --build
-
-# Ou usando o Makefile
-make up-build
-```
-
-> **Primeira execução:** aguarde o download das imagens e instalação das dependências (~5 min).
-
-### 3. Baixar o modelo LLM no Ollama
-
-```bash
-# Diretamente
 docker exec -it declaraai-ollama ollama pull mistral
-
-# Ou usando o Makefile
-make modelo
 ```
 
-> O download do Mistral 7B (~4 GB) pode levar alguns minutos dependendo da conexão.
+Serviços:
 
-### 4. Acessar a aplicação
-
-| Servico | URL |
+| Serviço | URL |
 |---|---|
-| Interface React | http://localhost:3000 |
-| API FastAPI (Swagger) | http://localhost:8000/docs |
+| Frontend | http://localhost:3000 |
+| API FastAPI | http://localhost:8000 |
+| Swagger | http://localhost:8000/docs |
 | Ollama | http://localhost:11434 |
 
----
+## Execução Local
 
-<h2 align="center">🛠️ Gerenciamento com Makefile</h2>
-
-O projeto inclui um `Makefile` com atalhos para todas as operações comuns:
-
-### Ciclo da Stack
-
-```bash
-make up             # sobe todos os serviços em background
-make up-build       # reconstrói imagens e sobe os serviços
-make down           # para e remove contêineres
-make down-v         # para contêineres e remove volumes
-make restart        # reinicia todos os serviços
-make restart-backend   # reinicia apenas o backend
-make restart-frontend  # reinicia apenas o frontend
-make restart-ollama    # reinicia apenas o Ollama
-```
-
-### Diagnóstico e Logs
-
-```bash
-make ps             # lista contêineres em execução
-make logs           # acompanha logs de todos os serviços
-make logs-backend   # logs do backend
-make logs-frontend  # logs do frontend
-make logs-ollama    # logs do Ollama
-make health         # checa o endpoint raiz da API
-make status         # exibe métricas do pipeline RAG
-```
-
-### Modelo e Ingestão
-
-```bash
-make modelo         # baixa o Mistral 7B no Ollama
-make ingest         # re-indexa a base de conhecimento via API
-```
-
-### Qualidade de Código
-
-```bash
-make lint           # verifica com flake8
-make format         # formata com black e isort
-make check          # verifica formatação sem alterar arquivos
-make test           # executa testes com pytest
-make test-cov       # testes com relatório de cobertura
-make clean          # remove cache Python
-```
-
-```bash
-make help           # lista todos os comandos disponíveis
-```
-
----
-
-<h2 align="center">🖥️ Como Executar Localmente (sem Docker)</h2>
-
-### Pré-requisitos
-- Python 3.11+
-- [Ollama](https://ollama.ai) instalado
-
-### Backend
+Backend:
 
 ```bash
 cd backend
 python -m venv .venv
-source .venv/bin/activate        # Linux/Mac
-# .venv\Scripts\activate         # Windows
-
+source .venv/bin/activate
 pip install -r requirements.txt
-
-# Configurar variáveis
-cp ../.env.example ../.env
-# Edite: OLLAMA_BASE_URL=http://localhost:11434
-
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### Frontend
+Frontend:
 
 ```bash
 cd frontend
 npm install
-# Opcional: configura a URL da API para dev sem proxy
-# echo "VITE_API_URL=http://localhost:8000" > .env
-npm run dev        # http://localhost:5173
+npm run dev
 ```
 
-### Ollama
+Ollama:
 
 ```bash
-ollama serve          # Terminal 1
-ollama pull mistral   # Terminal 2
+ollama serve
+ollama pull mistral
 ```
 
----
-
-<h2 align="center">🔌 API REST</h2>
-
-A documentação interativa completa está disponível em `http://localhost:8000/docs` (Swagger UI).
-
-### Chat RAG
-
-| Método | Endpoint | Descrição |
-|---|---|---|
-| `POST` | `/chat` | Enviar pergunta ao assistente |
-| `POST` | `/ingest` | Re-indexar base de conhecimento |
-| `GET` | `/status` | Status e métricas do sistema RAG |
-
-### Documentos
-
-| Método | Endpoint | Descrição |
-|---|---|---|
-| `POST` | `/documents/upload` | Upload e processamento (PDF, TXT, HTML, XML, JPG, PNG) com validação de dedutibilidade |
-| `POST` | `/documents/save` | Salvar documento no histórico e indexar no ChromaDB |
-| `GET` | `/documents/categorias` | Listar categorias tributárias disponíveis |
-| `GET` | `/documents/referencia-irpf` | Texto de apoio IRPF por categoria |
-
-### Declarante
-
-| Método | Endpoint | Descrição |
-|---|---|---|
-| `POST` | `/declarante/perfil` | Registrar nome e CPF do declarante na sessão |
-| `GET` | `/declarante/perfil` | Consultar perfil do declarante registrado |
-| `POST` | `/declarante/verificar-titularidade` | Verificar se beneficiário é declarante ou dependente |
-
-### Base de Conhecimento
-
-| Método | Endpoint | Descrição |
-|---|---|---|
-| `GET` | `/knowledge/files` | Listar arquivos e total de chunks indexados |
-| `POST` | `/knowledge/upload` | Adicionar arquivo e re-indexar o ChromaDB |
-| `DELETE` | `/knowledge/files/{nome}` | Remover arquivo e re-indexar o ChromaDB |
-
-### Histórico
-
-| Método | Endpoint | Descrição |
-|---|---|---|
-| `GET` | `/history` | Listar histórico (filtros: categoria, nome, período) |
-| `GET` | `/history/summary` | Resumo anual por categoria |
-| `DELETE` | `/history/{id}` | Excluir documento do histórico |
-
-### Avaliação
-
-| Método | Endpoint | Descrição |
-|---|---|---|
-| `POST` | `/evaluation/recuperacao` | Avaliar etapa de recuperação (sem LLM) |
-| `POST` | `/evaluation/completa` | Avaliar pipeline completo (com LLM) |
-| `GET` | `/evaluation/casos-teste` | Listar casos de teste |
-
-### Exemplos de uso
+## Makefile
 
 ```bash
-# Chat
+make up-build        # constrói e sobe a stack
+make down            # para os contêineres
+make modelo          # baixa o modelo Mistral
+make ingest          # re-indexa a base de conhecimento
+make status          # consulta métricas do RAG
+make check           # verifica formatação do backend
+make test            # executa testes Python
+```
+
+## API Principal
+
+| Método | Endpoint | Uso |
+|---|---|---|
+| `POST` | `/chat` | Envia pergunta ao assistente |
+| `POST` | `/ingest` | Re-indexa a base de conhecimento |
+| `GET` | `/status` | Consulta status do pipeline |
+| `POST` | `/documents/upload` | Processa documento fiscal |
+| `POST` | `/documents/save` | Salva documento no histórico |
+| `GET` | `/history` | Lista documentos salvos |
+| `GET` | `/knowledge/files` | Lista arquivos da base |
+| `POST` | `/knowledge/upload` | Adiciona documento à base |
+| `POST` | `/evaluation/recuperacao` | Avalia recuperação no dataset anotado |
+| `POST` | `/evaluation/recuperacao-pergunta` | Avalia uma pergunta isolada |
+
+Exemplo:
+
+```bash
 curl -X POST http://localhost:8000/chat \
   -H "Content-Type: application/json" \
   -d '{"pergunta": "Quais despesas médicas posso deduzir no IR?"}'
-
-# Upload de documento pessoal
-curl -X POST http://localhost:8000/documents/upload \
-  -F "arquivo=@recibo.pdf"
-
-# Adicionar arquivo à base de conhecimento
-curl -X POST http://localhost:8000/knowledge/upload \
-  -F "arquivo=@guia_receita_federal.pdf"
-
-# Avaliação de recuperação
-curl -X POST http://localhost:8000/evaluation/recuperacao
-
-# Ou com Makefile
-make ingest
-make status
 ```
 
----
+## Avaliação
 
-<h2 align="center">📊 Avaliação da Solução</h2>
-
-O sistema implementa métricas quantitativas inspiradas no **RAGAS** (Es et al., 2023), adaptadas para execução autossuficiente sem LLM-juiz externo.
-
-### Métricas implementadas
-
-| Métrica | Descrição | Endpoint |
-|---|---|---|
-| **Taxa de Recuperação** | % de perguntas com ao menos 1 chunk recuperado | `/evaluation/recuperacao` |
-| **Score Médio de Contexto** | Similaridade cosseno média (ChromaDB) dos chunks retornados | `/evaluation/recuperacao` |
-| **Cobertura de Keywords** | % de termos esperados encontrados na resposta gerada | `/evaluation/completa` |
-| **Análise de Falhas** | Casos com cobertura abaixo de 50%, indica lacunas na base | ambos |
-
-### Dataset de avaliacao
-
-`data/eval/perguntas.json` contem **60 perguntas** anotadas manualmente sobre o dominio IRPF,
-cobrindo 12 categorias:
-
-| Categoria | Perguntas | Exemplos |
-|-----------|-----------|---------|
-| Obrigatoriedade | 6 | Quem deve declarar, limites de renda |
-| Deducoes medicas | 10 | Consultas, plano de saude, farmacia |
-| Deducoes educacao | 6 | Mensalidade, MBA, material escolar |
-| Previdencia privada | 4 | PGBL vs VGBL, limite de 12% |
-| Rendimentos | 6 | Informe, poupanca, dividendos |
-| Dependentes | 5 | Quem pode ser dependente, valor |
-| Autonomos | 4 | Carne-leao, livro caixa |
-| Alugueis | 4 | Receber aluguel, IPTU, pensao |
-| Doacoes | 2 | ECA, Rouanet |
-| Penalidades | 4 | Multa, malha fina, omissao |
-| Documentos fiscais | 8 | NF-e, recibo, DARF, holerite |
-| Prazos | 3 | Prazo de entrega, retificadora, restituicao |
-
-Cada pergunta tem: `resposta_referencia`, `keywords` para medir cobertura e `dificuldade` (facil/media/dificil).
-
-### Scripts de avaliacao
+O projeto possui `data/eval/perguntas.json` com 60 perguntas anotadas por categoria, resposta de referência, palavras-chave esperadas e dificuldade. Os scripts salvam resultados em CSV para comparação final.
 
 ```bash
-# Avaliar todos os modelos LLM (salva em data/eval/resultados_llm.csv)
-python scripts/avaliar_llm.py
-
-# Ablation study: vanilla LLM vs RAG
-python scripts/avaliar_llm.py --no-rag
-
-# Avaliar apenas um modelo
-python scripts/avaliar_llm.py --modelo qwen2.5:7b
-
-# Avaliar estrategias de chunking (salva em data/eval/resultados_chunking.csv)
-python scripts/avaliar_chunking.py
-
-# Avaliacao RAGAS completa (requer: pip install ragas langchain-community)
-python scripts/avaliar_ragas.py --modelo mistral
+python scripts/avaliar_llm.py --limite 10
+python scripts/avaliar_llm.py --no-rag --limite 10
+python scripts/avaliar_chunking.py --config fixo_600_80 --limite 10
+python scripts/avaliar_ragas.py --modelo mistral --limite 10
 ```
 
-### Metricas implementadas (API)
+Saídas esperadas:
 
-```bash
-# Avaliacao rapida de recuperacao (nao requer Ollama)
-curl -X POST http://localhost:8000/evaluation/recuperacao
+| Arquivo | Conteúdo |
+|---|---|
+| `data/eval/resultados_llm.csv` | Comparação entre modelos e ablation study |
+| `data/eval/resultados_chunking.csv` | Comparação de estratégias de chunking |
+| `data/eval/resultados_ragas.csv` | Métricas RAGAS |
 
-# Avaliacao completa com LLM
-curl -X POST http://localhost:8000/evaluation/completa
+## Documentação
+
+| Caminho | Conteúdo |
+|---|---|
+| `docs/roadmap_artigo/roadmap_consolidado.md` | Plano unificado para artigo acadêmico |
+| `docs/roadmap_agentic/workflow.md` | Workflow Agentic RAG do DeclaraAI |
+| `docs/reports/relatorio_declaraai.tex` | Relatório técnico em LaTeX |
+| `docs/diagrams/` | Diagramas de arquitetura, RAG e classificação |
+
+## Privacidade e LGPD
+
+O DeclaraAI foi desenhado para execução local. O LLM roda no Ollama, os vetores ficam no ChromaDB local e o histórico usa SQLite no próprio ambiente do usuário. Esse desenho reduz exposição de dados sensíveis como CPF, renda, saúde, dependentes e documentos fiscais.
+
+## Limitações
+
+| Limitação | Mitigação |
+|---|---|
+| Não substitui contador | A interface mantém o sistema como apoio informativo |
+| Depende do Ollama | O status da interface informa disponibilidade |
+| OCR pode falhar em imagens ruins | Usuário revisa dados antes de salvar |
+| Regras fiscais mudam anualmente | Base pode ser atualizada pela interface |
+| Estratégias avançadas de chunking ainda são experimentais | Scripts registram configurações e resultados |
+
+## Estrutura do Projeto
+
+```text
+backend/                 API FastAPI, serviços e pipeline RAG
+frontend/                Interface React + Vite
+data/knowledge_base/     Base de conhecimento do IRPF
+data/eval/               Dataset e resultados de avaliação
+data/test_documents/     Documentos fictícios para simulação
+docs/                    Diagramas, roadmaps e relatórios
+scripts/                 Avaliação de LLMs, chunking e RAGAS
 ```
 
-Ou use a aba **Avaliacao** na interface Streamlit.
-
-### Resultados salvos em CSV
-
-| Arquivo | Conteudo |
-|---------|---------|
-| `data/eval/resultados_llm.csv` | Comparacao entre modelos LLM |
-| `data/eval/resultados_chunking.csv` | Comparacao entre estrategias de chunking |
-| `data/eval/resultados_ragas.csv` | Metricas RAGAS (faithfulness, relevancy, precision, recall) |
-
----
-
-<h2 align="center">🧩 Modelagem C4</h2>
-
-O projeto segue o modelo **C4** para representação arquitetural:
-
-### C1 - Contexto
-
-<p align="center">
-  <img src="docs/diagrams/c4_contexto.svg" alt="C4 Contexto" width="820">
-</p>
-
-### C2 - Contêineres
-
-<p align="center">
-  <img src="docs/diagrams/c4_containers.svg" alt="C4 Contêineres" width="900">
-</p>
-
-- **C1 - Contexto:** usuário interage com DeclaraAI via browser
-- **C2 - Contêineres:** Frontend (Streamlit), Backend (FastAPI), Banco Vetorial (ChromaDB), Banco Relacional (SQLite), LLM (Ollama)
-- **C3 - Componentes:** pipeline RAG (loader, chunker, embeddings, retriever, generator), serviços de classificação e extração, API REST
-
----
-
-<h2 align="center">Base de Conhecimento</h2>
-
-### Documentos indexados
-
-| Arquivo | Tipo | Fonte | Relevancia para o dominio |
-|---------|------|-------|--------------------------|
-| `guia_imposto_renda.txt` | TXT | Elaborado pela equipe com base em fontes oficiais da Receita Federal | Regras gerais do IRPF, categorias de deducao, limites, obrigatoriedade |
-| `pr-irpf-2024.pdf` | PDF | Perguntas e Respostas IRPF 2024 -- Receita Federal do Brasil | Respostas oficiais para as duvidas mais frequentes de contribuintes |
-
-### Justificativa da escolha dos documentos
-
-Esses documentos foram escolhidos por cobrir o espectro de duvidas mais comuns do publico-alvo
-(contribuinte leigo) e por serem fontes primarias da Receita Federal. O "Perguntas e Respostas
-IRPF" e o documento oficial que a propria Receita Federal disponibiliza para esclarecer duvidas
-dos contribuintes, tornando-o a fonte mais adequada para um sistema de apoio a declaracao.
-
-### Pre-processamento e ingestao
-
-A ingestao de documentos segue o pipeline:
-
-```
-Documento
-    |
-[Loader] -- detecta formato: PDF (PyMuPDF), TXT, HTML (BeautifulSoup),
-    |        XML/NF-e (parser especifico), Imagem (Tesseract OCR)
-    |
-[Limpeza textual]
-    | * remove cabecalhos/rodapes repetidos
-    | * normaliza espacos e quebras de linha
-    | * remove caracteres de controle e artefatos de OCR
-    |
-[Chunker] -- divide em trechos de 600 tokens com overlap de 80
-    | * separadores: paragrafo > linha > palavra
-    | * preserva valores monetarios e numeros de documentos
-    |
-[Embedder] -- paraphrase-multilingual-MiniLM-L12-v2
-    | * 384 dimensoes, suporte nativo ao portugues
-    | * executado localmente via sentence-transformers
-    |
-[ChromaDB] -- armazena vetores com metadados (nome do arquivo, chunk_id)
-```
-
----
-
-<h2 align="center">Workflow Agentico</h2>
-
-O sistema implementa **Agentic RAG** com as seguintes ferramentas:
-
-| Ferramenta | Quando o agente aciona |
-|-----------|----------------------|
-| `busca_vetorial` | Perguntas abertas sobre regras do IRPF |
-| `busca_documento_usuario` | Perguntas sobre documentos enviados pelo usuario |
-| `classificar_documento` | Ao receber novo documento para analise |
-| `gerar_justificativa` | Apos classificar, enriquece com contexto da base |
-| `verificar_titularidade` | Verifica se beneficiario e declarante ou dependente |
-| `consulta_banco_dados` | Resumo anual, totais por categoria |
-
-Fluxo detalhado: [docs/roadmap_agentic/workflow.md](docs/roadmap_agentic/workflow.md)
-
----
-
-<h2 align="center">Privacidade e LGPD</h2>
-
-O DeclaraAI implementa **privacy-by-design**:
-
-- **Ollama** roda o modelo no proprio computador do usuario
-- **ChromaDB** armazena os vetores localmente
-- **SQLite** armazena o banco local
-- **Nenhum documento e nenhuma pergunta saem da maquina**
-
-Isso e especialmente relevante para o contexto de IRPF, onde os documentos contem
-dados sensiveis protegidos pela LGPD (Lei 13.709/2018, Art. 5, II): CPF, renda anual,
-dados bancarios, informacoes de saude e dados de dependentes.
-
----
-
-<h2 align="center">Limitacoes Conhecidas</h2>
-
-| Limitacao | Impacto | Mitigacao |
-|-----------|---------|-----------|
-| Nao substitui contador | Risco legal se usado como fonte unica | Aviso legal obrigatorio na interface |
-| Qualidade dependente do modelo Ollama | Respostas variam conforme o modelo | Testes comparativos documentados em `data/eval/` |
-| Metadados por heuristicas | Falha em documentos muito atipicos | Usuario pode corrigir no formulario de confirmacao |
-| Base de conhecimento manual | Regras fiscais mudam anualmente | Instrutor de gerenciamento de arquivos na aba Base de Conhecimento |
-| Latencia de geracao | 10-30s por resposta em CPU | Warmup no startup, indicador de carregamento |
-| OCR em imagens ruins | Perda de informacao em scans de baixa qualidade | Alerta para usuario revisar dados extraidos |
-| Dataset de avaliacao pequeno | Metricas podem nao ser representativas | Dataset expandido para 60 perguntas; RAGAS planejado |
-| Sem busca hibrida | Termos exatos (CNPJ, NF-e) podem nao ser localizados | BM25 + vetorial planejado para versao 2 |
-
----
-
-<h2 align="center">👥 Equipe</h2>
-
-<p align="center">
+## Equipe
 
 | Nome | Matrícula |
 |---|---|
 | Juliana Ballin Lima | 2315310011 |
 | Fernando Luiz Da Silva Freire | 2315310007 |
 
-</p>
-
----
-
-<h3 align="center">UEA • Oficina e Desenvolvimento de Sistemas I • DeclaraAI</h3>
+Projeto acadêmico da Universidade do Estado do Amazonas, disciplina Oficina e Desenvolvimento de Sistemas I.

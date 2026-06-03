@@ -1,0 +1,266 @@
+\documentclass[11pt,a4paper,oneside]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{geometry}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{
+  a4paper,
+  top=25mm,
+  bottom=25mm,
+  left=25mm,
+  right=20mm,
+  headheight=18mm,
+  headsep=6mm,
+  footskip=12mm
+}
+
+\graphicspath{{../}{../diagrams/}}
+\onehalfspacing
+\setlength{\emergencystretch}{3em}
+\renewcommand{\arraystretch}{1.25}
+
+\definecolor{declaraTeal}{RGB}{15,118,110}
+\definecolor{declaraOrange}{RGB}{249,115,22}
+\definecolor{declaraGray}{RGB}{71,85,105}
+\definecolor{declaraLight}{RGB}{240,253,250}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=declaraTeal,
+  urlcolor=declaraOrange,
+  citecolor=declaraTeal,
+  pdftitle={Relatório Técnico DeclaraAI},
+  pdfauthor={Juliana Ballin Lima, Fernando Luiz Da Silva Freire},
+  pdfsubject={Agentic RAG aplicado ao apoio à declaração de IRPF},
+  pdfkeywords={RAG, Agentic RAG, IRPF, Ollama, FastAPI, React}
+}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\titleformat{\section}
+  {\Large\bfseries\color{declaraTeal}}
+  {\thesection}{1em}{}
+  [\vspace{1pt}{\color{declaraOrange}\hrule height 1pt}\vspace{4pt}]
+
+\titleformat{\subsection}
+  {\large\bfseries\color{declaraTeal}}
+  {\thesubsection}{1em}{}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{\color{declaraTeal}DeclaraAI}}
+\fancyhead[C]{\textcolor{declaraGray}{Relatório Técnico}}
+\fancyhead[R]{\textcolor{declaraGray}{UEA}}
+\fancyfoot[L]{\textcolor{declaraGray}{Oficina e Desenvolvimento de Sistemas I}}
+\fancyfoot[C]{\textcolor{declaraGray}{\thepage\ de \pageref{LastPage}}}
+\fancyfoot[R]{\textcolor{declaraGray}{2026}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.3pt}
+
+\begin{document}
+\pagenumbering{gobble}
+
+\begin{titlepage}
+  \centering
+  \vspace*{18mm}
+  {\Huge\bfseries\color{declaraTeal}DeclaraAI\par}
+  \vspace{4mm}
+  {\Large Agentic RAG para apoio à declaração de IRPF\par}
+  \vspace{10mm}
+  \IfFileExists{../logo.png}{\includegraphics[height=38mm]{../logo.png}\par}{}
+  \vspace{10mm}
+  \begin{tabular}{ll}
+    \textbf{Instituição:} & Universidade do Estado do Amazonas \\
+    \textbf{Disciplina:} & Oficina e Desenvolvimento de Sistemas I \\
+    \textbf{Projeto:} & Micro SaaS com Agentic RAG \\
+    \textbf{Data:} & 3 de junho de 2026 \\
+    \textbf{Integrantes:} & Juliana Ballin Lima \\
+                         & Fernando Luiz Da Silva Freire \\
+  \end{tabular}
+  \vfill
+  {\large Manaus, AM\par}
+\end{titlepage}
+
+\pagenumbering{roman}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\section{Resumo Executivo}
+
+O DeclaraAI é um assistente inteligente para apoiar contribuintes brasileiros na organização de documentos e no entendimento de regras da declaração do Imposto de Renda Pessoa Física. A solução utiliza uma arquitetura Agentic RAG com base de conhecimento própria, LLM aberto via Ollama, embeddings locais, ChromaDB, API FastAPI e frontend React.
+
+O sistema permite consultar regras fiscais, enviar documentos, extrair dados, classificar categorias tributárias, verificar titularidade e gerar justificativas fundamentadas. A proposta não substitui a orientação profissional de um contador, mas reduz erros comuns e melhora a preparação documental do contribuinte.
+
+\section{Definição do Problema}
+
+A declaração do IRPF envolve regras, limites, documentos comprobatórios e categorias que mudam com o ano fiscal. Usuários leigos frequentemente enfrentam três dificuldades:
+
+\begin{itemize}[leftmargin=7mm]
+  \item identificar se uma despesa é dedutível;
+  \item organizar documentos aceitos pela Receita Federal;
+  \item entender quando uma informação está fora da base de conhecimento.
+\end{itemize}
+
+O público-alvo são contribuintes pessoas físicas com perfil simples ou intermediário, especialmente usuários que acumulam recibos, notas fiscais, informes de rendimentos e comprovantes educacionais ou médicos durante o ano.
+
+\section{Arquitetura da Solução}
+
+\subsection{Visão Geral}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{38mm}Y@{}}
+\toprule
+\textbf{Camada} & \textbf{Responsabilidade} \\
+\midrule
+Frontend React & Interface de chat, upload, base de conhecimento, histórico, avaliação e status. \\
+FastAPI & Endpoints REST, validações, orquestração de serviços e documentação Swagger. \\
+Pipeline RAG & Ingestão, chunking, embeddings, recuperação, re-ranking e geração. \\
+Ollama & Execução local do LLM aberto usado em geração e classificação. \\
+ChromaDB & Persistência vetorial dos chunks recuperáveis. \\
+SQLite & Histórico de documentos salvos e dados estruturados. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\subsection{Pipeline RAG}
+
+O pipeline segue oito etapas:
+
+\begin{enumerate}[leftmargin=8mm]
+  \item carregamento de documentos da base;
+  \item extração e limpeza textual;
+  \item divisão em chunks de 600 caracteres com 80 caracteres de sobreposição;
+  \item geração de embeddings multilíngues;
+  \item indexação no ChromaDB;
+  \item recuperação semântica dos trechos;
+  \item re-ranking com CrossEncoder;
+  \item geração de resposta com LLM local.
+\end{enumerate}
+
+\subsection{Comportamento Agentic}
+
+O agente decide qual ferramenta usar conforme a intenção do usuário. Perguntas abertas acionam busca vetorial. Uploads acionam extração, classificação, verificação de titularidade e justificativa enriquecida. Consultas sobre documentos salvos usam histórico e metadados.
+
+\section{Base de Conhecimento}
+
+\begin{longtable}{@{}L{56mm}L{15mm}L{84mm}@{}}
+\toprule
+\textbf{Documento} & \textbf{Tipo} & \textbf{Justificativa} \\
+\midrule
+\endhead
+\texttt{guia\_imposto\_renda.txt} & TXT & Reúne regras resumidas de obrigatoriedade, deduções e documentos comuns do IRPF. \\
+\texttt{pr-irpf-2024.pdf} & PDF & Documento oficial de perguntas e respostas da Receita Federal, usado como fonte primária. \\
+\bottomrule
+\end{longtable}
+
+Essas fontes cobrem despesas médicas, educação, previdência privada, rendimentos, dependentes, aluguéis, prazos e penalidades. A base pode ser ampliada pela interface.
+
+\section{Modelo de Linguagem e Recuperação}
+
+O modelo padrão é o \texttt{mistral} executado via Ollama. A escolha prioriza licença aberta, execução local, bom desempenho em português e custo computacional compatível com máquinas comuns. O embedding padrão é \texttt{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}, escolhido por ser leve, multilíngue e adequado para CPU.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{36mm}Y@{}}
+\toprule
+\textbf{Decisão} & \textbf{Motivo} \\
+\midrule
+Ollama local & Evita envio de documentos fiscais para APIs externas. \\
+ChromaDB & Banco vetorial simples, persistente e suficiente para protótipo. \\
+Re-ranking & Melhora a ordem dos trechos em perguntas complexas. \\
+Temperatura baixa & Reduz alucinações em domínio fiscal. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\section{Interface}
+
+O frontend foi desenvolvido em React + Vite. A interface possui páginas de uso direto:
+
+\begin{itemize}[leftmargin=7mm]
+  \item Chat RAG com fontes consultadas;
+  \item Upload de documentos com revisão antes de salvar;
+  \item Base de conhecimento para adicionar ou remover fontes;
+  \item Histórico de documentos salvos;
+  \item Avaliação do pipeline;
+  \item Status do sistema, incluindo Ollama, modelos e chunks indexados.
+\end{itemize}
+
+\section{Avaliação e Comparações}
+
+O dataset \texttt{data/eval/perguntas.json} possui 60 perguntas anotadas com resposta de referência, palavras-chave e dificuldade. As avaliações salvam resultados em CSV para comparação final.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{68mm}Y@{}}
+\toprule
+\textbf{Script} & \textbf{Objetivo} \\
+\midrule
+\texttt{scripts/avaliar\_llm.py} & Comparar modelos Ollama e executar ablation study sem RAG. \\
+\texttt{scripts/avaliar\_chunking.py} & Comparar configurações de chunking e latência. \\
+\texttt{scripts/avaliar\_ragas.py} & Calcular métricas RAGAS com Ollama local como juiz. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Métricas implementadas:
+
+\begin{itemize}[leftmargin=7mm]
+  \item taxa de recuperação;
+  \item score médio de contexto;
+  \item cobertura de palavras-chave;
+  \item latência por pergunta;
+  \item casos sem contexto;
+  \item métricas RAGAS opcionais.
+\end{itemize}
+
+\section{Etapas de Desenvolvimento}
+
+\begin{longtable}{@{}L{62mm}L{22mm}L{72mm}@{}}
+\toprule
+\textbf{Etapa} & \textbf{Status} & \textbf{Resultado} \\
+\midrule
+\endhead
+Base RAG & Concluída & Ingestão, chunking, ChromaDB, embeddings e resposta contextualizada. \\
+Classificação & Concluída & LLM-first com fallback por regras e origem da classificação. \\
+Justificativa & Concluída & Resposta personalizada com trechos da base. \\
+Frontend & Concluída & Interface React profissional e responsiva. \\
+Avaliação & Concluída & Dataset de 60 perguntas e scripts de comparação. \\
+Relatório & Concluída & Documentação técnica em LaTeX. \\
+Busca híbrida & Futuro & BM25 + vetorial + fusão de rankings. \\
+Notebooks & Futuro & Gráficos para artigo e apresentação. \\
+\bottomrule
+\end{longtable}
+
+\section{Limitações e Riscos}
+
+\begin{itemize}[leftmargin=7mm]
+  \item O sistema depende do Ollama e dos modelos instalados localmente.
+  \item Regras fiscais mudam anualmente e exigem atualização da base.
+  \item OCR pode falhar em imagens de baixa qualidade.
+  \item A classificação pode exigir revisão do usuário em documentos atípicos.
+  \item O projeto é apoio informativo e não substitui contador.
+\end{itemize}
+
+\section{Conclusão}
+
+O DeclaraAI atende aos requisitos centrais da atividade: domínio bem definido, base de conhecimento própria, ingestão, chunking, embeddings, recuperação, LLM aberto, Agentic RAG, interface web, avaliação e documentação. A principal evolução futura é ampliar a avaliação experimental com busca híbrida, comparação de embeddings e dataset anotado de documentos reais ou sintéticos.
+
+\end{document}
