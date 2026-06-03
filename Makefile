@@ -24,15 +24,16 @@ help: ## Mostra esta mensagem de ajuda
 	@printf "\n\033[1;33mDeclaraAI — Comandos disponíveis\033[0m\n"
 
 	@printf "\n\033[1;36mCiclo da Stack\033[0m\n"
-	@printf "  make up                - sobe todos os serviços em background\n"
+	@printf "  make up                - sobe todos os servicos em background\n"
 	@printf "  make up-build          - sobe tudo com rebuild das imagens\n"
 	@printf "  make down              - para e remove containers\n"
 	@printf "  make down-v            - para containers e remove volumes\n"
-	@printf "  make build             - apenas reconstrói as imagens\n"
-	@printf "  make restart           - reinicia todos os serviços\n"
+	@printf "  make build             - apenas reconstroi as imagens\n"
+	@printf "  make restart           - reinicia todos os servicos\n"
 	@printf "  make restart-backend   - reinicia apenas o backend\n"
 	@printf "  make restart-frontend  - reinicia apenas o frontend\n"
 	@printf "  make restart-ollama    - reinicia apenas o Ollama\n"
+	@printf "\n  Portas: Frontend http://localhost:3000 | API http://localhost:8000 | Ollama http://localhost:11434\n"
 
 	@printf "\n\033[1;36mDiagnóstico\033[0m\n"
 	@printf "  make ps                - lista containers em execução\n"
@@ -144,6 +145,9 @@ prune: ## Remove recursos Docker não utilizados
 	docker system prune
 
 # ── Modelo e Ingestão ─────────────────────────────────────────────────────────
+dev-frontend: ## Roda o frontend em modo dev local (npm run dev)
+	cd frontend && npm install && npm run dev
+
 modelo: ## Baixa o modelo Mistral 7B no container do Ollama
 	docker exec -it $(CONTAINER_OLLAMA) ollama pull mistral
 

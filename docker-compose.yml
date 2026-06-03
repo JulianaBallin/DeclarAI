@@ -2,14 +2,14 @@
 # ============================================================
 # DeclaraAI — Docker Compose
 #
-# Serviços:
+# Servicos:
 #   - backend  : API FastAPI com pipeline RAG (porta 8000)
-#   - frontend : Interface Streamlit (porta 8501)
+#   - frontend : Interface React + Nginx (porta 3000)
 #   - ollama   : Servidor de LLM local (porta 11434)
 #
 # Volumes persistentes:
-#   - ./data   → dados de uploads, base de conhecimento e ChromaDB
-#   - ollama_models → modelos do Ollama baixados
+#   - ./data        : uploads, base de conhecimento e ChromaDB
+#   - ollama_models : modelos do Ollama baixados
 # ============================================================
 
 services:
@@ -47,17 +47,19 @@ services:
       - declaraai-net
 
   # ----------------------------------------------------------
-  # Frontend — Streamlit
+  # Frontend — React + Vite (build) + Nginx (serve)
   # ----------------------------------------------------------
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        # VITE_API_URL nao e necessario em Docker pois o nginx faz proxy de /api
+        # para o backend internamente. Deixado aqui para referencia.
+        VITE_API_URL: ""
     container_name: declaraai-frontend
     ports:
-      - "8501:8501"
-    environment:
-      - API_URL=http://backend:8000
+      - "3000:80"
     depends_on:
       - backend
     restart: unless-stopped

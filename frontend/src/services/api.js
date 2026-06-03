@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+// Em Docker (nginx): usa /api que o nginx redireciona para o backend.
+// Em dev local sem Docker: VITE_API_URL=http://localhost:8000 no .env,
+//   ou o proxy do Vite em vite.config.js cuida de /api automaticamente.
+const API_URL = import.meta.env.VITE_API_URL || "/api";
 
 const api = axios.create({
   baseURL: API_URL,

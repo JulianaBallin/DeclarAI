@@ -182,11 +182,25 @@ DeclaraAI/
 │   │   └── utils/file_parsers.py         # Parsers PDF/TXT/HTML/XML/imagem
 │   ├── requirements.txt
 │   └── Dockerfile
-├── frontend/
-│   ├── app.py                            # Streamlit: 6 abas (laranja/preto)
-│   ├── .streamlit/config.toml            # Tema: laranja, preto, branco
-│   ├── requirements.txt
-│   └── Dockerfile
+├── frontend/                             # Interface React + Vite (servida por Nginx)
+│   ├── src/
+│   │   ├── pages/
+│   │   │   ├── Chat.jsx                 # Chat RAG com historico e fontes
+│   │   │   ├── Upload.jsx               # Upload com drag-and-drop e confirmacao
+│   │   │   ├── BaseConhecimento.jsx     # Gerenciar arquivos indexados
+│   │   │   ├── Historico.jsx            # Documentos salvos com filtros
+│   │   │   ├── Avaliacao.jsx            # Metricas do pipeline RAG
+│   │   │   └── Status.jsx               # Status do sistema (Ollama, chunks)
+│   │   ├── components/
+│   │   │   └── Navbar.jsx               # Barra de navegacao fixa
+│   │   ├── services/
+│   │   │   └── api.js                   # Wrapper das chamadas ao backend
+│   │   ├── App.jsx                      # Rotas (react-router-dom)
+│   │   └── index.css                    # Design system (paleta laranja/preto)
+│   ├── nginx.conf                        # Nginx: SPA fallback + proxy /api
+│   ├── vite.config.js                    # Dev proxy: /api -> localhost:8000
+│   ├── package.json
+│   └── Dockerfile                        # Multi-stage: Node (build) + Nginx (serve)
 ├── data/
 │   ├── uploads/                          # Documentos enviados pelos usuarios
 │   ├── knowledge_base/
@@ -227,16 +241,16 @@ DeclaraAI/
 
 <h2 align="center">🖥️ Interface — Abas do Sistema</h2>
 
-A interface é construída com **Streamlit** na paleta laranja (`#FF6B35`), amarelo (`#FFD700`), preto e branco, com alto contraste em todas as mensagens de estado.
+A interface e construida com **React + Vite**, servida por **Nginx**, na paleta laranja (`#FF6B35`), amarelo (`#FFD700`), preto e branco.
 
-| Aba | Ícone | Descrição |
+| Pagina | Rota | Descricao |
 |---|---|---|
-| **Chat** | 💬 | Perguntas em linguagem natural respondidas pelo pipeline RAG com exibição das fontes consultadas |
-| **Upload** | 📄 | Envio de documentos pessoais (recibos, notas, informes) com extração automática de categoria, data, valor, emitente e validação de dedutibilidade |
-| **Base de Conhecimento** | 🗂️ | Adição e remoção de documentos de referência (guias, instruções da Receita Federal) com re-indexação automática no ChromaDB |
-| **Histórico** | 📚 | Consulta e filtragem dos documentos salvos por categoria, nome e período, com opção de exclusão |
-| **Resumo Anual** | 📊 | Visão consolidada dos documentos agrupados por categoria tributária para apoio ao preenchimento da declaração |
-| **Avaliação** | 🔬 | Métricas quantitativas do pipeline RAG (taxa de recuperação, score de contexto, cobertura de palavras-chave) com 8 casos de teste do domínio IRPF |
+| **Chat** | `/chat` | Perguntas em linguagem natural respondidas pelo pipeline RAG com exibicao das fontes consultadas |
+| **Upload** | `/upload` | Envio de documentos pessoais com drag-and-drop, extracao automatica e formulario de confirmacao |
+| **Base de Conhecimento** | `/base` | Adicao e remocao de arquivos de referencia com re-indexacao automatica no ChromaDB |
+| **Historico** | `/historico` | Documentos salvos com filtros por categoria e opcao de exclusao |
+| **Avaliacao** | `/avaliacao` | Metricas do pipeline RAG + instrucoes para rodar scripts de comparacao |
+| **Status** | `/status` | Status em tempo real: Ollama, chunks indexados, modelo carregado |
 
 ---
 
@@ -275,9 +289,9 @@ make modelo
 
 ### 4. Acessar a aplicação
 
-| Serviço | URL |
+| Servico | URL |
 |---|---|
-| Interface Streamlit | http://localhost:8501 |
+| Interface React | http://localhost:3000 |
 | API FastAPI (Swagger) | http://localhost:8000/docs |
 | Ollama | http://localhost:11434 |
 
@@ -363,9 +377,10 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 ```bash
 cd frontend
-pip install -r requirements.txt
-export API_URL=http://localhost:8000
-streamlit run app.py
+npm install
+# Opcional: configura a URL da API para dev sem proxy
+# echo "VITE_API_URL=http://localhost:8000" > .env
+npm run dev        # http://localhost:5173
 ```
 
 ### Ollama
