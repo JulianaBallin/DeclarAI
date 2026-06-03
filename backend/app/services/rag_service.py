@@ -13,6 +13,8 @@ Pipeline:
     6. Geração   → GeradorResposta monta e envia o prompt ao LLM (Ollama)
 """
 
+from pathlib import Path
+
 from app.rag.loader import CarregadorDocumentos
 from app.rag.chunker import ChunkerTexto
 from app.rag.vector_store import BancoVetorial
@@ -44,9 +46,13 @@ class ServicoRAG:
     Recuperador para evitar conexões duplicadas ao ChromaDB.
     """
 
-    def __init__(self, banco_vetorial: BancoVetorial | None = None):
+    def __init__(
+        self,
+        banco_vetorial: BancoVetorial | None = None,
+        chunker: ChunkerTexto | None = None,
+    ):
         self.carregador = CarregadorDocumentos()
-        self.chunker = ChunkerTexto()
+        self.chunker = chunker or ChunkerTexto()
         # Aceita instância externa para evitar múltiplas conexões ao ChromaDB
         self.banco_vetorial = banco_vetorial or BancoVetorial()
         self.recuperador = Recuperador(banco_vetorial=self.banco_vetorial)
@@ -114,7 +120,7 @@ class ServicoRAG:
     # Consulta
     # -----------------------------------------------------------------------
 
-    async def responder_pergunta(self, pergunta: str) -> dict:
+    async def responder_pergunta(self, pergunta: str, modelo: str | None = None) -> dict:
         """
         Executa o pipeline completo RAG para responder uma pergunta.
 
@@ -138,11 +144,12 @@ class ServicoRAG:
         contexto = self.recuperador.formatar_contexto(chunks_relevantes)
 
         # Passo 3: Geração de resposta
-        resposta = await self.gerador.gerar(pergunta, contexto)
+        resposta = await self.gerador.gerar(pergunta, contexto, modelo=modelo)
 
         # Deduplica fontes e coleta scores de similaridade para avaliação
         fontes = list({c.get("fonte", "") for c in chunks_relevantes if c.get("fonte")})
         scores = [round(c.get("score", 0.0), 4) for c in chunks_relevantes]
+        score_medio = round(sum(scores) / len(scores), 4) if scores else 0.0
 
         return {
             "resposta": resposta,
@@ -150,6 +157,7 @@ class ServicoRAG:
             "fontes": fontes,
             "chunks_recuperados": len(chunks_relevantes),
             "scores_contexto": scores,
+            "score_medio_contexto": score_medio,
         }
 
     # -----------------------------------------------------------------------
@@ -164,8 +172,10 @@ class ServicoRAG:
             Dicionário com informações de diagnóstico.
         """
         return {
+            "rag_inicializado": True,
             "chunks_indexados": self.banco_vetorial.total_chunks(),
             "modelo_embeddings": configuracoes.MODELO_EMBEDDINGS,
+            "modelo_embedding": configuracoes.MODELO_EMBEDDINGS,
             "modelo_llm": configuracoes.OLLAMA_MODELO,
             "ollama_url": configuracoes.OLLAMA_BASE_URL,
             "caminho_base_conhecimento": configuracoes.CAMINHO_BASE_CONHECIMENTO,
@@ -173,4 +183,18 @@ class ServicoRAG:
             "chunk_size": configuracoes.CHUNK_SIZE,
             "chunk_overlap": configuracoes.CHUNK_OVERLAP,
             "top_k": configuracoes.TOP_K_RESULTADOS,
+            "documentos_base": self._contar_documentos_base(),
         }
+
+    def _contar_documentos_base(self) -> int:
+        """Conta arquivos suportados na base de conhecimento."""
+        diretorio = Path(configuracoes.CAMINHO_BASE_CONHECIMENTO)
+        if not diretorio.exists():
+            return 0
+
+        extensoes = {".pdf", ".txt", ".html", ".htm"}
+        return sum(
+            1
+            for arquivo in diretorio.rglob("*")
+            if arquivo.is_file() and arquivo.suffix.lower() in extensoes
+        )

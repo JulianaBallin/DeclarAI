@@ -35,7 +35,10 @@ async def chat(requisicao: RequisicaoChat) -> RespostaChat:
 
     try:
         servico = get_servico_rag()
-        resultado = await servico.responder_pergunta(requisicao.pergunta)
+        resultado = await servico.responder_pergunta(
+            requisicao.pergunta,
+            modelo=requisicao.modelo,
+        )
         return RespostaChat(**resultado)
     except Exception as erro:
         logger.error(f"Erro no endpoint /chat: {erro}", exc_info=True)

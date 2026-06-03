@@ -33,8 +33,10 @@ class ChunkerTexto:
             tamanho_chunk: Número máximo de caracteres por chunk.
             overlap: Número de caracteres de sobreposição entre chunks.
         """
-        self.tamanho_chunk = tamanho_chunk or configuracoes.CHUNK_SIZE
-        self.overlap = overlap or configuracoes.CHUNK_OVERLAP
+        self.tamanho_chunk = (
+            tamanho_chunk if tamanho_chunk is not None else configuracoes.CHUNK_SIZE
+        )
+        self.overlap = overlap if overlap is not None else configuracoes.CHUNK_OVERLAP
 
     def dividir_texto(self, texto: str) -> List[str]:
         """
@@ -60,7 +62,7 @@ class ChunkerTexto:
             fim = inicio + self.tamanho_chunk
 
             if fim >= len(texto):
-                # Último fragmento — inclui o restante
+                # Último fragmento: inclui o restante
                 fragmento = texto[inicio:].strip()
                 if fragmento:
                     chunks.append(fragmento)

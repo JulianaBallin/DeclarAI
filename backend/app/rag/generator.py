@@ -20,7 +20,7 @@ REGRAS OBRIGATÓRIAS:
 - Recomende consultar um contador apenas ao final, nunca como substituto da resposta.
 - Use listas e tópicos quando a resposta tiver múltiplos itens.
 
-REGRAS CRÍTICAS PARA DEDUÇÕES — LEIA COM ATENÇÃO:
+REGRAS CRÍTICAS PARA DEDUÇÕES - LEIA COM ATENÇÃO:
 
 1. NEGAÇÕES SÃO ABSOLUTAS: Quando o contexto disser que algo NÃO é dedutível, responda
    claramente que NÃO é dedutível. Não inverta a regra. Não transforme uma exceção em regra geral.
@@ -33,13 +33,13 @@ REGRAS CRÍTICAS PARA DEDUÇÕES — LEIA COM ATENÇÃO:
    "Sim, podem ser deduzidos quando incluídos na conta hospitalar."
 
 2. EXCEÇÕES NÃO VIRAM REGRAS: Se o contexto descrever uma regra geral com uma exceção
-   estreita, responda com a regra geral primeiro e a exceção depois — nunca o contrário.
+   estreita, responda com a regra geral primeiro e a exceção depois - nunca o contrário.
 
 3. CURSO DE IDIOMAS: Cursos de inglês, espanhol ou qualquer idioma são cursos LIVRES e NÃO
    são dedutíveis como educação, independentemente do motivo ou uso profissional. Só são
    dedutíveis cursos reconhecidos pelo MEC (ensino fundamental, médio, superior, técnico
    reconhecido, pós-graduação stricto sensu). Não tente encaixar curso de idioma como
-   "educação profissional" — isso está errado.
+   "educação profissional" - isso está errado.
 
 4. FARMÁCIA vs HOSPITAL: Medicamentos de farmácia = NÃO dedutível. Medicamentos dentro
    da conta hospitalar de uma internação = dedutível como parte da internação. São situações
@@ -48,11 +48,11 @@ REGRAS CRÍTICAS PARA DEDUÇÕES — LEIA COM ATENÇÃO:
 5. QUANDO HOUVER DÚVIDA: Se o contexto for ambíguo, prefira a resposta mais restritiva.
    No domínio fiscal, dizer "não deduz" quando há dúvida é mais seguro do que dizer "deduz".
 
-6. RECIBOS E DECLARAÇÕES — VALIDADE FISCAL: Recibos e declarações simples NÃO têm
+6. RECIBOS E DECLARAÇÕES - VALIDADE FISCAL: Recibos e declarações simples NÃO têm
    validade fiscal direta na Receita Federal. Eles comprovam pagamento, mas não substituem
    uma nota fiscal eletrônica. Informe o usuário sobre esse risco sem alarmismo, mas com
    clareza. Notas fiscais eletrônicas (NF-e, NFC-e, NFS-e) têm chave de acesso de 44 dígitos
-   consultável no portal https://www.nfe.fazenda.gov.br — oriente o usuário a verificar.
+   consultável no portal https://www.nfe.fazenda.gov.br - oriente o usuário a verificar.
 
 7. DESPESAS DE TERCEIROS: Despesas de pessoas que NÃO são dependentes incluídos na
    declaração NÃO são dedutíveis, mesmo que você tenha pago. Só são dedutíveis despesas
@@ -92,7 +92,7 @@ class GeradorResposta:
         self.url_status = f"{configuracoes.OLLAMA_BASE_URL}/api/tags"
         self.modelo = configuracoes.OLLAMA_MODELO
 
-    async def gerar(self, pergunta: str, contexto: str) -> str:
+    async def gerar(self, pergunta: str, contexto: str, modelo: str | None = None) -> str:
         """
         Gera resposta baseada na pergunta e no contexto recuperado.
 
@@ -102,12 +102,14 @@ class GeradorResposta:
         """
         prompt = PROMPT_SISTEMA.format(contexto=contexto, pergunta=pergunta)
 
+        modelo_ollama = modelo or self.modelo
+
         payload = {
-            "model": self.modelo,
+            "model": modelo_ollama,
             "prompt": prompt,
             "stream": False,
             "options": {
-                "temperature": 0.1,   # Mais conservador — reduz alucinações em domínio fiscal
+                "temperature": 0.1,   # Mais conservador - reduz alucinações em domínio fiscal
                 "top_p": 0.85,
                 "num_ctx": 4096,      # Janela de contexto
                 "num_predict": 1024,  # Limite de tokens na resposta
@@ -123,7 +125,7 @@ class GeradorResposta:
                 return texto if texto else "Não foi possível gerar uma resposta."
 
         except httpx.ConnectError:
-            logger.error("Ollama indisponível — verifique se o serviço está em execução.")
+            logger.error("Ollama indisponível - verifique se o serviço está em execução.")
             return (
                 "O serviço de linguagem (Ollama) não está acessível no momento. "
                 "Certifique-se de que o Ollama está em execução e tente novamente."
