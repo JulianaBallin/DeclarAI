@@ -102,7 +102,11 @@ export default function Status() {
           </div>
           <div className="info-row">
             <span>Documentação da API</span>
-            <a href="http://localhost:8000/docs" target="_blank" rel="noopener noreferrer">
+            <a
+              href={`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/docs`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               /docs (Swagger UI)
             </a>
           </div>

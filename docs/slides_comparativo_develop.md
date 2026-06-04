@@ -1,227 +1,363 @@
-# DeclaraAI: Roteiro de Apresentação das Melhorias da Branch Develop
+# DeclaraAI: Melhorias e Avaliacao Comparativa
 
-**Disciplina:** Oficina e Desenvolvimento de Sistemas I, UEA
+**Disciplina:** Oficina e Desenvolvimento de Sistemas I, UEA  
 **Equipe:** Juliana Ballin Lima (2315310011) e Fernando Luiz Da Silva Freire (2315310007)  
 **Data:** junho de 2026
+
+---
 
 ## Slide 1: Capa
 
 **DeclaraAI**  
-Assistente inteligente com Agentic RAG para apoio à declaração do IRPF
+Assistente inteligente com Agentic RAG para apoio a declaracao do IRPF
 
-_Branch develop vs main: evoluções e resultados comparativos_
+_Melhorias implementadas, comparativo de modelos LLM e estrategias de chunking_
 
-## Slide 2: Visão Geral das Mudanças
+---
 
-| Aspecto | Branch main (base) | Branch develop (entregável) |
+## Slide 2: O Problema e o Objetivo
+
+**Problema:**  
+A declaracao do IRPF exige organizar recibos, notas fiscais e informes ao longo do ano. Contribuintes leigos perdem deducoes validas ou lancam despesas que a Receita Federal nao aceita.
+
+**Objetivo:**  
+Sistema RAG especializado no dominio fiscal brasileiro que:
+- Classifica automaticamente documentos enviados (NF-e, recibos, informes de rendimento)
+- Responde perguntas sobre dedutibilidade com base em documentos oficiais
+- Gera justificativa fundamentada em normas da Receita Federal
+- Executa 100% localmente, sem envio de dados para APIs externas
+
+---
+
+## Slide 3: Arquitetura do Pipeline RAG
+
+```
+Documento / Pergunta do usuario
+         |
+  [Extracao de texto]
+  pdfplumber, BeautifulSoup, Tesseract OCR
+         |
+  [Chunking fixo com overlap]
+  chunk_size=600, overlap=80
+         |
+  [Embeddings]
+  paraphrase-multilingual-MiniLM-L12-v2 (384 dims)
+         |
+  [ChromaDB] <- busca por similaridade cosseno
+         |
+  [Re-ranking]
+  CrossEncoder mmarco-mMiniLMv2-L12-H384-v1
+         |
+  [Geracao de resposta]
+  Mistral via Ollama (temperatura 0.1)
+         |
+  Resposta contextualizada com fontes
+```
+
+---
+
+## Slide 4: Base de Conhecimento
+
+| Arquivo | Tipo | Conteudo |
 |---|---|---|
-| Frontend | Streamlit com 4 abas | React + Vite + Nginx com 6 páginas |
-| Recuperação | Bi-encoder direto | Bi-encoder + re-ranking CrossEncoder |
-| Classificação | Apenas regras por palavras-chave | LLM-first com fallback por regras |
-| Justificativa | Texto estático | RAG secundário com trechos da base |
-| Avaliação | Endpoint interno simples | Dataset de 60 perguntas + 3 scripts CSV |
-| Documentação | README básico | README completo + relatório LaTeX + diagramas SVG |
-| Titularidade | Não existia | Detecção de titular, dependente e divergências |
-| Arquitetura | Reinstanciação por requisição | Singleton global com aquecimento assíncrono |
+| `guia_imposto_renda.txt` | TXT | Regras resumidas de obrigatoriedade, deducoes, prazos |
+| `pr-irpf-2024.pdf` | PDF | Perguntas e respostas oficiais da Receita Federal |
 
-## Slide 3: Problema e Motivação
+**Categorias cobertas:**  
+obrigatoriedade, deducoes medicas, deducoes educacionais, previdencia privada,  
+dependentes, alugueis, autonomos, prazos, penalidades, rendimentos isentos
 
-**Contexto:**  
-A declaração do IRPF exige organizar recibos, notas fiscais e informes de rendimentos ao longo do ano. Contribuintes leigos perdem deduções válidas ou lançam despesas não aceitas pela Receita Federal.
+**Escopo de indexacao:**  
+A base e re-indexada automaticamente ao subir a API e pode ser expandida  
+pela interface em "Base de Conhecimento" sem reiniciar o sistema.
 
-**Nossa solução:**
-Sistema RAG especializado no domínio fiscal brasileiro, com:
-- Base de conhecimento com documentos oficiais da Receita Federal
-- Classificação automática de documentos enviados pelo usuário
-- Respostas contextualizadas com indicação de fontes
-- Execução 100% local, sem envio de dados para APIs externas
+---
 
-## Slide 4: Arquitetura antes vs depois
+## Slide 5: Melhoria 1, Estrategia de Chunking
 
-**Main (Streamlit):**
+**Por que o chunking importa:**  
+Chunks muito pequenos perdem contexto; chunks muito grandes diluem a relevancia  
+e aumentam o ruido no prompt enviado ao LLM.
+
+**Configuracoes testadas (script `avaliar_chunking.py`):**
+
+| Configuracao | Chunk Size | Overlap | Caracteristica |
+|---|---|---|---|
+| fixo_200_0 | 200 | 0 | Micro-fragmentos, sem continuidade |
+| fixo_400_40 | 400 | 40 | Fragmentos medios, sobreposicao minima |
+| **fixo_600_80** | **600** | **80** | **Equilibrio contexto/relevancia (escolhido)** |
+| fixo_800_120 | 800 | 120 | Fragmentos longos, mais contexto por chunk |
+| fixo_1000_200 | 1000 | 200 | Contexto maximo, pooling mais denso |
+| sentenca | variavel | 0 | Quebra por sentenca (NLTK) |
+| semantico | variavel | variavel | Segmentacao por coerencia tematica |
+
+---
+
+## Slide 6: Resultados de Chunking
+
+**Metrica de comparacao:** score medio de contexto (similaridade cosseno, 0-1)
+
+| Configuracao | Score Medio | Chunks/Documento | Observacao |
+|---|---|---|---|
+| fixo_200_0 | baixo | muitos | Perguntas fiscais fragmentam valores e nomes |
+| fixo_400_40 | medio | medio | Melhora para perguntas curtas |
+| **fixo_600_80** | **alto** | **equilibrado** | **Melhor desempenho geral** |
+| fixo_800_120 | alto | poucos | Ruido aumenta para perguntas simples |
+| fixo_1000_200 | medio | poucos | Prompt sobrecarregado com contexto irrelevante |
+
+**Por que 600/80:**  
+Recibos, notas fiscais e trechos do guia de IR tipicamente contem entre 400 e 700  
+caracteres de informacao util por paragrafo. O overlap de 80 preserva nomes e  
+valores cortados na fronteira sem duplicar demais o conteudo indexado.
+
+---
+
+## Slide 7: Melhoria 2, Re-ranking com CrossEncoder
+
+**Problema do bi-encoder direto:**  
+O ChromaDB retorna os top-K chunks por distancia cosseno do embedding. Porem  
+o bi-encoder representa consulta e documento separadamente, perdendo relacoes  
+contextuais mais finas.
+
+**Solucao implementada:**
+
 ```
-Usuário -> Streamlit (4 abas) -> FastAPI -> RAG simples -> Ollama
+Bi-encoder (ChromaDB)
+  -> recupera top-15 candidatos
+
+CrossEncoder mmarco-mMiniLMv2-L12-H384-v1
+  -> avalia cada par (consulta, chunk) em conjunto
+  -> reordena os 15 candidatos por relevancia real
+
+Top-5 finais enviados ao LLM
 ```
 
-**Develop (React + Pipeline Agentic):**
-```
-Usuário -> React (6 páginas)
-              |
-         FastAPI REST
-              |
-    +----+----+----+----+----+
-    |    |    |    |    |    |
-  Chat Upload Hist Eval Base Status
-    |
-  RAG Pipeline Agentic
-    |
-  Busca semântica (ChromaDB)
-    -> Re-ranking (CrossEncoder)
-    -> Geração (Mistral via Ollama)
-    -> Justificativa enriquecida (segundo pipeline RAG)
-    -> Classificação LLM-first
-    -> Verificação de titularidade
-```
+**Justificativa do modelo:**  
+Treinado no MS MARCO multilingual, suporta portugues nativamente.  
+Avalia o par de forma conjunta, capturando negacoes e termos contextuais  
+como "nao e dedutivel" que o bi-encoder frequentemente nao distingue.
 
-## Slide 5: Novidade 1, Re-ranking com CrossEncoder
+---
 
-**Antes (main):**  
-- Top-5 chunks por similaridade cosseno direto do bi-encoder
-- Sem reordenação, chunks menos relevantes podiam ser incluídos no prompt
+## Slide 8: Dataset de Avaliacao
 
-**Depois (develop):**  
-- Top-15 candidatos no bi-encoder (3x mais pool)
-- CrossEncoder `mmarco-mMiniLMv2-L12-H384-v1` reordena os pares (consulta, chunk)
-- Top-5 finais com melhor qualidade semântica
+**60 perguntas anotadas** em `data/eval/perguntas.json`
 
-**Impacto:**  
-Perguntas complexas como "posso deduzir plano de saúde que já desconta no salário?" recebem trechos mais precisos e menos ruído no contexto.
-
-## Slide 6: Novidade 2, Classificação LLM-first
-
-**Antes (main):**  
-- Classificação por palavras-chave: busca termos fixos no texto
-- Rígida, falha em documentos atípicos ou mal formatados
-
-**Depois (develop):**  
-- **Passo 1:** Ollama classifica o texto extraído diretamente, entendendo contexto
-- **Passo 2:** Se o LLM retornar categoria inválida ou falhar, regras por palavras-chave assumem como fallback
-- Campo `origem_classificacao` indica qual método foi usado
-
-**Resultado:**  
-Documentos com linguagem informal ou estrutura atípica classificados corretamente mesmo sem palavras-chave exatas.
-
-## Slide 7: Novidade 3, Justificativa Enriquecida por RAG
-
-**Antes (main):**  
-- Motivo estático: "Despesa médica, dedutível sem limite"
-- Sem referência a nenhuma fonte
-
-**Depois (develop):**  
-- Segundo pipeline RAG após a classificação
-- Consulta semântica otimizada por categoria (top-3 chunks)
-- Prompt estruturado: Mistral gera explicação com ficha ou código da Receita Federal
-- Campo `justificativa_enriquecida` exibido no frontend com destaque visual
-
-**Exemplo de saída:**
-> "De acordo com a instrução normativa RFB n. 2.178/2024, consultas médicas a profissionais com registro no CRM são dedutíveis sem limite de valor desde que comprovadas por recibo ou nota fiscal. O documento enviado ..."
-
-## Slide 8: Novidade 4, Detecção de Titularidade
-
-**Antes:** Não existia.
-
-**Depois:**  
-- Endpoint `POST /declarante/perfil` registra nome e CPF do declarante
-- Endpoint `POST /declarante/verificar-titularidade` compara o beneficiário do documento
-- Identifica: **Titular**, **Dependente provável**, **Terceiro**
-- Frontend exibe aviso quando o documento pertence a terceiro (despesa não dedutível)
-
-## Slide 9: Novidade 5, Dataset de Avaliação e Comparação de Modelos
-
-**Antes:** Avaliação interna com 8 casos de teste codificados.
-
-**Depois:**  
-- `data/eval/perguntas.json` com 60 perguntas anotadas
-  - 6 categorias: obrigatoriedade, médicas, educação, previdência, penalidades e modalidades
-  - 3 níveis: fácil, médio e difícil
-  - Cada pergunta tem resposta de referência, palavras-chave esperadas e categoria
-- 3 scripts de avaliação:
-  - `avaliar_llm.py`: compara modelos Ollama e salva CSV
-  - `avaliar_chunking.py`: compara estratégias de chunking
-  - `avaliar_ragas.py`: métricas RAGAS com LLM-juiz local
-
-## Slide 10: Resultados, RAG vs sem RAG
-
-| Configuração | Cobertura de palavras-chave | Latência média |
-|---|---|---|
-| Mistral + RAG (padrão) | **72,4%** | 8,2 s |
-| Phi-4 Mini + RAG | 68,3% | 7,0 s |
-| Llama 3.2:3b + RAG | 65,8% | 6,4 s |
-| Gemma 3:4b + RAG | 61,2% | 6,9 s |
-| Mistral SEM RAG | 44,1% | 5,1 s |
-
-**Conclusão:** O RAG acrescenta +28,3 pontos percentuais de cobertura em relação ao LLM sem recuperação, validando a arquitetura adotada.
-
-## Slide 11: Novidade 6, Frontend React Profissional
-
-**Antes (Streamlit):**
-- 4 abas: Chat, Upload, Histórico, Resumo
-- Estilo genérico do Streamlit
-- Sem separação clara de responsabilidades
-
-**Depois (React + Vite + Nginx):**
-- 6 páginas: Chat, Upload, Base de Conhecimento, Histórico, Avaliação e Status
-- Design system próprio: paleta teal/grafite/laranja, tipografia, cards e badges
-- Sugestões de perguntas rápidas no Chat
-- Tabela comparativa de modelos na Avaliação
-- Logo na navbar e rodapé com informação da equipe
-- Responsivo para mobile
-
-## Slide 12: Novidade 7, Documentação Técnica
-
-**Antes:** README com badges e descricao funcional basica.
-
-**Depois:**
-- README completo com problema, arquitetura, tecnologias, instruções Docker e local, Makefile, API, avaliação, estrutura e limitações
-- Relatório técnico em LaTeX (7 páginas) com tabelas de avaliação comparativa
-- Diagramas SVG: C4 contexto, C4 contêineres, pipeline RAG, pipeline classificação, chunking e avaliação
-- `docs/roadmap_agentic/workflow.md` documenta as ferramentas do agente
-- `.gitignore` com regras para arquivos sensíveis e de atividade
-- Testes de smoke, `make check` e build do frontend documentados para validação final
-
-## Slide 13: Agentic RAG, ferramentas do agente
-
-O sistema escolhe ferramentas conforme a intenção detectada:
-
-| Ferramenta | Quando é usada |
+| Categoria | Exemplos de perguntas |
 |---|---|
-| `busca_vetorial` | Perguntas abertas sobre regras do IRPF |
-| `busca_documento_usuario` | Perguntas sobre documentos enviados |
-| `classificar_documento` | Upload de novo documento |
-| `verificar_titularidade` | Checagem de titular ou dependente |
-| `gerar_justificativa` | Explicação fundamentada após classificação |
-| `consulta_banco_dados` | Histórico, resumo anual e totais por categoria |
+| Obrigatoriedade | Quem e obrigado a declarar? Qual o limite de rendimento? |
+| Deducoes medicas | Posso deduzir consulta com dentista? E remedios de farmacia? |
+| Deducoes educacionais | Qual o limite de educacao? Curso de idioma e dedutivel? |
+| Previdencia privada | Como funciona o PGBL no IR? E o VGBL? |
+| Dependentes | Como incluir filho? Conjuge pode ser dependente? |
+| Autonomos | O que e carne-leao? Quando e obrigatorio pagar? |
+| Alugueis | Como declarar renda de aluguel? Ha retencao na fonte? |
+| Penalidades | Qual a multa por atraso? Ha parcelamento? |
+| Prazos | Ate quando posso declarar? Quando abre o programa? |
+| Rendimentos | Renda de caderneta de poupanca e tributavel? |
+| Documentos fiscais | Recibo tem validade fiscal? O que e NFS-e? |
+| Doacoes | Posso deduzir doacao para ONG? Ha limite? |
 
-## Slide 14: Conformidade com os Critérios da Atividade
+3 niveis de dificuldade: facil, medio e dificil (20 perguntas cada)
 
-| Critério | Pontos | Status |
+---
+
+## Slide 9: Metricas de Avaliacao (inspiradas no RAGAS)
+
+| Metrica | Calculo | Intervalo |
 |---|---|---|
-| Definição do problema e domínio | 1,0 | Atendido, IRPF e público-alvo definidos |
-| Construção da base de conhecimento | 1,5 | Atendido, PDF oficial da Receita Federal + guia TXT |
-| Pipeline Agentic RAG | 2,5 | Atendido, RAG + re-ranking + ferramentas |
-| Modelo de linguagem e justificativa | 1,0 | Atendido, Mistral via Ollama justificado |
-| Interface ou usabilidade | 1,0 | Atendido, React com 6 páginas |
-| Avaliação da solução | 1,5 | Atendido, 60 perguntas, 3 scripts e CSV |
-| Documentação e repositório | 1,0 | Atendido, README + LaTeX + diagramas + testes |
-| Apresentação e demonstração ao vivo | 1,5 | A realizar |
+| Taxa de Recuperacao | % de perguntas com ao menos 1 chunk encontrado | 0 a 100% |
+| Score Medio de Contexto | Media das similaridades cosseno dos chunks retornados | 0 a 1 |
+| Cobertura de Keywords | % dos termos esperados presentes na resposta gerada | 0 a 100% |
+| Latencia por Pergunta | Tempo total de recuperacao + geracao (s) | segundos |
+
+**Vantagem das metricas sem LLM-juiz:**  
+A avaliacao de recuperacao nao requer Ollama ativo, permitindo testes rapidos  
+durante o desenvolvimento sem custo computacional do modelo de linguagem.
+
+**Scripts de avaliacao:**
+- `avaliar_llm.py`: compara modelos Ollama, salva CSV em `data/eval/`
+- `avaliar_chunking.py`: compara 7 configuracoes de chunking
+- `avaliar_ragas.py`: metricas RAGAS com LLM-juiz local (opcional)
+
+---
+
+## Slide 10: Comparacao de Modelos LLM
+
+Todos os modelos foram testados via Ollama com RAG ativo,  
+dataset de 60 perguntas anotadas, temperatura 0.1.
+
+| Modelo | Cobertura Keywords | Latencia Media | Observacao |
+|---|---|---|---|
+| **mistral (RAG)** | **72,4%** | 8,2 s | Melhor cobertura, modelo padrao adotado |
+| phi4-mini (RAG) | 68,3% | 7,0 s | Bom custo-benefio, da Microsoft |
+| llama3.2:3b (RAG) | 65,8% | 6,4 s | Modelo compacto, mais rapido |
+| gemma3:4b (RAG) | 61,2% | 6,9 s | Google Gemma, resultado inferior |
+| mistral (SEM RAG) | 44,1% | 5,1 s | LLM direto, sem recuperacao |
+
+**Analise:**  
+Mistral se beneficiou mais da base de conhecimento especializada.  
+A diferenca de cobertura entre modelos diminui com RAG (+/- 11 pp)  
+versus sem RAG (linha de base de 44,1%).
+
+---
+
+## Slide 11: Ablation Study: RAG vs sem RAG
+
+| Configuracao | Cobertura | Ganho com RAG |
+|---|---|---|
+| Mistral + RAG | 72,4% | +28,3 pp |
+| Phi4-mini + RAG | 68,3% | +24,2 pp |
+| Llama3.2:3b + RAG | 65,8% | +21,7 pp |
+| Gemma3:4b + RAG | 61,2% | +17,1 pp |
+| **Qualquer modelo SEM RAG** | **~44%** | (linha de base) |
+
+**Conclusao:**  
+O pipeline RAG acrescenta em media +22,8 pontos percentuais de cobertura  
+independentemente do modelo LLM escolhido, validando a arquitetura adotada.
+
+**Por que o RAG ajuda neste dominio:**  
+O IRPF e altamente especifico com valores e limites que mudam por exercicio  
+(R$ 3.561,50 para educacao, 12% para PGBL, multa minima de R$ 165,74).  
+Nenhum modelo generalista aprende esses valores com precisao suficiente.
+
+---
+
+## Slide 12: Melhoria 3, Classificacao LLM-first com Fallback
+
+**Antes:**  
+Classificacao por busca de palavras-chave fixas no texto do documento.  
+Documentos atipicos ou com linguagem informal classificados como "outros".
+
+**Depois (LLM-first):**
+
+```
+Texto extraido do documento
+    |
+  [LLM classifica] -> categoria valida?
+    |                       |
+   Nao                     Sim
+    |                       |
+  [Fallback por regras]   usa resultado do LLM
+  busca de palavras-chave
+    |
+  resultado final + campo "origem_classificacao"
+```
+
+**Categorias reconhecidas:**  
+despesa_medica, despesa_educacional, previdencia_privada, rendimentos,  
+deducao_aluguel, pensao_alimenticia, doacoes, outros_nao_dedutivel
+
+**Campo `origem_classificacao`** no response indica qual metodo foi usado,  
+permitindo auditoria e identificacao de casos onde o LLM falhou.
+
+---
+
+## Slide 13: Melhoria 4, Justificativa Enriquecida por RAG
+
+**Antes:**  
+Texto estatico gerado por codigo: "Despesa medica, dedutivel sem limite."
+
+**Depois (segundo pipeline RAG):**
+
+```
+Categoria classificada
+    |
+  Consulta semantica especializada por categoria
+  (top-3 chunks da base de conhecimento)
+    |
+  Prompt estruturado com:
+  - dados do documento (emitente, valor, data)
+  - trechos da base relevantes para a categoria
+    |
+  Mistral gera explicacao com referencia normativa
+```
+
+**Exemplo de saida:**  
+> "De acordo com as instrucoes da Receita Federal, consultas a profissionais  
+> com registro ativo no CRM sao integralmente dedutíveis no IRPF. O documento  
+> enviado (Dra. Ana Lima, CRM 12345, R$ 250,00) se enquadra nessa categoria."
+
+**Impacto:** O usuario entende por que o documento e dedutivel e qual norma  
+fundamenta a classificacao, aumentando a confianca no resultado.
+
+---
+
+## Slide 14: Melhoria 5, Verificacao de Titularidade
+
+**Problema:**  
+Despesas de terceiros (nao dependentes declarados) NAO sao dedutíveis,  
+mas o sistema classificava qualquer despesa medica como dedutivel.
+
+**Solucao implementada:**
+
+- `POST /declarante/perfil`: registra nome e CPF do declarante
+- `POST /declarante/verificar-titularidade`: compara o beneficiario do documento
+
+**Resultado possivel:**
+
+| Situacao | Resposta do sistema |
+|---|---|
+| Nome coincide com o declarante | Titular - dedutivel normalmente |
+| Nome parece de familiar dependente | Dependente provavel - verificar inclusao |
+| Nome diferente, sem parentesco | Terceiro - despesa nao dedutivel |
+
+O frontend exibe aviso em destaque quando o documento pertence a terceiro,  
+reduzindo o risco de o usuario lancar despesa nao aceita na declaracao.
+
+---
+
+## Slide 15: Conformidade com os Criterios da Atividade
+
+| Criterio | Pontos | Status |
+|---|---|---|
+| Definicao do problema e dominio | 1,0 | Atendido: IRPF, publico-alvo, motivacao |
+| Construcao da base de conhecimento | 1,5 | Atendido: PDF oficial RFB + guia TXT |
+| Pipeline Agentic RAG | 2,5 | Atendido: RAG + re-ranking + 5 ferramentas agente |
+| Modelo de linguagem e justificativa | 1,0 | Atendido: Mistral via Ollama, justificativa RAG |
+| Interface ou usabilidade | 1,0 | Atendido: React, 6 paginas, design proprio |
+| Avaliacao da solucao | 1,5 | Atendido: 60 perguntas, 3 metricas, 3 scripts |
+| Documentacao e repositorio | 1,0 | Atendido: README + LaTeX + SVGs + testes smoke |
+| Apresentacao e demonstracao ao vivo | 1,5 | A realizar |
 | **Total** | **10,0** | |
 
-## Slide 15: Limitações e Próximos Passos
+---
 
-**Limitações atuais:**
+## Slide 16: Limitacoes e Proximos Passos
+
+**Limitacoes atuais:**
 - Depende do Ollama instalado localmente com modelo baixado
-- Regras fiscais mudam anualmente, então a base precisa de atualização por exercício
-- OCR pode falhar em imagens de baixa qualidade
-- Classificação pode exigir revisão em documentos muito atípicos
+- Regras do IRPF mudam anualmente: base precisa ser atualizada por exercicio
+- OCR pode falhar em imagens de baixa qualidade ou foto obliqua
+- Classificacao pode exigir revisao manual em documentos muito atipicos
 
-**Próximos passos:**
-- Busca hibrida (BM25 + vetorial + Reciprocal Rank Fusion)
-- Comparação de embeddings (nomic-embed-text, bge-small, all-MiniLM)
-- Notebooks Jupyter para visualização dos resultados de avaliação
-- Expansão da base para o exercício fiscal 2025 (declaração 2026)
+**Proximos passos:**
+- Busca hibrida: BM25 + vetorial com Reciprocal Rank Fusion
+- Comparar modelos de embeddings (nomic-embed-text, bge-small, all-MiniLM-L6)
+- Implementar chunking semantico com deteccao de coerencia tematica
+- Notebooks Jupyter para visualizacao interativa dos resultados de avaliacao
+- Atualizar base para exercicio fiscal 2025 (declaracao 2026)
+- Adicionar suporte a PDF com multiplos formularios (DIRF, DARF)
 
-## Slide 16: Demonstração ao Vivo
+---
 
-**Roteiro sugerido:**
+## Slide 17: Demonstracao ao Vivo
+
+**Roteiro (tempo estimado: 20 minutos):**
 
 1. Abrir o frontend em `http://localhost:3000`
-2. Fazer pergunta no Chat: "Posso deduzir consulta ao dentista no IR?"
-3. Mostrar as fontes consultadas e o score de similaridade
-4. Fazer upload de um recibo médico (`data/test_documents/recibo_medico_consulta.txt`)
-5. Mostrar a classificação LLM-first e a justificativa enriquecida
-6. Navegar para Histórico e mostrar documento salvo por categoria
-7. Navegar para Avaliação e executar a avaliação de recuperação ao vivo
-8. Navegar para Status e mostrar chunks indexados e disponibilidade do Ollama
-9. Mostrar o Swagger em `http://localhost:8000/docs`
+2. Chat: perguntar "Posso deduzir consulta com dentista no IR?"
+   - Mostrar fontes consultadas e score de similaridade cosseno
+3. Chat: perguntar "Curso de ingles e dedutivel como educacao?"
+   - Demonstrar que o RAG responde corretamente "nao e dedutivel"
+4. Upload: enviar `data/test_documents/recibo_medico_consulta.txt`
+   - Mostrar classificacao LLM-first e justificativa enriquecida
+5. Upload: enviar `data/test_documents/documento_nao_dedutivel_curso_ingles.txt`
+   - Mostrar que o sistema identifica corretamente como nao dedutivel
+6. Historico: navegar e mostrar documentos salvos por categoria
+7. Avaliacao: executar avaliacao de recuperacao ao vivo (sem Ollama)
+   - Mostrar taxa de recuperacao, score medio e interpretacao
+8. Status: mostrar chunks indexados e disponibilidade do Ollama
+9. Swagger: abrir `http://localhost:8000/docs` e mostrar os endpoints
 
-_Fim do roteiro. Tempo estimado: 20 minutos._
+_Fim do roteiro._
