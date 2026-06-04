@@ -134,6 +134,14 @@ pip install -r requirements.txt
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+Dependências de desenvolvimento, testes e avaliação:
+
+```bash
+cd ..
+pip install -r requirements-dev.txt
+make test
+```
+
 Frontend:
 
 ```bash

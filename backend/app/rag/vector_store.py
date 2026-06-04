@@ -5,12 +5,13 @@ Responsável por persistir embeddings de chunks e recuperá-los por
 similaridade semântica (cosine similarity).
 """
 
-import chromadb
+import logging
 import uuid
 from typing import List
+
+import chromadb
 from app.core.config import configuracoes
 from app.rag.embeddings import GeradorEmbeddings
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -32,9 +33,7 @@ class BancoVetorial:
     def _inicializar_cliente(self) -> None:
         """Cria o cliente persistente e garante que a coleção exista."""
         try:
-            self.cliente = chromadb.PersistentClient(
-                path=configuracoes.CAMINHO_CHROMA
-            )
+            self.cliente = chromadb.PersistentClient(path=configuracoes.CAMINHO_CHROMA)
             self.colecao = self.cliente.get_or_create_collection(
                 name=NOME_COLECAO,
                 metadata={"hnsw:space": "cosine"},
@@ -120,12 +119,16 @@ class BancoVetorial:
                 resultados["metadatas"][0],
                 resultados["distances"][0],
             ):
-                chunks_relevantes.append({
-                    "texto": texto,
-                    "fonte": meta.get("fonte", ""),
-                    "tipo": meta.get("tipo", ""),
-                    "score": round(1 - distancia, 4),  # Converte distância → similaridade
-                })
+                chunks_relevantes.append(
+                    {
+                        "texto": texto,
+                        "fonte": meta.get("fonte", ""),
+                        "tipo": meta.get("tipo", ""),
+                        "score": round(
+                            1 - distancia, 4
+                        ),  # Converte distância → similaridade
+                    }
+                )
 
         return chunks_relevantes
 

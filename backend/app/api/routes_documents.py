@@ -2,42 +2,50 @@
 Rotas da API para upload, processamento e salvamento de documentos fiscais.
 """
 
+import logging
 import shutil
 import uuid
 from pathlib import Path
-
-from fastapi import APIRouter, HTTPException, UploadFile, File, Depends, Query
-from sqlalchemy.orm import Session
 
 from app.core.config import configuracoes
 from app.core.database import obter_db
 from app.schemas.document import DocumentoSalvar
 from app.services.classification_service import ServicoClassificacao
-from app.services.llm_classification_service import ServicoClassificacaoLLM
 from app.services.document_kind_service import (
     ajustar_categoria_irpf_por_tipo_documento,
+    avaliar_dedutibilidade_conteudo,
+    inferir_categoria_conteudo,
     inferir_tipo_documento,
     inferir_tipo_documento_resumido,
-    inferir_categoria_conteudo,
     legenda_validade_fiscal,
     referencia_irpf,
     resumir_status_irpf,
     texto_declara_ficticio_ou_teste_sem_validade_fiscal,
     validade_fiscal_do_tipo,
-    avaliar_dedutibilidade_conteudo,
 )
 from app.services.extraction_service import ServicoExtracao
 from app.services.history_service import ServicoHistorico
 from app.services.justificativa_service import ServicoJustificativa
+from app.services.llm_classification_service import ServicoClassificacaoLLM
 from app.services.rag_service import get_servico_rag
-import logging
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
+from sqlalchemy.orm import Session
 
 logger = logging.getLogger(__name__)
 
 roteador = APIRouter()
 
 # Extensões de arquivo permitidas para upload
-EXTENSOES_PERMITIDAS = {".pdf", ".txt", ".html", ".htm", ".xml", ".jpg", ".jpeg", ".png"}
+EXTENSOES_PERMITIDAS = {
+    ".pdf",
+    ".txt",
+    ".html",
+    ".htm",
+    ".xml",
+    ".jpg",
+    ".jpeg",
+    ".png",
+}
 
 
 @roteador.post(
@@ -112,9 +120,7 @@ async def upload_documento(arquivo: UploadFile = File(...)):
             tipo_exib, categoria, dados["texto_extraido"]
         )
         val_ok = validade_fiscal_do_tipo(tipo_exib)
-        if texto_declara_ficticio_ou_teste_sem_validade_fiscal(
-            dados["texto_extraido"]
-        ):
+        if texto_declara_ficticio_ou_teste_sem_validade_fiscal(dados["texto_extraido"]):
             val_ok = False
 
         # Substitui o nome técnico pelo nome original do arquivo
@@ -245,7 +251,9 @@ async def salvar_documento(
 )
 async def obter_referencia_irpf(
     categoria: str = Query(..., description="Categoria do DeclaraAI"),
-    texto: str = Query("", max_length=12000, description="Trecho do texto extraído (opcional)"),
+    texto: str = Query(
+        "", max_length=12000, description="Trecho do texto extraído (opcional)"
+    ),
 ):
     return {"referencia_irpf": referencia_irpf(categoria, texto)}
 

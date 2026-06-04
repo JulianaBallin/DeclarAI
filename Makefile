@@ -7,7 +7,7 @@
 	lint format check test test-cov clean \
 	modelo ingest status
 
-# ── Variáveis ─────────────────────────────────────────────────────────────────
+# Variáveis
 COMPOSE          = docker compose
 CONTAINER_BACK   = declaraai-backend
 CONTAINER_FRONT  = declaraai-frontend
@@ -19,24 +19,24 @@ FLAKE8           := $(PYTHON) -m flake8
 BLACK            := $(PYTHON) -m black
 ISORT            := $(PYTHON) -m isort
 
-# ── Ajuda ─────────────────────────────────────────────────────────────────────
+# Ajuda
 help: ## Mostra esta mensagem de ajuda
 	@printf "\n\033[1;33mDeclaraAI - Comandos disponíveis\033[0m\n"
 
 	@printf "\n\033[1;36mCiclo da Stack\033[0m\n"
-	@printf "  make up                - sobe todos os servicos em background\n"
+	@printf "  make up                - sobe todos os serviços em background\n"
 	@printf "  make up-build          - sobe tudo com rebuild das imagens\n"
-	@printf "  make down              - para e remove containers\n"
-	@printf "  make down-v            - para containers e remove volumes\n"
-	@printf "  make build             - apenas reconstroi as imagens\n"
-	@printf "  make restart           - reinicia todos os servicos\n"
+	@printf "  make down              - para e remove contêineres\n"
+	@printf "  make down-v            - para contêineres e remove volumes\n"
+	@printf "  make build             - apenas reconstrói as imagens\n"
+	@printf "  make restart           - reinicia todos os serviços\n"
 	@printf "  make restart-backend   - reinicia apenas o backend\n"
 	@printf "  make restart-frontend  - reinicia apenas o frontend\n"
 	@printf "  make restart-ollama    - reinicia apenas o Ollama\n"
 	@printf "\n  Portas: Frontend http://localhost:3000 | API http://localhost:8000 | Ollama http://localhost:11434\n"
 
 	@printf "\n\033[1;36mDiagnóstico\033[0m\n"
-	@printf "  make ps                - lista containers em execução\n"
+	@printf "  make ps                - lista contêineres em execução\n"
 	@printf "  make logs              - acompanha logs de todos os serviços\n"
 	@printf "  make logs-backend      - acompanha logs do backend\n"
 	@printf "  make logs-frontend     - acompanha logs do frontend\n"
@@ -45,11 +45,11 @@ help: ## Mostra esta mensagem de ajuda
 	@printf "  make status            - exibe status e métricas do pipeline RAG\n"
 
 	@printf "\n\033[1;36mDepuração\033[0m\n"
-	@printf "  make shell             - abre shell no container do backend\n"
-	@printf "  make shell-ollama      - abre shell no container do Ollama\n"
-	@printf "  make inspect-backend   - inspeciona o container do backend\n"
-	@printf "  make inspect-frontend  - inspeciona o container do frontend\n"
-	@printf "  make inspect-ollama    - inspeciona o container do Ollama\n"
+	@printf "  make shell             - abre shell no contêiner do backend\n"
+	@printf "  make shell-ollama      - abre shell no contêiner do Ollama\n"
+	@printf "  make inspect-backend   - inspeciona o contêiner do backend\n"
+	@printf "  make inspect-frontend  - inspeciona o contêiner do frontend\n"
+	@printf "  make inspect-ollama    - inspeciona o contêiner do Ollama\n"
 
 	@printf "\n\033[1;36mImagens e Build\033[0m\n"
 	@printf "  make build-no-cache    - reconstrói imagens sem usar cache\n"
@@ -68,17 +68,17 @@ help: ## Mostra esta mensagem de ajuda
 	@printf "  make test-cov          - executa testes com cobertura\n"
 	@printf "  make clean             - remove arquivos de cache Python\n\n"
 
-# ── Docker Compose / Ciclo da Stack ───────────────────────────────────────────
+# Docker Compose / Ciclo da Stack
 up: ## Sobe todos os serviços em background
 	$(COMPOSE) up -d
 
 up-build: ## Reconstrói as imagens e sobe os serviços
 	$(COMPOSE) up -d --build
 
-down: ## Para e remove os containers
+down: ## Para e remove os contêineres
 	$(COMPOSE) down
 
-down-v: ## Para containers e remove volumes (apaga modelos Ollama)
+down-v: ## Para contêineres e remove volumes (apaga modelos Ollama)
 	$(COMPOSE) down -v
 
 build: ## Apenas reconstrói as imagens
@@ -96,7 +96,7 @@ restart-frontend: ## Reinicia apenas o frontend
 restart-ollama: ## Reinicia apenas o Ollama
 	$(COMPOSE) restart ollama
 
-# ── Logs / Diagnóstico ────────────────────────────────────────────────────────
+# Logs / Diagnóstico
 logs: ## Acompanha logs de todos os serviços
 	$(COMPOSE) logs -f
 
@@ -109,7 +109,7 @@ logs-frontend: ## Acompanha logs do frontend
 logs-ollama: ## Acompanha logs do Ollama
 	$(COMPOSE) logs -f ollama
 
-ps: ## Lista os containers em execução
+ps: ## Lista os contêineres em execução
 	$(COMPOSE) ps
 
 health: ## Checa o endpoint raiz da API (health check)
@@ -118,23 +118,23 @@ health: ## Checa o endpoint raiz da API (health check)
 status: ## Exibe status e métricas do pipeline RAG
 	@curl -s http://localhost:8000/status | $(PYTHON) -m json.tool
 
-# ── Shell / Depuração ─────────────────────────────────────────────────────────
-shell: ## Abre shell no container do backend
+# Shell / Depuração
+shell: ## Abre shell no contêiner do backend
 	$(COMPOSE) exec backend sh
 
-shell-ollama: ## Abre shell no container do Ollama
+shell-ollama: ## Abre shell no contêiner do Ollama
 	$(COMPOSE) exec ollama sh
 
-inspect-backend: ## Mostra detalhes completos do container do backend
+inspect-backend: ## Mostra detalhes completos do contêiner do backend
 	docker inspect $(CONTAINER_BACK)
 
-inspect-frontend: ## Mostra detalhes completos do container do frontend
+inspect-frontend: ## Mostra detalhes completos do contêiner do frontend
 	docker inspect $(CONTAINER_FRONT)
 
-inspect-ollama: ## Mostra detalhes completos do container do Ollama
+inspect-ollama: ## Mostra detalhes completos do contêiner do Ollama
 	docker inspect $(CONTAINER_OLLAMA)
 
-# ── Imagens e Build ───────────────────────────────────────────────────────────
+# Imagens e Build
 build-no-cache: ## Reconstrói as imagens sem usar cache
 	$(COMPOSE) build --no-cache
 
@@ -144,17 +144,17 @@ images: ## Lista imagens Docker locais
 prune: ## Remove recursos Docker não utilizados
 	docker system prune
 
-# ── Modelo e Ingestão ─────────────────────────────────────────────────────────
+# Modelo e Ingestão
 dev-frontend: ## Roda o frontend em modo dev local (npm run dev)
 	cd frontend && npm install && npm run dev
 
-modelo: ## Baixa o modelo Mistral 7B no container do Ollama
+modelo: ## Baixa o modelo Mistral 7B no contêiner do Ollama
 	docker exec -it $(CONTAINER_OLLAMA) ollama pull mistral
 
 ingest: ## Re-indexa a base de conhecimento via API
 	@curl -s -X POST http://localhost:8000/ingest | $(PYTHON) -m json.tool
 
-# ── Qualidade de Código ───────────────────────────────────────────────────────
+# Qualidade de Código
 lint: ## Verifica o código com flake8
 	$(FLAKE8) $(SRC_DIR)
 
@@ -167,14 +167,14 @@ check: ## Verifica formatação sem modificar arquivos (CI)
 	$(BLACK) --check $(SRC_DIR)
 	$(FLAKE8) $(SRC_DIR)
 
-# ── Testes ────────────────────────────────────────────────────────────────────
+# Testes
 test: ## Executa os testes com pytest
 	$(PYTHON) -m pytest -v
 
 test-cov: ## Executa testes com relatório de cobertura
 	$(PYTHON) -m pytest --cov=$(SRC_DIR) --cov-report=term-missing -v
 
-# ── Utilitários ───────────────────────────────────────────────────────────────
+# Utilitários
 clean: ## Remove arquivos de cache Python
 	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 	find . -type f -name "*.pyc" -delete

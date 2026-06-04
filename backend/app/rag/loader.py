@@ -4,11 +4,12 @@ Responsável por ler todos os arquivos suportados de um diretório
 e prepará-los para ingestão no pipeline RAG.
 """
 
+import logging
 from pathlib import Path
 from typing import List
-from app.utils.file_parsers import extrair_texto
+
 from app.core.config import configuracoes
-import logging
+from app.utils.file_parsers import extrair_texto
 
 logger = logging.getLogger(__name__)
 
@@ -40,9 +41,7 @@ class CarregadorDocumentos:
         documentos: List[dict] = []
 
         if not self.diretorio.exists():
-            logger.warning(
-                f"Diretório '{self.diretorio}' não encontrado. Criando..."
-            )
+            logger.warning(f"Diretório '{self.diretorio}' não encontrado. Criando...")
             self.diretorio.mkdir(parents=True, exist_ok=True)
             return documentos
 
@@ -51,12 +50,14 @@ class CarregadorDocumentos:
                 try:
                     texto, tipo = extrair_texto(str(arquivo))
                     if texto.strip():
-                        documentos.append({
-                            "texto": texto,
-                            "fonte": arquivo.name,
-                            "caminho": str(arquivo),
-                            "tipo": tipo,
-                        })
+                        documentos.append(
+                            {
+                                "texto": texto,
+                                "fonte": arquivo.name,
+                                "caminho": str(arquivo),
+                                "tipo": tipo,
+                            }
+                        )
                         logger.info(f"Carregado: {arquivo.name} ({tipo.upper()})")
                     else:
                         logger.warning(f"Arquivo vazio ignorado: {arquivo.name}")

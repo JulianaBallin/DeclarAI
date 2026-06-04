@@ -22,13 +22,14 @@ Referência metodológica:
 """
 
 import json
+import logging
 import re
 from pathlib import Path
 from typing import List
+
 from app.rag.retriever import Recuperador
 from app.rag.vector_store import BancoVetorial
 from app.services.rag_service import ServicoRAG
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +45,13 @@ CASOS_TESTE_PADRAO: List[dict] = [
     {
         "id": 1,
         "pergunta": "Quem é obrigado a declarar o imposto de renda?",
-        "palavras_chave": ["rendimentos tributáveis", "declarar", "obrigado", "bens", "800.000"],
+        "palavras_chave": [
+            "rendimentos tributáveis",
+            "declarar",
+            "obrigado",
+            "bens",
+            "800.000",
+        ],
         "categoria": "Obrigatoriedade",
     },
     {
@@ -91,7 +98,9 @@ CASOS_TESTE_PADRAO: List[dict] = [
     },
 ]
 
-CAMINHO_DATASET = Path(__file__).resolve().parents[3] / "data" / "eval" / "perguntas.json"
+CAMINHO_DATASET = (
+    Path(__file__).resolve().parents[3] / "data" / "eval" / "perguntas.json"
+)
 
 
 def carregar_casos_teste() -> List[dict]:
@@ -111,14 +120,16 @@ def carregar_casos_teste() -> List[dict]:
 
         casos = []
         for item in dados.get("perguntas", []):
-            casos.append({
-                "id": item["id"],
-                "pergunta": item["pergunta"],
-                "categoria": item["categoria"],
-                "palavras_chave": item.get("keywords", []),
-                "dificuldade": item.get("dificuldade", "nao_informada"),
-                "resposta_referencia": item.get("resposta_referencia", ""),
-            })
+            casos.append(
+                {
+                    "id": item["id"],
+                    "pergunta": item["pergunta"],
+                    "categoria": item["categoria"],
+                    "palavras_chave": item.get("keywords", []),
+                    "dificuldade": item.get("dificuldade", "nao_informada"),
+                    "resposta_referencia": item.get("resposta_referencia", ""),
+                }
+            )
 
         if casos:
             return casos
@@ -166,28 +177,28 @@ class ServicoAvaliacao:
         for caso in self.casos_teste:
             resultado = self.avaliar_pergunta(caso["pergunta"])
 
-            resultados.append({
-                "id": caso["id"],
-                "pergunta": caso["pergunta"],
-                "categoria": caso["categoria"],
-                "dificuldade": caso.get("dificuldade", "nao_informada"),
-                "chunks_recuperados": resultado["chunks_recuperados"],
-                "score_medio_contexto": resultado["score_medio_contexto"],
-                "score_maximo": resultado["score_maximo"],
-                "fontes_encontradas": resultado["fontes"],
-                "contexto_encontrado": resultado["contexto_encontrado"],
-                "cobertura_keywords_pct": self._calcular_cobertura_keywords(
-                    " ".join(resultado["contextos"]),
-                    caso.get("palavras_chave", []),
-                ),
-            })
+            resultados.append(
+                {
+                    "id": caso["id"],
+                    "pergunta": caso["pergunta"],
+                    "categoria": caso["categoria"],
+                    "dificuldade": caso.get("dificuldade", "nao_informada"),
+                    "chunks_recuperados": resultado["chunks_recuperados"],
+                    "score_medio_contexto": resultado["score_medio_contexto"],
+                    "score_maximo": resultado["score_maximo"],
+                    "fontes_encontradas": resultado["fontes"],
+                    "contexto_encontrado": resultado["contexto_encontrado"],
+                    "cobertura_keywords_pct": self._calcular_cobertura_keywords(
+                        " ".join(resultado["contextos"]),
+                        caso.get("palavras_chave", []),
+                    ),
+                }
+            )
 
         # Métricas agregadas
         total = len(resultados)
         com_contexto = sum(1 for r in resultados if r["contexto_encontrado"])
-        score_medio_geral = (
-            sum(r["score_medio_contexto"] for r in resultados) / total
-        )
+        score_medio_geral = sum(r["score_medio_contexto"] for r in resultados) / total
         casos_falha = [r for r in resultados if not r["contexto_encontrado"]]
 
         metricas = {
@@ -245,19 +256,21 @@ class ServicoAvaliacao:
                 resultado_rag["resposta"], caso["palavras_chave"]
             )
 
-            resultados.append({
-                "id": caso["id"],
-                "pergunta": caso["pergunta"],
-                "categoria": caso["categoria"],
-                "dificuldade": caso.get("dificuldade", "nao_informada"),
-                "chunks_recuperados": resultado_rag["chunks_recuperados"],
-                "score_medio_contexto": score_medio,
-                "cobertura_keywords_pct": cobertura_kw,
-                "palavras_esperadas": caso["palavras_chave"],
-                "fontes": resultado_rag["fontes"],
-                "resposta_preview": resultado_rag["resposta"][:300],
-                "falha": cobertura_kw < 50.0,
-            })
+            resultados.append(
+                {
+                    "id": caso["id"],
+                    "pergunta": caso["pergunta"],
+                    "categoria": caso["categoria"],
+                    "dificuldade": caso.get("dificuldade", "nao_informada"),
+                    "chunks_recuperados": resultado_rag["chunks_recuperados"],
+                    "score_medio_contexto": score_medio,
+                    "cobertura_keywords_pct": cobertura_kw,
+                    "palavras_esperadas": caso["palavras_chave"],
+                    "fontes": resultado_rag["fontes"],
+                    "resposta_preview": resultado_rag["resposta"][:300],
+                    "falha": cobertura_kw < 50.0,
+                }
+            )
 
         # Métricas agregadas
         total = len(resultados)
@@ -355,9 +368,7 @@ class ServicoAvaliacao:
         else:
             return "Insuficiente: muitas perguntas sem contexto. A base de conhecimento precisa ser expandida."
 
-    def _interpretar_pipeline(
-        self, taxa: float, score: float, cobertura: float
-    ) -> str:
+    def _interpretar_pipeline(self, taxa: float, score: float, cobertura: float) -> str:
         """Gera interpretação textual das métricas do pipeline completo."""
         if taxa >= 0.9 and cobertura >= 70:
             return "Excelente: pipeline RAG funcionando com alta qualidade de recuperação e resposta."

@@ -5,16 +5,17 @@ Usa heurísticas baseadas em expressões regulares para identificar
 informações relevantes como datas, valores monetários e emitentes.
 """
 
+import logging
 import re
 from pathlib import Path
 from typing import Optional
-from app.utils.file_parsers import extrair_metadados_xml_fiscal, extrair_texto
+
 from app.services.document_kind_service import (
     texto_eh_recibo_aluguel,
     texto_eh_recibo_pensao_alimenticia,
     texto_recibo_comprovante_que_nao_e_nfs_e,
 )
-import logging
+from app.utils.file_parsers import extrair_metadados_xml_fiscal, extrair_texto
 
 logger = logging.getLogger(__name__)
 
@@ -25,10 +26,10 @@ _RE_SERV = r"servi[çc]o?s?"
 # ---------------------------------------------------------------------------
 
 PADROES_DATA = [
-    r"\b(\d{2}/\d{2}/\d{4})\b",                              # 31/12/2024
-    r"\b(\d{2}-\d{2}-\d{4})\b",                              # 31-12-2024
-    r"\b(\d{4}-\d{2}-\d{2})\b",                              # 2024-12-31
-    r"\b(\d{1,2}\s+de\s+\w+\s+de\s+\d{4})\b",               # 1 de janeiro de 2024
+    r"\b(\d{2}/\d{2}/\d{4})\b",  # 31/12/2024
+    r"\b(\d{2}-\d{2}-\d{4})\b",  # 31-12-2024
+    r"\b(\d{4}-\d{2}-\d{2})\b",  # 2024-12-31
+    r"\b(\d{1,2}\s+de\s+\w+\s+de\s+\d{4})\b",  # 1 de janeiro de 2024
 ]
 
 PADROES_VALOR = [
@@ -52,7 +53,9 @@ PADROES_EMITENTE = [
 ]
 
 # Chave de acesso NF-e: 44 dígitos, possivelmente com espaços/pontos entre grupos
-PADRAO_CHAVE_ACESSO = re.compile(r"(?:chave[:\s]*(?:de\s+acesso)?[:\s]*)?((?:\d[\s.]?){44})", re.IGNORECASE)
+PADRAO_CHAVE_ACESSO = re.compile(
+    r"(?:chave[:\s]*(?:de\s+acesso)?[:\s]*)?((?:\d[\s.]?){44})", re.IGNORECASE
+)
 
 PADROES_CNPJ = [
     r"\b(\d{2}[.\s]?\d{3}[.\s]?\d{3}[/\s]?\d{4}[-\s]?\d{2})\b",  # CNPJ xx.xxx.xxx/xxxx-xx
@@ -93,9 +96,7 @@ def _formatar_cpf_onze_digitos(sem_formatacao: str) -> str:
 
 def _linha_limpa_nome_locacao(s: str) -> str:
     s = s.strip()
-    s = re.sub(
-        r"(?i)(cpf|cnpj|endere[çc]o|rua|cep|residen)\b.*$", "", s
-    ).strip()
+    s = re.sub(r"(?i)(cpf|cnpj|endere[çc]o|rua|cep|residen)\b.*$", "", s).strip()
     s = re.sub(r"^[\s,;:-]+", "", s)
     return re.sub(r"\s+", " ", s) if s else ""
 
@@ -156,14 +157,10 @@ class ServicoExtracao:
             p_rec, p_alim, p_alit, _ = self._partes_recibo_pensao(texto)
             if p_alit:
                 tomador_nfse = self._ajustar_caixa_nome_proprio(p_alit)[:120]
-        codigo_mun = (
-            self._extrair_codigo_verificacao_nfse(texto) if nfse else None
-        )
+        codigo_mun = self._extrair_codigo_verificacao_nfse(texto) if nfse else None
         chave = self._extrair_chave_acesso(
             texto,
-            tem_codigo_municipal=bool(
-                codigo_mun and len(codigo_mun) >= 45
-            ),
+            tem_codigo_municipal=bool(codigo_mun and len(codigo_mun) >= 45),
         )
         if rec_aluguel or rec_pensao:
             chave = None
@@ -172,9 +169,7 @@ class ServicoExtracao:
             id_fiscal = None
         res_informe = (self._resumo_informe_valores(texto) or None) if informe else None
         data_det = self._extrair_data(texto)
-        valor_det = self._extrair_valor(
-            texto, nfse=nfse, informe=informe
-        )
+        valor_det = self._extrair_valor(texto, nfse=nfse, informe=informe)
         benef_det = self._extrair_nome_beneficiario(
             texto,
             nfse=nfse,
@@ -193,9 +188,7 @@ class ServicoExtracao:
             texto, nfse=nfse, recibo_aluguel=rec_aluguel, recibo_pensao=rec_pensao
         )
         meta_xml = (
-            extrair_metadados_xml_fiscal(caminho)
-            if tipo_arquivo == "xml"
-            else None
+            extrair_metadados_xml_fiscal(caminho) if tipo_arquivo == "xml" else None
         )
         if meta_xml:
             if meta_xml.get("data_documento"):
@@ -209,7 +202,11 @@ class ServicoExtracao:
             elif valor_det:
                 valor_det = _normalizar_valor_exibicao_br(valor_det)
             cmeta = (meta_xml.get("chave_44") or "").strip()
-            if cmeta and len(cmeta) == 44 and not (chave and len(re.sub(r"\D", "", chave or "")) == 44):
+            if (
+                cmeta
+                and len(cmeta) == 44
+                and not (chave and len(re.sub(r"\D", "", chave or "")) == 44)
+            ):
                 chave = cmeta
                 id_fiscal = (codigo_mun or chave or "") or None
         elif valor_det:
@@ -345,9 +342,7 @@ class ServicoExtracao:
             ),
             (
                 "Vale-refeição (isento)",
-                (
-                    r"(?i)vale[-\s]?refei\w*.{0,200}?R\$\s*([\d.]+,\d{2})",
-                ),
+                (r"(?i)vale[-\s]?refei\w*.{0,200}?R\$\s*([\d.]+,\d{2})",),
             ),
         ]
 
@@ -400,8 +395,7 @@ class ServicoExtracao:
 
     def _emitente_fonte_pag_informe(self, texto: str) -> Optional[str]:
         m = re.search(
-            r"(?is)fonte\s+pagadora.{0,1200}?"
-            r"raz[ãa]o\s+social\s*:\s*([^\n\r]+)",
+            r"(?is)fonte\s+pagadora.{0,1200}?" r"raz[ãa]o\s+social\s*:\s*([^\n\r]+)",
             texto,
         )
         if m:
@@ -447,7 +441,9 @@ class ServicoExtracao:
         if m:
             return m.group(0)
         m2 = re.search(
-            r"(?is)(?:tomador|destinat[aá]rio)(?:\s+de\s+" + _RE_SERV + r")?[\s\S]{0,4000}",
+            r"(?is)(?:tomador|destinat[aá]rio)(?:\s+de\s+"
+            + _RE_SERV
+            + r")?[\s\S]{0,4000}",
             texto,
         )
         return m2.group(0) if m2 else ""
@@ -559,7 +555,7 @@ class ServicoExtracao:
                 if valor_bruto in ("0,00", "0.00", "0"):
                     continue
                 inicio = max(0, correspondencia.start() - 80)
-                contexto = texto[inicio: correspondencia.end() + 40].lower()
+                contexto = texto[inicio : correspondencia.end() + 40].lower()
                 if nfse and any(
                     x in contexto
                     for x in (
@@ -604,9 +600,7 @@ class ServicoExtracao:
             r"(?m)^\s*Locat[áaA]rio\s*:\s*([^\n\r]+?)\s*(?:$|\n)", t, re.IGNORECASE
         )
         if not m_l:
-            m_l = re.search(
-                r"(?is)Locat[áaA]rio\s*:\s*([^\n\r]+?)(?=\n\s*CPF|\n|$)", t
-            )
+            m_l = re.search(r"(?is)Locat[áaA]rio\s*:\s*([^\n\r]+?)(?=\n\s*CPF|\n|$)", t)
         if m_l:
             locat_n = _linha_limpa_nome_locacao(m_l.group(1))[:200]
 
@@ -630,9 +624,7 @@ class ServicoExtracao:
                 cpf_l = d
                 break
         if not cpf_l:
-            cps = re.findall(
-                r"\b(\d{3}[\s.]?\d{3}[\s.]?\d{3}[-\s/]?\d{2})\b", t
-            )
+            cps = re.findall(r"\b(\d{3}[\s.]?\d{3}[\s.]?\d{3}[-\s/]?\d{2})\b", t)
             for raw in cps:
                 d = re.sub(r"\D", "", raw)
                 if len(d) == 11:
@@ -654,12 +646,16 @@ class ServicoExtracao:
         )
         if m0:
             rec = _linha_limpa_nome_locacao(m0.group(1))[:200]
-        m = None if rec else re.search(
-            r"(?is)(?:recebedor[ao]?\s*[/,]\s*representante(?:\s+legal)?|"
-            r"representante\s+legal|recebedor[ao]?\b)(?:\s*[:,.])?\s*"
-            r"(?-i:)([A-ZÀ-Ü'.\-](?:[A-ZÀ-Úa-z'.\-]|\s){2,100}?)"
-            r"(?=\s*(?:,|\n|CPF)|$)",
-            t,
+        m = (
+            None
+            if rec
+            else re.search(
+                r"(?is)(?:recebedor[ao]?\s*[/,]\s*representante(?:\s+legal)?|"
+                r"representante\s+legal|recebedor[ao]?\b)(?:\s*[:,.])?\s*"
+                r"(?-i:)([A-ZÀ-Ü'.\-](?:[A-ZÀ-Úa-z'.\-]|\s){2,100}?)"
+                r"(?=\s*(?:,|\n|CPF)|$)",
+                t,
+            )
         )
         if m and not rec:
             cand = _linha_limpa_nome_locacao(m.group(1))[:200]
@@ -682,9 +678,7 @@ class ServicoExtracao:
                 t,
             )
         if m2:
-            alim = re.sub(
-                r"\s*\([^)]{0,80}\).*$", "", m2.group(1).strip()
-            ).strip()
+            alim = re.sub(r"\s*\([^)]{0,80}\).*$", "", m2.group(1).strip()).strip()
             alim = _linha_limpa_nome_locacao(alim)[:200]
         m3 = re.search(
             r"(?is)alimentante\s*[:,.]?\s*"
@@ -729,9 +723,7 @@ class ServicoExtracao:
             if re.search(
                 r"(?i)nota\s+fiscal(?!.+(?:ltda|ltda\.|s\.a|me\b|eireli))",
                 linha,
-            ) and not re.search(
-                r"(?i)(ltda|eireli|ltda\.|s\.\s*a\.)", linha
-            ):
+            ) and not re.search(r"(?i)(ltda|eireli|ltda\.|s\.\s*a\.)", linha):
                 continue
             return linha[:120]
         return None
@@ -747,16 +739,16 @@ class ServicoExtracao:
         if recibo_aluguel:
             loc, _, _ = self._partes_recibo_aluguel(texto)
             if loc:
-                return self._ajustar_caixa_nome_proprio(
-                    self._sanear_razao_social(loc)
-                )[:120]
+                return self._ajustar_caixa_nome_proprio(self._sanear_razao_social(loc))[
+                    :120
+                ]
             return None
         if recibo_pensao:
             r, _, _, _ = self._partes_recibo_pensao(texto)
             if r:
-                return self._ajustar_caixa_nome_proprio(
-                    self._sanear_razao_social(r)
-                )[:120]
+                return self._ajustar_caixa_nome_proprio(self._sanear_razao_social(r))[
+                    :120
+                ]
             return None
         if informe:
             e = self._emitente_fonte_pag_informe(texto)
@@ -775,9 +767,7 @@ class ServicoExtracao:
         for padrao in PADROES_EMITENTE:
             correspondencia = re.search(padrao, texto)
             if correspondencia:
-                nome = self._limpar_nome_fiscal(
-                    correspondencia.group(1).strip()
-                )
+                nome = self._limpar_nome_fiscal(correspondencia.group(1).strip())
                 nome = self._sanear_razao_social(nome)
                 if re.match(r"(?i)^comprovante\b", nome):
                     continue
@@ -805,9 +795,7 @@ class ServicoExtracao:
         texto: str,
         tem_codigo_municipal: bool = False,
     ) -> Optional[str]:
-        if texto_eh_recibo_aluguel(texto) or texto_eh_recibo_pensao_alimenticia(
-            texto
-        ):
+        if texto_eh_recibo_aluguel(texto) or texto_eh_recibo_pensao_alimenticia(texto):
             return None
         if tem_codigo_municipal:
             return None
@@ -870,7 +858,15 @@ class ServicoExtracao:
         if not s:
             return s
         particulas = {
-            "de", "da", "do", "das", "dos", "e", "del", "della", "dalla",
+            "de",
+            "da",
+            "do",
+            "das",
+            "dos",
+            "e",
+            "del",
+            "della",
+            "dalla",
         }
         partes: list[str] = []
         for w in s.split():
@@ -917,9 +913,7 @@ class ServicoExtracao:
         return None
 
     def _texto_eh_mensalidade_escolar_nao_pensao(self, texto: str) -> bool:
-        if texto_eh_recibo_pensao_alimenticia(texto) or texto_eh_recibo_aluguel(
-            texto
-        ):
+        if texto_eh_recibo_pensao_alimenticia(texto) or texto_eh_recibo_aluguel(texto):
             return False
         t = (texto or "")[:20000].lower()
         if not re.search(

@@ -6,9 +6,8 @@ informado pelo usuário. Foca nos sobrenomes, pois dependentes geralmente
 compartilham o sobrenome familiar.
 """
 
-import re
-import unicodedata
 import logging
+import unicodedata
 
 logger = logging.getLogger(__name__)
 
@@ -84,7 +83,9 @@ def verificar_titularidade(
 
     sobrenomes_declarante = _extrair_sobrenomes(nome_declarante)
     sobrenomes_beneficiario = _extrair_sobrenomes(nome_beneficiario)
-    similaridade = _similaridade_sobrenomes(sobrenomes_beneficiario, sobrenomes_declarante)
+    similaridade = _similaridade_sobrenomes(
+        sobrenomes_beneficiario, sobrenomes_declarante
+    )
 
     if primeiro_declarante == primeiro_beneficiario and similaridade >= 0.5:
         return {

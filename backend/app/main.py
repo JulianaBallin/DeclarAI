@@ -10,17 +10,16 @@ import logging
 from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
-from app.core.config import configuracoes
-from app.core.database import criar_tabelas
 from app.api.routes_chat import roteador as roteador_chat
 from app.api.routes_documents import roteador as roteador_documentos
-from app.api.routes_history import roteador as roteador_historico
 from app.api.routes_evaluation import roteador as roteador_avaliacao
+from app.api.routes_history import roteador as roteador_historico
 from app.api.routes_knowledge import roteador as roteador_base
 from app.api.routes_perfil import roteador as roteador_perfil
+from app.core.config import configuracoes
+from app.core.database import criar_tabelas
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 # ---------------------------------------------------------------------------
 # Configuração de logging
@@ -36,6 +35,7 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Ciclo de vida da aplicação
 # ---------------------------------------------------------------------------
+
 
 @asynccontextmanager
 async def ciclo_de_vida(app: FastAPI):
@@ -69,10 +69,14 @@ async def ciclo_de_vida(app: FastAPI):
 
         servico_rag = get_servico_rag()
         if servico_rag.banco_vetorial.total_chunks() == 0:
-            logger.info("ChromaDB vazio - iniciando ingestão automática da base de conhecimento...")
+            logger.info(
+                "ChromaDB vazio - iniciando ingestão automática da base de conhecimento..."
+            )
             total = servico_rag.ingerir_base_conhecimento()
             if total > 0:
-                logger.info(f"Ingestão automática concluída: {total} chunk(s) indexado(s).")
+                logger.info(
+                    f"Ingestão automática concluída: {total} chunk(s) indexado(s)."
+                )
             else:
                 logger.info(
                     "Base de conhecimento vazia. "
@@ -91,8 +95,10 @@ async def ciclo_de_vida(app: FastAPI):
     # Pré-aquece embeddings e modelo LLM em segundo plano para eliminar latência na primeira consulta.
     async def _aquecer_tudo():
         import asyncio
+
         from app.rag.embeddings import GeradorEmbeddings
         from app.rag.generator import GeradorResposta
+
         logger.info("Aquecendo modelo de embeddings...")
         loop = asyncio.get_event_loop()
         await loop.run_in_executor(None, GeradorEmbeddings().gerar, "aquecimento")
@@ -129,7 +135,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],       # Em produção: restringir às origens permitidas
+    allow_origins=["*"],  # Em produção: restringir às origens permitidas
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -162,6 +168,7 @@ app.include_router(
 # ---------------------------------------------------------------------------
 # Rota raiz (health check)
 # ---------------------------------------------------------------------------
+
 
 @app.get("/", summary="Health check", tags=["Sistema"])
 async def raiz():

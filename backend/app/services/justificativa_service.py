@@ -8,6 +8,7 @@ classificação e o que o contribuinte precisa verificar na declaração do IRPF
 """
 
 import logging
+
 import httpx
 from app.core.config import configuracoes
 from app.rag.retriever import Recuperador
@@ -139,7 +140,10 @@ class ServicoJustificativa:
             chave_consulta = categoria
             if chave_consulta in ("Documento Não Classificado", "Requer Revisão"):
                 for conteudo_chave in ("Saúde", "Educação", "Aluguel", "Pensão"):
-                    if categoria_conteudo and conteudo_chave.lower() in categoria_conteudo.lower():
+                    if (
+                        categoria_conteudo
+                        and conteudo_chave.lower() in categoria_conteudo.lower()
+                    ):
                         chave_consulta = conteudo_chave
                         break
 
@@ -149,7 +153,9 @@ class ServicoJustificativa:
 
             chunks = self.recuperador.recuperar(consulta, top_k=3)
             if not chunks:
-                logger.warning("Justificativa: nenhum chunk recuperado para '%s'.", categoria)
+                logger.warning(
+                    "Justificativa: nenhum chunk recuperado para '%s'.", categoria
+                )
                 return ""
 
             contexto = self.recuperador.formatar_contexto(chunks)
@@ -183,15 +189,21 @@ class ServicoJustificativa:
                 texto = resposta.json().get("response", "").strip()
                 if texto:
                     logger.info(
-                        "Justificativa gerada para '%s': %d caracteres.", categoria, len(texto)
+                        "Justificativa gerada para '%s': %d caracteres.",
+                        categoria,
+                        len(texto),
                     )
                 return texto
 
         except httpx.ConnectError:
-            logger.warning("Justificativa: Ollama indisponível - justificativa omitida.")
+            logger.warning(
+                "Justificativa: Ollama indisponível - justificativa omitida."
+            )
             return ""
         except httpx.TimeoutException:
-            logger.warning("Justificativa: timeout ao aguardar Ollama - justificativa omitida.")
+            logger.warning(
+                "Justificativa: timeout ao aguardar Ollama - justificativa omitida."
+            )
             return ""
         except Exception as erro:
             logger.error("Justificativa: erro inesperado: %s", erro, exc_info=True)

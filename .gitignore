@@ -1,11 +1,11 @@
-# DeclaraAI - runtime data (nao versionar)
+# DeclaraAI - dados de execução (não versionar)
 data/uploads/*
 !data/uploads/.gitkeep
 data/chroma_db/*
 !data/chroma_db/.gitkeep
 data/*.db
 
-# Arquivos de atividade e instrucoes internas
+# Arquivos de atividade e instruções internas
 Atividade.pdf
 AGENTE.md
 .history/

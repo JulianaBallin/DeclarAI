@@ -3,12 +3,16 @@ Configurações centrais da aplicação DeclaraAI.
 Carrega variáveis de ambiente com fallback para valores padrão.
 """
 
-from pydantic_settings import BaseSettings
-from pathlib import Path
+from typing import Any
+
+from pydantic import field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Configuracoes(BaseSettings):
     """Configurações globais carregadas via variáveis de ambiente ou arquivo .env."""
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     # Informações da aplicação
     NOME_APP: str = "DeclaraAI"
@@ -31,7 +35,9 @@ class Configuracoes(BaseSettings):
 
     # Modelo de embeddings (multilíngue, leve, código aberto)
     # paraphrase-multilingual-MiniLM-L12-v2: suporte a PT-BR, 384 dims, rápido
-    MODELO_EMBEDDINGS: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    MODELO_EMBEDDINGS: str = (
+        "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
+    )
 
     # Integração com Ollama (LLM local)
     OLLAMA_BASE_URL: str = "http://ollama:11434"
@@ -40,9 +46,36 @@ class Configuracoes(BaseSettings):
     # Recuperação semântica
     TOP_K_RESULTADOS: int = 5
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    @field_validator("DEBUG", mode="before")
+    @classmethod
+    def normalizar_debug(cls, valor: Any) -> Any:
+        """Aceita valores comuns de ambiente para modo debug."""
+        if isinstance(valor, str):
+            normalizado = valor.strip().lower()
+            if normalizado in {
+                "release",
+                "prod",
+                "production",
+                "false",
+                "0",
+                "no",
+                "não",
+                "nao",
+                "off",
+            }:
+                return False
+            if normalizado in {
+                "debug",
+                "dev",
+                "development",
+                "true",
+                "1",
+                "yes",
+                "sim",
+                "on",
+            }:
+                return True
+        return valor
 
 
 # Instância global de configurações

@@ -2,9 +2,10 @@
 Gerador de respostas via LLM rodando no Ollama.
 """
 
+import logging
+
 import httpx
 from app.core.config import configuracoes
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -92,7 +93,9 @@ class GeradorResposta:
         self.url_status = f"{configuracoes.OLLAMA_BASE_URL}/api/tags"
         self.modelo = configuracoes.OLLAMA_MODELO
 
-    async def gerar(self, pergunta: str, contexto: str, modelo: str | None = None) -> str:
+    async def gerar(
+        self, pergunta: str, contexto: str, modelo: str | None = None
+    ) -> str:
         """
         Gera resposta baseada na pergunta e no contexto recuperado.
 
@@ -109,9 +112,9 @@ class GeradorResposta:
             "prompt": prompt,
             "stream": False,
             "options": {
-                "temperature": 0.1,   # Mais conservador - reduz alucinações em domínio fiscal
+                "temperature": 0.1,  # Mais conservador - reduz alucinações em domínio fiscal
                 "top_p": 0.85,
-                "num_ctx": 4096,      # Janela de contexto
+                "num_ctx": 4096,  # Janela de contexto
                 "num_predict": 1024,  # Limite de tokens na resposta
             },
         }
@@ -125,7 +128,9 @@ class GeradorResposta:
                 return texto if texto else "Não foi possível gerar uma resposta."
 
         except httpx.ConnectError:
-            logger.error("Ollama indisponível - verifique se o serviço está em execução.")
+            logger.error(
+                "Ollama indisponível - verifique se o serviço está em execução."
+            )
             return (
                 "O serviço de linguagem (Ollama) não está acessível no momento. "
                 "Certifique-se de que o Ollama está em execução e tente novamente."
@@ -135,7 +140,7 @@ class GeradorResposta:
             return "A geração da resposta excedeu o tempo limite. Tente uma pergunta mais curta."
         except Exception as erro:
             logger.error(f"Erro inesperado ao chamar Ollama: {erro}")
-            return f"Erro ao processar sua pergunta. Por favor, tente novamente."
+            return "Erro ao processar sua pergunta. Por favor, tente novamente."
 
     async def aquecer(self) -> None:
         """

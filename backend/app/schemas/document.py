@@ -2,17 +2,19 @@
 Schemas Pydantic para validação e serialização de dados da API.
 """
 
-from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional, List
+from typing import List, Optional
 
+from pydantic import BaseModel
 
 # ---------------------------------------------------------------------------
 # Schemas de Documento
 # ---------------------------------------------------------------------------
 
+
 class DocumentoBase(BaseModel):
     """Campos comuns a todos os schemas de documento."""
+
     nome_arquivo: str
     tipo_arquivo: str
     categoria: Optional[str] = None
@@ -40,12 +42,14 @@ class DocumentoBase(BaseModel):
 
 class DocumentoSalvar(DocumentoBase):
     """Schema para salvar documento no histórico (enviado pelo frontend)."""
+
     texto_extraido: Optional[str] = None
     caminho_arquivo: Optional[str] = None
 
 
 class DocumentoResumo(DocumentoBase):
     """Schema resumido para listagem no histórico (sem texto completo)."""
+
     id: int
     criado_em: datetime
 
@@ -54,6 +58,7 @@ class DocumentoResumo(DocumentoBase):
 
 class DocumentoCompleto(DocumentoBase):
     """Schema completo incluindo texto extraído."""
+
     id: int
     texto_extraido: Optional[str] = None
     criado_em: datetime
@@ -63,6 +68,7 @@ class DocumentoCompleto(DocumentoBase):
 
 class DocumentoProcessado(BaseModel):
     """Resultado do processamento de upload de documento."""
+
     nome_arquivo: str
     tipo_arquivo: str
     categoria: str
@@ -95,8 +101,10 @@ class DocumentoProcessado(BaseModel):
 # Schemas de Chat
 # ---------------------------------------------------------------------------
 
+
 class RequisicaoChat(BaseModel):
     """Requisição de pergunta ao sistema RAG."""
+
     pergunta: str
     modelo: Optional[str] = None
     historico: Optional[List[dict]] = []
@@ -104,6 +112,7 @@ class RequisicaoChat(BaseModel):
 
 class RespostaChat(BaseModel):
     """Resposta gerada pelo pipeline RAG."""
+
     resposta: str
     contexto_utilizado: Optional[List[str]] = []
     fontes: Optional[List[str]] = []
@@ -116,8 +125,10 @@ class RespostaChat(BaseModel):
 # Schemas de Resumo
 # ---------------------------------------------------------------------------
 
+
 class ItemResumo(BaseModel):
     """Item individual dentro do resumo de uma categoria."""
+
     id: int
     nome: str
     data_detectada: Optional[str] = None
@@ -128,6 +139,7 @@ class ItemResumo(BaseModel):
 
 class CategoriaResumo(BaseModel):
     """Resumo de documentos agrupados por categoria tributária."""
+
     quantidade: int
     documentos: List[ItemResumo]
     valores: List[str]
@@ -135,6 +147,7 @@ class CategoriaResumo(BaseModel):
 
 class ResumoAnual(BaseModel):
     """Resumo anual de todos os documentos organizados por categoria."""
+
     ano: int
     total_documentos: int
     categorias: dict
@@ -144,14 +157,17 @@ class ResumoAnual(BaseModel):
 # Schemas de Perfil do Declarante (M4)
 # ---------------------------------------------------------------------------
 
+
 class PerfilDeclarante(BaseModel):
     """Dados do titular da declaração fornecidos pelo usuário."""
+
     nome_completo: str
     cpf: str
 
 
 class RespostaVerificacaoTitularidade(BaseModel):
     """Resultado da verificação de nome do beneficiário vs. declarante."""
-    status: str          # "titular" | "provavel_dependente" | "terceiro" | "nao_verificado"
+
+    status: str  # "titular" | "provavel_dependente" | "terceiro" | "nao_verificado"
     mensagem: str
     requer_confirmacao: bool

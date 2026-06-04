@@ -12,9 +12,10 @@ Estratégia adotada:
   o que melhora a coerência dos trechos recuperados pelo retriever.
 """
 
-from typing import List
-from app.core.config import configuracoes
 import logging
+from typing import List
+
+from app.core.config import configuracoes
 
 logger = logging.getLogger(__name__)
 
@@ -104,14 +105,16 @@ class ChunkerTexto:
             total = len(chunks)
 
             for indice, chunk in enumerate(chunks):
-                todos_chunks.append({
-                    "texto": chunk,
-                    "fonte": documento.get("fonte", "desconhecido"),
-                    "caminho": documento.get("caminho", ""),
-                    "tipo": documento.get("tipo", ""),
-                    "chunk_index": indice,
-                    "total_chunks": total,
-                })
+                todos_chunks.append(
+                    {
+                        "texto": chunk,
+                        "fonte": documento.get("fonte", "desconhecido"),
+                        "caminho": documento.get("caminho", ""),
+                        "tipo": documento.get("tipo", ""),
+                        "chunk_index": indice,
+                        "total_chunks": total,
+                    }
+                )
 
         logger.info(f"Total de chunks gerados: {len(todos_chunks)}")
         return todos_chunks

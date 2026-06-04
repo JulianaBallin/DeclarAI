@@ -3,13 +3,14 @@ Utilitários para extração de texto de diferentes formatos de arquivo.
 Suporta PDF, TXT, HTML, XML (NF-e SEFAZ) e imagens JPG/PNG (via OCR).
 """
 
+import logging
 import re
+import xml.etree.ElementTree as ET
+from pathlib import Path
+from typing import Any, Optional
+
 import pdfplumber
 from bs4 import BeautifulSoup
-from pathlib import Path
-import logging
-import xml.etree.ElementTree as ET
-from typing import Any, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -242,10 +243,26 @@ def extrair_texto_xml_nfe(caminho: str) -> str:
         if inf_nfe is None:
             inf_nfe = root
 
-        emit = inf_nfe.find(f".//{_tag('emit')}") or inf_nfe.find(".//emit") or ET.Element("emit")
-        dest = inf_nfe.find(f".//{_tag('dest')}") or inf_nfe.find(".//dest") or ET.Element("dest")
-        ide = inf_nfe.find(f".//{_tag('ide')}") or inf_nfe.find(".//ide") or ET.Element("ide")
-        total = inf_nfe.find(f".//{_tag('ICMSTot')}") or inf_nfe.find(".//ICMSTot") or ET.Element("ICMSTot")
+        emit = (
+            inf_nfe.find(f".//{_tag('emit')}")
+            or inf_nfe.find(".//emit")
+            or ET.Element("emit")
+        )
+        dest = (
+            inf_nfe.find(f".//{_tag('dest')}")
+            or inf_nfe.find(".//dest")
+            or ET.Element("dest")
+        )
+        ide = (
+            inf_nfe.find(f".//{_tag('ide')}")
+            or inf_nfe.find(".//ide")
+            or ET.Element("ide")
+        )
+        total = (
+            inf_nfe.find(f".//{_tag('ICMSTot')}")
+            or inf_nfe.find(".//ICMSTot")
+            or ET.Element("ICMSTot")
+        )
 
         def txt(el, tag):
             n = el.find(_tag(tag))
@@ -260,7 +277,7 @@ def extrair_texto_xml_nfe(caminho: str) -> str:
 
         linhas = [
             "=== NOTA FISCAL ELETRÔNICA (XML SEFAZ) ===",
-            f"Nota Fiscal Eletrônica",
+            "Nota Fiscal Eletrônica",
             f"Número: {txt(ide, 'nNF')}  Série: {txt(ide, 'serie')}",
             f"Data de Emissão: {txt(ide, 'dhEmi') or txt(ide, 'dEmi')}",
             f"Chave de Acesso: {chave}",
@@ -284,14 +301,16 @@ def extrair_texto_xml_nfe(caminho: str) -> str:
         ]
 
         # Adiciona itens (produtos/serviços)
-        for det in (inf_nfe.findall(f".//{_tag('det')}") or inf_nfe.findall(".//det") or [])[:10]:
+        for det in (
+            inf_nfe.findall(f".//{_tag('det')}") or inf_nfe.findall(".//det") or []
+        )[:10]:
             prod = det.find(_tag("prod")) or det.find("prod")
             if prod is not None:
                 linhas.append(
                     f"Item: {txt(prod, 'xProd')} | Qtd: {txt(prod, 'qCom')} | Valor: R$ {txt(prod, 'vProd')}"
                 )
 
-        return "\n".join(l for l in linhas if l or l == "")
+        return "\n".join(linha for linha in linhas if linha or linha == "")
 
     except ET.ParseError as erro:
         logger.error(f"XML inválido '{caminho}': {erro}")
@@ -319,8 +338,8 @@ def extrair_texto_imagem(caminho: str) -> str:
         RuntimeError: Se OCR não estiver disponível ou falhar.
     """
     try:
-        from PIL import Image
         import pytesseract
+        from PIL import Image
     except ImportError:
         raise RuntimeError(
             "OCR não disponível. O arquivo de imagem não pôde ser processado automaticamente. "

@@ -5,13 +5,14 @@ Persiste, recupera e organiza os documentos fiscais salvos pelo usuário
 no banco de dados SQLite via SQLAlchemy.
 """
 
-import re
-from sqlalchemy.orm import Session
-from sqlalchemy import extract
-from typing import Optional, List
-from datetime import datetime
-from app.models.document import Documento
 import logging
+import re
+from datetime import datetime
+from typing import List, Optional
+
+from app.models.document import Documento
+from sqlalchemy import extract
+from sqlalchemy.orm import Session
 
 logger = logging.getLogger(__name__)
 
@@ -19,12 +20,12 @@ logger = logging.getLogger(__name__)
 # M7 - Limites de dedução anuais por categoria (valores vigentes IRPF 2024)
 # ---------------------------------------------------------------------------
 LIMITES_DEDUCAO: dict[str, float | None] = {
-    "Comprovante Educacional": 3561.50,   # por pessoa (titular + cada dependente)
-    "Recibo Médico": None,                 # sem limite
-    "Nota Fiscal": None,                   # depende do conteúdo
-    "Previdência Privada": None,           # 12% da renda bruta - calculado dinamicamente
-    "Doações": None,                       # % do imposto - variável
-    "Pensão Alimentícia": None,            # sem limite (dedução integral)
+    "Comprovante Educacional": 3561.50,  # por pessoa (titular + cada dependente)
+    "Recibo Médico": None,  # sem limite
+    "Nota Fiscal": None,  # depende do conteúdo
+    "Previdência Privada": None,  # 12% da renda bruta - calculado dinamicamente
+    "Doações": None,  # % do imposto - variável
+    "Pensão Alimentícia": None,  # sem limite (dedução integral)
     "Aluguel": None,
     "Informe de Rendimentos": None,
 }
@@ -148,8 +149,7 @@ class ServicoHistorico:
                 logger.warning(f"Formato de data_fim inválido: '{data_fim}'")
 
         return (
-            query
-            .order_by(Documento.criado_em.desc())
+            query.order_by(Documento.criado_em.desc())
             .offset(offset)
             .limit(limite)
             .all()
@@ -195,14 +195,16 @@ class ServicoHistorico:
                 }
 
             resumo["categorias"][categoria]["quantidade"] += 1
-            resumo["categorias"][categoria]["documentos"].append({
-                "id": doc.id,
-                "nome": doc.nome_arquivo,
-                "data_detectada": doc.data_detectada,
-                "valor_detectado": doc.valor_detectado,
-                "emitente": doc.emitente_detectado,
-                "criado_em": doc.criado_em.isoformat() if doc.criado_em else None,
-            })
+            resumo["categorias"][categoria]["documentos"].append(
+                {
+                    "id": doc.id,
+                    "nome": doc.nome_arquivo,
+                    "data_detectada": doc.data_detectada,
+                    "valor_detectado": doc.valor_detectado,
+                    "emitente": doc.emitente_detectado,
+                    "criado_em": doc.criado_em.isoformat() if doc.criado_em else None,
+                }
+            )
 
             if doc.valor_detectado:
                 resumo["categorias"][categoria]["valores"].append(doc.valor_detectado)
@@ -234,8 +236,13 @@ class ServicoHistorico:
                     )
 
             # Soma categorias dedutíveis para estimativa
-            if categoria in ("Recibo Médico", "Comprovante Educacional", "Pensão Alimentícia",
-                             "Previdência Privada", "Doações"):
+            if categoria in (
+                "Recibo Médico",
+                "Comprovante Educacional",
+                "Pensão Alimentícia",
+                "Previdência Privada",
+                "Doações",
+            ):
                 dedutivel = min(total_num, limite) if limite else total_num
                 total_deducoes += dedutivel
 

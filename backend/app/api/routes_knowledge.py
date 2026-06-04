@@ -5,17 +5,16 @@ Permite listar os arquivos já indexados e adicionar novos documentos
 diretamente pela interface, sem necessidade de acesso manual ao servidor.
 """
 
+import logging
 import shutil
 from pathlib import Path
-
-from fastapi import APIRouter, HTTPException, UploadFile, File
-from fastapi.responses import FileResponse
-from pydantic import BaseModel, Field
 
 from app.core.config import configuracoes
 from app.rag.chunker import ChunkerTexto
 from app.services.rag_service import get_servico_rag
-import logging
+from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi.responses import FileResponse
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
@@ -47,11 +46,13 @@ async def listar_arquivos_base():
     arquivos = []
     for arquivo in sorted(diretorio.rglob("*")):
         if arquivo.is_file() and arquivo.suffix.lower() in EXTENSOES_PERMITIDAS:
-            arquivos.append({
-                "nome": arquivo.name,
-                "tipo": arquivo.suffix.lower().lstrip("."),
-                "tamanho_kb": round(arquivo.stat().st_size / 1024, 1),
-            })
+            arquivos.append(
+                {
+                    "nome": arquivo.name,
+                    "tipo": arquivo.suffix.lower().lstrip("."),
+                    "tamanho_kb": round(arquivo.stat().st_size / 1024, 1),
+                }
+            )
 
     try:
         servico = get_servico_rag()
@@ -169,7 +170,9 @@ async def adicionar_a_base(arquivo: UploadFile = File(...)):
         servico = get_servico_rag()
         servico.banco_vetorial.limpar()
         total_chunks = servico.ingerir_base_conhecimento()
-        logger.info(f"Re-indexação concluída após upload de '{nome_destino}': {total_chunks} chunks.")
+        logger.info(
+            f"Re-indexação concluída após upload de '{nome_destino}': {total_chunks} chunks."
+        )
     except Exception as erro:
         logger.error(f"Erro na re-indexação: {erro}", exc_info=True)
         raise HTTPException(

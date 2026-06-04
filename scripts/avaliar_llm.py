@@ -140,7 +140,7 @@ def avaliar_modelo(modelo: str, perguntas: list[dict], modo_rag: bool) -> list[d
                 "score_medio_contexto": dados.get("score_medio_contexto", 0.0),
                 "cobertura_keywords_pct": cobertura,
                 "latencia_segundos": dados.get("latencia_segundos", 0),
-                "modo_rag": "sim" if modo_rag else "nao",
+                "modo_rag": "sim" if modo_rag else "não",
                 "data_execucao": datetime.now().isoformat(),
             })
         except Exception as e:
@@ -156,7 +156,7 @@ def avaliar_modelo(modelo: str, perguntas: list[dict], modo_rag: bool) -> list[d
                 "score_medio_contexto": 0.0,
                 "cobertura_keywords_pct": 0.0,
                 "latencia_segundos": 0,
-                "modo_rag": "sim" if modo_rag else "nao",
+                "modo_rag": "sim" if modo_rag else "não",
                 "data_execucao": datetime.now().isoformat(),
             })
 

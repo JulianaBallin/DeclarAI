@@ -2,9 +2,9 @@
 Modelo de banco de dados para documentos fiscais salvos pelo usuário.
 """
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, Boolean
-from sqlalchemy.sql import func
 from app.core.database import Base
+from sqlalchemy import Boolean, Column, DateTime, Integer, String, Text
+from sqlalchemy.sql import func
 
 
 class Documento(Base):
@@ -36,7 +36,9 @@ class Documento(Base):
     referencia_irpf = Column(String(500), nullable=True)
 
     # M1: validade fiscal e confiança da classificação
-    validade_fiscal = Column(Boolean, nullable=True)          # True = NF-e/NFC-e/NFSe; False = recibo/declaração
+    validade_fiscal = Column(
+        Boolean, nullable=True
+    )  # True = NF-e/NFC-e/NFSe; False = recibo/declaração
     confianca_classificacao = Column(String(10), nullable=True)  # alta | media | baixa
 
     # Conteúdo extraído
@@ -51,8 +53,10 @@ class Documento(Base):
     chave_acesso = Column(String(44), nullable=True)
     codigo_verificacao = Column(String(64), nullable=True)
     identificador_fiscal = Column(String(64), nullable=True)
-    cnpj_emitente = Column(String(20), nullable=True)    # CNPJ ou CPF do emitente
-    nome_beneficiario = Column(String(255), nullable=True)  # destinatário/paciente/aluno
+    cnpj_emitente = Column(String(20), nullable=True)  # CNPJ ou CPF do emitente
+    nome_beneficiario = Column(
+        String(255), nullable=True
+    )  # destinatário/paciente/aluno
     nome_tomador_nfs_e = Column(String(255), nullable=True)  # tomador/pagador (NFS-e)
 
     # Localização do arquivo no servidor

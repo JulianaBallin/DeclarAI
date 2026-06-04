@@ -2,16 +2,15 @@
 Rotas da API para consulta ao histórico de documentos e geração de resumo anual.
 """
 
+import logging
 from typing import List, Optional
-
-from fastapi import APIRouter, HTTPException, Depends, Query
-from fastapi.responses import Response
-from sqlalchemy.orm import Session
 
 from app.core.database import obter_db
 from app.schemas.document import DocumentoResumo
 from app.services.history_service import ServicoHistorico
-import logging
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import Response
+from sqlalchemy.orm import Session
 
 logger = logging.getLogger(__name__)
 
@@ -60,8 +59,12 @@ async def resumo_anual(
     ),
 )
 async def listar_historico(
-    categoria: Optional[str] = Query(None, description="Filtrar por categoria tributária"),
-    nome: Optional[str] = Query(None, description="Filtrar por nome do arquivo (parcial)"),
+    categoria: Optional[str] = Query(
+        None, description="Filtrar por categoria tributária"
+    ),
+    nome: Optional[str] = Query(
+        None, description="Filtrar por nome do arquivo (parcial)"
+    ),
     data_inicio: Optional[str] = Query(
         None, description="Data de início no formato YYYY-MM-DD"
     ),

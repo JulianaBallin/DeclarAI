@@ -5,10 +5,11 @@ Expõe endpoints para medir a qualidade da recuperação semântica e das
 respostas geradas, facilitando a análise de desempenho do sistema.
 """
 
-from pydantic import BaseModel
-from fastapi import APIRouter, HTTPException
-from app.services.evaluation_service import ServicoAvaliacao
 import logging
+
+from app.services.evaluation_service import ServicoAvaliacao
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
 
 logger = logging.getLogger(__name__)
 

@@ -13,15 +13,15 @@ Pipeline:
     6. Geração   → GeradorResposta monta e envia o prompt ao LLM (Ollama)
 """
 
+import logging
 from pathlib import Path
 
-from app.rag.loader import CarregadorDocumentos
-from app.rag.chunker import ChunkerTexto
-from app.rag.vector_store import BancoVetorial
-from app.rag.retriever import Recuperador
-from app.rag.generator import GeradorResposta
 from app.core.config import configuracoes
-import logging
+from app.rag.chunker import ChunkerTexto
+from app.rag.generator import GeradorResposta
+from app.rag.loader import CarregadorDocumentos
+from app.rag.retriever import Recuperador
+from app.rag.vector_store import BancoVetorial
 
 logger = logging.getLogger(__name__)
 
@@ -120,12 +120,14 @@ class ServicoRAG:
     # Consulta
     # -----------------------------------------------------------------------
 
-    async def responder_pergunta(self, pergunta: str, modelo: str | None = None) -> dict:
+    async def responder_pergunta(
+        self, pergunta: str, modelo: str | None = None
+    ) -> dict:
         """
         Executa o pipeline completo RAG para responder uma pergunta.
 
         Etapas:
-        1. Recupera chunks semânticamente relevantes do ChromaDB
+        1. Recupera chunks semanticamente relevantes do ChromaDB
         2. Formata o contexto para o prompt
         3. Envia ao LLM via Ollama e retorna a resposta
 

@@ -3,16 +3,18 @@ Configuração do banco de dados relacional com SQLAlchemy.
 Utiliza SQLite para persistência dos documentos salvos pelo usuário.
 """
 
-from sqlalchemy import create_engine, inspect, text
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
-from app.core.config import configuracoes
 import logging
+
+from app.core.config import configuracoes
+from sqlalchemy import create_engine, inspect, text
+from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 logger = logging.getLogger(__name__)
 
 
 class Base(DeclarativeBase):
     """Classe base para todos os modelos SQLAlchemy."""
+
     pass
 
 

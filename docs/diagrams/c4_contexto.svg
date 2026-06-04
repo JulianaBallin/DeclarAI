@@ -123,7 +123,7 @@
   <rect x="36" y="428" width="470" height="54" rx="8" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
   <text x="270" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#666">LEGENDA</text>
   <line x1="55" y1="460" x2="88" y2="460" stroke="#FF6B35" stroke-width="2"/>
-  <text x="96" y="464" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#aaa">Interacao sincrona (usuario - sistema)</text>
+  <text x="96" y="464" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#aaa">Interação síncrona (usuário - sistema)</text>
   <line x1="55" y1="474" x2="88" y2="474" stroke="#888" stroke-width="1.8" stroke-dasharray="5,3"/>
   <text x="96" y="478" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#aaa">Dados externos (offline / referencia)</text>
 

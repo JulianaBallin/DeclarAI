@@ -11,11 +11,12 @@ Re-ranking:
     mais finas que o bi-encoder e melhora a precisão para perguntas complexas.
 """
 
-from typing import List
-from sentence_transformers import CrossEncoder
-from app.rag.vector_store import BancoVetorial
-from app.core.config import configuracoes
 import logging
+from typing import List
+
+from app.core.config import configuracoes
+from app.rag.vector_store import BancoVetorial
+from sentence_transformers import CrossEncoder
 
 logger = logging.getLogger(__name__)
 

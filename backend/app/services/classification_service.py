@@ -23,7 +23,6 @@ import re
 from typing import Optional
 
 import httpx
-
 from app.core.config import configuracoes
 from app.services.document_kind_service import texto_eh_recibo_aluguel
 
@@ -46,81 +45,207 @@ def _evidencia_nfse(texto: str, nome_arquivo: str) -> bool:
 CATEGORIAS_TRIBUTARIAS: dict[str, dict] = {
     "Recibo Médico": {
         "palavras": [
-            "médico", "médica", "consulta", "clínica", "hospital", "saúde",
-            "dentista", "odontológico", "odontologia", "odontoclínica",
-            "procedimento odontológico", "tratamento odontológico",
-            "psicólogo", "psiquiatra", "fisioterapia", "fisioterapeuta",
-            "fonoaudiólogo", "terapia ocupacional", "terapia", "exame",
-            "laboratório", "farmácia", "medicamento", "remédio",
-            "plano de saúde", "cirurgia", "internação", "prontuário",
-            "receita médica", "nutricionista", "psicopedagogo",
-            "oftalmologia", "cardiologia", "ortopedia", "dermatologia",
-            "ginecologia", "pediatria", "anestesia", "radiologia",
-            "ressonância", "tomografia", "ultrassom", "colonoscopia",
-            "endoscopia", "hemograma",
-            "CRM", "CRO", "CRP", "CRF", "CREFITO",
-            "infinity odontologia", "odontologia ltda",
+            "médico",
+            "médica",
+            "consulta",
+            "clínica",
+            "hospital",
+            "saúde",
+            "dentista",
+            "odontológico",
+            "odontologia",
+            "odontoclínica",
+            "procedimento odontológico",
+            "tratamento odontológico",
+            "psicólogo",
+            "psiquiatra",
+            "fisioterapia",
+            "fisioterapeuta",
+            "fonoaudiólogo",
+            "terapia ocupacional",
+            "terapia",
+            "exame",
+            "laboratório",
+            "farmácia",
+            "medicamento",
+            "remédio",
+            "plano de saúde",
+            "cirurgia",
+            "internação",
+            "prontuário",
+            "receita médica",
+            "nutricionista",
+            "psicopedagogo",
+            "oftalmologia",
+            "cardiologia",
+            "ortopedia",
+            "dermatologia",
+            "ginecologia",
+            "pediatria",
+            "anestesia",
+            "radiologia",
+            "ressonância",
+            "tomografia",
+            "ultrassom",
+            "colonoscopia",
+            "endoscopia",
+            "hemograma",
+            "CRM",
+            "CRO",
+            "CRP",
+            "CRF",
+            "CREFITO",
+            "infinity odontologia",
+            "odontologia ltda",
         ],
         "peso": 2.0,
     },
     "Comprovante Educacional": {
         "palavras": [
-            "escola", "colégio", "universidade", "faculdade", "mensalidade",
-            "matrícula", "educação", "ensino", "curso", "aula", "professor",
-            "aluno", "semestre", "graduação", "pós-graduação", "pós graduação",
-            "MEC", "vestibular", "ENEM", "bolsa", "pedagógico", "creche",
-            "pré-escola", "técnico", "tecnológico", "especialização",
-            "IFAM", "UEA", "UFAM", "ensino médio", "ensino fundamental",
+            "escola",
+            "colégio",
+            "universidade",
+            "faculdade",
+            "mensalidade",
+            "matrícula",
+            "educação",
+            "ensino",
+            "curso",
+            "aula",
+            "professor",
+            "aluno",
+            "semestre",
+            "graduação",
+            "pós-graduação",
+            "pós graduação",
+            "MEC",
+            "vestibular",
+            "ENEM",
+            "bolsa",
+            "pedagógico",
+            "creche",
+            "pré-escola",
+            "técnico",
+            "tecnológico",
+            "especialização",
+            "IFAM",
+            "UEA",
+            "UFAM",
+            "ensino médio",
+            "ensino fundamental",
         ],
         "peso": 2.0,
     },
     "Informe de Rendimentos": {
         "palavras": [
-            "informe de rendimentos", "rendimentos", "salário", "remuneração",
-            "empregador", "INSS", "IRRF", "imposto retido", "imposto de renda retido",
-            "décimo terceiro", "13º salário", "férias", "rescisão", "CLT",
-            "holerite", "contracheque", "rendimento tributável", "rendimento isento",
-            "comprovante de rendimentos", "DIRF", "declaração anual",
+            "informe de rendimentos",
+            "rendimentos",
+            "salário",
+            "remuneração",
+            "empregador",
+            "INSS",
+            "IRRF",
+            "imposto retido",
+            "imposto de renda retido",
+            "décimo terceiro",
+            "13º salário",
+            "férias",
+            "rescisão",
+            "CLT",
+            "holerite",
+            "contracheque",
+            "rendimento tributável",
+            "rendimento isento",
+            "comprovante de rendimentos",
+            "DIRF",
+            "declaração anual",
         ],
         "peso": 2.0,
     },
     "Nota Fiscal": {
         "palavras": [
-            "nota fiscal", "NF-e", "NFC-e", "NF-Se", "NFe", "DANFE",
-            "chave de acesso", "valor dos serviços", "protocolo de autorização",
-            "ICMS", "IPI", "ISS", "produto", "produtos", "mercadoria",
-            "compra", "venda", "série", "número NF", "emissão fiscal",
-            "SEFAZ", "supermercado", "restaurante", "loja", "comércio",
+            "nota fiscal",
+            "NF-e",
+            "NFC-e",
+            "NF-Se",
+            "NFe",
+            "DANFE",
+            "chave de acesso",
+            "valor dos serviços",
+            "protocolo de autorização",
+            "ICMS",
+            "IPI",
+            "ISS",
+            "produto",
+            "produtos",
+            "mercadoria",
+            "compra",
+            "venda",
+            "série",
+            "número NF",
+            "emissão fiscal",
+            "SEFAZ",
+            "supermercado",
+            "restaurante",
+            "loja",
+            "comércio",
         ],
         "peso": 1.0,
     },
     "Previdência Privada": {
         "palavras": [
-            "previdência privada", "PGBL", "VGBL", "fundo de pensão",
-            "contribuição previdenciária", "plano de previdência",
-            "previdência complementar", "pecúlio",
+            "previdência privada",
+            "PGBL",
+            "VGBL",
+            "fundo de pensão",
+            "contribuição previdenciária",
+            "plano de previdência",
+            "previdência complementar",
+            "pecúlio",
         ],
         "peso": 2.0,
     },
     "Doações": {
         "palavras": [
-            "doação", "donatário", "recibo de doação", "ONG", "entidade",
-            "filantropia", "beneficente", "sem fins lucrativos", "associação",
-            "fundação", "doador",
+            "doação",
+            "donatário",
+            "recibo de doação",
+            "ONG",
+            "entidade",
+            "filantropia",
+            "beneficente",
+            "sem fins lucrativos",
+            "associação",
+            "fundação",
+            "doador",
         ],
         "peso": 1.5,
     },
     "Pensão Alimentícia": {
         "palavras": [
-            "pensão alimentícia", "alimentos", "pensionista", "decisão judicial",
-            "acordo judicial", "alimentando", "pensão", "guarda",
+            "pensão alimentícia",
+            "alimentos",
+            "pensionista",
+            "decisão judicial",
+            "acordo judicial",
+            "alimentando",
+            "pensão",
+            "guarda",
         ],
         "peso": 2.0,
     },
     "Aluguel": {
         "palavras": [
-            "aluguel", "locação", "locatário", "locador", "imóvel", "contrato",
-            "recibo de aluguel", "arrendamento", "IPTU", "condomínio",
+            "aluguel",
+            "locação",
+            "locatário",
+            "locador",
+            "imóvel",
+            "contrato",
+            "recibo de aluguel",
+            "arrendamento",
+            "IPTU",
+            "condomínio",
         ],
         "peso": 1.5,
     },
@@ -170,7 +295,9 @@ class ServicoClassificacao:
     Para experimentos de ablation (regras puras), use classificar_por_regras_puro().
     """
 
-    def _documento_fiscal_eletronico_evidente(self, texto: str, nome_arquivo: str) -> bool:
+    def _documento_fiscal_eletronico_evidente(
+        self, texto: str, nome_arquivo: str
+    ) -> bool:
         if texto_eh_recibo_aluguel(f"{texto}\n{nome_arquivo}"):
             return False
         blob = f"{texto}\n{nome_arquivo}"
@@ -193,7 +320,8 @@ class ServicoClassificacao:
             return True
         digitos = re.sub(r"\D", "", blob)
         if not re.search(
-            r"chave\s+(de\s+)?acesso|danfe|nf-?e|nfce|nfs-?e|nfe|nota\s+fiscal", t,
+            r"chave\s+(de\s+)?acesso|danfe|nf-?e|nfce|nfs-?e|nfe|nota\s+fiscal",
+            t,
         ):
             return False
         return bool(re.search(r"\d{44}", digitos))
@@ -270,7 +398,9 @@ class ServicoClassificacao:
             logger.warning("LLM interno: %s", e)
             return None, "baixa"
 
-    def classificar_com_confianca(self, texto: str, nome_arquivo: str = "") -> tuple[str, str]:
+    def classificar_com_confianca(
+        self, texto: str, nome_arquivo: str = ""
+    ) -> tuple[str, str]:
         """
         Classifica usando regras e, se inconclusivo, LLM interno.
         Chamado pelo ServicoClassificacaoLLM como fallback.
@@ -343,4 +473,7 @@ class ServicoClassificacao:
         return CATEGORIA_REVISAO, "baixa"
 
     def listar_categorias(self) -> list[str]:
-        return list(CATEGORIAS_TRIBUTARIAS.keys()) + [CATEGORIA_PADRAO, CATEGORIA_REVISAO]
+        return list(CATEGORIAS_TRIBUTARIAS.keys()) + [
+            CATEGORIA_PADRAO,
+            CATEGORIA_REVISAO,
+        ]

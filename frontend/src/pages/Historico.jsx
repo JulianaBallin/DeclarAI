@@ -13,25 +13,34 @@ import {
 } from "lucide-react";
 import { listarHistorico, excluirDocumento } from "../services/api";
 
-const ICONES_CAT = {
-  "Recibo Medico": Stethoscope,
-  "Recibo Médico": Stethoscope,
-  "Comprovante Educacional": GraduationCap,
-  "Informe de Rendimentos": Building2,
-  "Nota Fiscal": FileText,
-  "Previdencia Privada": PiggyBank,
-  "Previdência Privada": PiggyBank,
-  "Doacoes": HeartHandshake,
-  "Doações": HeartHandshake,
-  "Pensao Alimenticia": Landmark,
-  "Pensão Alimentícia": Landmark,
-  "Aluguel": Home,
-  "Documento Nao Classificado": FileText,
-  "Documento Não Classificado": FileText,
-};
+const CATEGORIAS_ICONES = [
+  ["Recibo Médico", Stethoscope],
+  ["Comprovante Educacional", GraduationCap],
+  ["Informe de Rendimentos", Building2],
+  ["Nota Fiscal", FileText],
+  ["Previdência Privada", PiggyBank],
+  ["Doações", HeartHandshake],
+  ["Pensão Alimentícia", Landmark],
+  ["Aluguel", Home],
+  ["Documento Não Classificado", FileText],
+];
+
+function normalizarCategoria(categoria) {
+  return (categoria || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+}
+
+const ICONES_CAT = Object.fromEntries(
+  CATEGORIAS_ICONES.map(([categoria, Icone]) => [
+    normalizarCategoria(categoria),
+    Icone,
+  ])
+);
 
 function IconeCategoria({ categoria }) {
-  const Icone = ICONES_CAT[categoria] || FileText;
+  const Icone = ICONES_CAT[normalizarCategoria(categoria)] || FileText;
   return <Icone size={16} aria-hidden="true" />;
 }
 

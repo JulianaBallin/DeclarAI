@@ -2,10 +2,11 @@
 Rotas da API para o chat com RAG e gerenciamento da base de conhecimento.
 """
 
-from fastapi import APIRouter, HTTPException
-from app.schemas.document import RequisicaoChat, RespostaChat
-from app.services.rag_service import ServicoRAG, get_servico_rag
 import logging
+
+from app.schemas.document import RequisicaoChat, RespostaChat
+from app.services.rag_service import get_servico_rag
+from fastapi import APIRouter, HTTPException
 
 logger = logging.getLogger(__name__)
 
@@ -83,6 +84,7 @@ async def status_rag():
 
         # Verifica disponibilidade do Ollama
         from app.rag.generator import GeradorResposta
+
         gerador = GeradorResposta()
         status["ollama_disponivel"] = await gerador.verificar_disponibilidade()
 

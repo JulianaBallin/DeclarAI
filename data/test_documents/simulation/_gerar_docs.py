@@ -267,8 +267,8 @@ def gerar_pdf_conta_hospitalar():
         ("Diarias hospitalares (4x R$ 1.200,00)", "R$  4.800,00"),
         ("Honorarios medicos - cirurgia",          "R$  3.500,00"),
         ("Anestesia",                              "R$  1.200,00"),
-        ("Medicamentos utilizados na internacao",  "R$    890,00"),
-        ("Materiais cirurgicos",                   "R$    650,00"),
+        ("Medicamentos utilizados na internação",  "R$    890,00"),
+        ("Materiais cirúrgicos",                   "R$    650,00"),
         ("Exames laboratoriais",                   "R$    380,00"),
         ("Exames de imagem (tomografia)",          "R$    520,00"),
     ]
@@ -285,7 +285,7 @@ def gerar_pdf_conta_hospitalar():
     pdf.cell(140, 8, "TOTAL DA CONTA HOSPITALAR:", ln=False)
     pdf.cell(0, 8, "R$ 11.940,00", ln=True, align="R")
     pdf.set_font("Helvetica", "", 10)
-    pdf.cell(0, 6, "Pago pelo plano de saude: R$ 9.552,00  |  Coparticipacao: R$ 2.388,00", ln=True)
+    pdf.cell(0, 6, "Pago pelo plano de saúde: R$ 9.552,00  |  Coparticipação: R$ 2.388,00", ln=True)
     pdf.ln(4)
 
     pdf.line(10, pdf.get_y(), 200, pdf.get_y())
@@ -293,9 +293,9 @@ def gerar_pdf_conta_hospitalar():
     pdf.set_text_color(0, 120, 0)
     pdf.set_font("Helvetica", "", 10)
     pdf.multi_cell(0, 6,
-        "IRPF: Despesas hospitalares (incluindo medicamentos utilizados na internacao)\n"
-        "sao dedutíveis - codigos 21 (Medicos) e 26 (Planos). Deduzir apenas a coparticipacao\n"
-        "nao coberta pelo plano: R$ 2.388,00.")
+        "IRPF: Despesas hospitalares (incluindo medicamentos utilizados na internação)\n"
+        "são dedutíveis - códigos 21 (Médicos) e 26 (Planos). Deduzir apenas a coparticipação\n"
+        "não coberta pelo plano: R$ 2.388,00.")
     pdf.set_text_color(0, 0, 0)
     pdf.ln(6)
 

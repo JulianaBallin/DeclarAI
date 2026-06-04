@@ -21,12 +21,11 @@ from dataclasses import dataclass
 from typing import Optional
 
 import httpx
-
 from app.core.config import configuracoes
 from app.services.classification_service import (
-    CATEGORIAS_VALIDAS,
     CATEGORIA_PADRAO,
     CATEGORIA_REVISAO,
+    CATEGORIAS_VALIDAS,
     ServicoClassificacao,
 )
 
@@ -127,7 +126,9 @@ class ServicoClassificacaoLLM:
             origem="nao_classificado",
         )
 
-    def classificar_compativel(self, texto: str, nome_arquivo: str = "") -> tuple[str, str]:
+    def classificar_compativel(
+        self, texto: str, nome_arquivo: str = ""
+    ) -> tuple[str, str]:
         resultado = self.classificar(texto, nome_arquivo)
         return resultado.categoria, resultado.confianca
 
@@ -163,7 +164,9 @@ class ServicoClassificacaoLLM:
                 latencia_ms = (time.perf_counter() - inicio) * 1000
 
                 texto_resposta = resposta.json().get("response", "").strip()
-                resultado = self._parsear_resposta(texto_resposta, latencia_ms, tentativa)
+                resultado = self._parsear_resposta(
+                    texto_resposta, latencia_ms, tentativa
+                )
                 if resultado is not None:
                     return resultado
 
@@ -174,7 +177,9 @@ class ServicoClassificacaoLLM:
                 )
 
             except httpx.ConnectError:
-                logger.warning("Tentativa %d: Ollama indisponível (conexão).", tentativa)
+                logger.warning(
+                    "Tentativa %d: Ollama indisponível (conexão).", tentativa
+                )
                 return None
             except httpx.TimeoutException:
                 logger.warning("Tentativa %d: timeout ao chamar Ollama.", tentativa)
@@ -184,7 +189,9 @@ class ServicoClassificacaoLLM:
                 )
                 return None
             except Exception as e:
-                logger.error("Tentativa %d: erro inesperado - %s", tentativa, e, exc_info=True)
+                logger.error(
+                    "Tentativa %d: erro inesperado - %s", tentativa, e, exc_info=True
+                )
 
         return None
 

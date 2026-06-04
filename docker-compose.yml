@@ -2,7 +2,7 @@
 # ============================================================
 # DeclaraAI - Docker Compose
 #
-# Servicos:
+# Serviços:
 #   - backend  : API FastAPI com pipeline RAG (porta 8000)
 #   - frontend : Interface React + Nginx (porta 3000)
 #   - ollama   : Servidor de LLM local (porta 11434)
@@ -37,7 +37,7 @@ services:
       - TOP_K_RESULTADOS=5
       - DEBUG=false
     volumes:
-      # Monta o diretório de dados do host no container
+      # Monta o diretório de dados do host no contêiner
       - ./data:/app/data
     depends_on:
       ollama:
@@ -54,8 +54,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        # VITE_API_URL nao e necessario em Docker pois o nginx faz proxy de /api
-        # para o backend internamente. Deixado aqui para referencia.
+        # VITE_API_URL não é necessário em Docker pois o nginx faz proxy de /api
+        # para o backend internamente. Deixado aqui para referência.
         VITE_API_URL: ""
     container_name: declaraai-frontend
     ports:

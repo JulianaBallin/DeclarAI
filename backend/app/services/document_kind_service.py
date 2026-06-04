@@ -77,7 +77,9 @@ def texto_recibo_comprovante_que_nao_e_nfs_e(texto: str) -> bool:
         t,
     ):
         return True
-    if re.search(r"recebi\s+do\(?a\)?\s+sr\(?a\)?\s*\.|recebemos\s+de", t) and re.search(
+    if re.search(
+        r"recebi\s+do\(?a\)?\s+sr\(?a\)?\s*\.|recebemos\s+de", t
+    ) and re.search(
         r"crm|cardiolog|m[ée]dico|consulta\s+m[ée]dica|cl[íi]nica",
         t,
     ):
@@ -114,8 +116,8 @@ _REF_IRPF_POR_CATEGORIA: dict[str, dict] = {
     "Recibo Médico": {
         "ficha": "Pagamentos Efetuados",
         "codigo": "09 - Médico (inclusive residente) / 10 - Dentista / "
-                  "11 - Psicólogo / 12 - Fisioterapeuta / 13 - Fonoaudiólogo / "
-                  "21 - Médico no exterior",
+        "11 - Psicólogo / 12 - Fisioterapeuta / 13 - Fonoaudiólogo / "
+        "21 - Médico no exterior",
         "dedutivel": True,
         "limite": None,
         "observacao": (
@@ -138,7 +140,7 @@ _REF_IRPF_POR_CATEGORIA: dict[str, dict] = {
     },
     "Informe de Rendimentos": {
         "ficha": "Rendimentos Tributáveis Recebidos de PJ / Rendimentos Isentos / "
-                 "Rendimentos Tributados Exclusivamente na Fonte",
+        "Rendimentos Tributados Exclusivamente na Fonte",
         "codigo": "N/A - preencher conforme natureza dos rendimentos",
         "dedutivel": False,
         "limite": None,
@@ -265,8 +267,9 @@ def ajustar_categoria_irpf_por_tipo_documento(
             )
         ):
             return "Pensão Alimentícia"
-        if categoria_sugerida == "Previdência Privada" or _texto_parece_previdencia_pgbl(
-            texto
+        if (
+            categoria_sugerida == "Previdência Privada"
+            or _texto_parece_previdencia_pgbl(texto)
         ):
             return "Previdência Privada"
         return "Documento Não Classificado"
@@ -279,9 +282,10 @@ def ajustar_categoria_irpf_por_tipo_documento(
         )
     ):
         return "Nota Fiscal"
-    if "informe" in (tipo_resumido or "").lower() and "rendimento" in (
-        tipo_resumido or ""
-    ).lower():
+    if (
+        "informe" in (tipo_resumido or "").lower()
+        and "rendimento" in (tipo_resumido or "").lower()
+    ):
         return "Informe de Rendimentos"
     return categoria_sugerida
 
@@ -293,11 +297,13 @@ def texto_declara_ficticio_ou_teste_sem_validade_fiscal(texto: str) -> bool:
     if re.search(
         r"fins?\s+de\s+teste|teste\s+de\s+sistema|apenas\s+para\s+teste", t
     ) and re.search(
-        r"sem\s+validade\s+fiscal|n[aã]o\s+tem\s+validade", t,
+        r"sem\s+validade\s+fiscal|n[aã]o\s+tem\s+validade",
+        t,
     ):
         return True
     if re.search(r"n[aã]o\s+tem\s+validade\s+fiscal", t) and re.search(
-        r"teste|fict|simul", t,
+        r"teste|fict|simul",
+        t,
     ):
         return True
     return False
@@ -377,7 +383,9 @@ def inferir_tipo_documento(texto: str, nome_arquivo: str = "") -> str:
             r"consulta\s+m[ée]dica|cardiolog|crm|m[ée]dico|cl[íi]nica",
             b,
         ):
-            return "Recibo de consulta médica (não confundir com menção a NFS-e no rodapé)"
+            return (
+                "Recibo de consulta médica (não confundir com menção a NFS-e no rodapé)"
+            )
         return "Recibo ou comprovante de serviço de saúde (texto nega nota de prefeitura / NFS-e)"
 
     if re.search(r"comprovante\s+de\s+pagamento", b) and (
@@ -399,9 +407,14 @@ def inferir_tipo_documento(texto: str, nome_arquivo: str = "") -> str:
         if re.search(r"\bdanfe\b", b):
             return "NFC-e + DANFE (cupom / documento auxiliar)"
         return "NFC-e - Nota Fiscal de Consumidor Eletrônica"
-    if re.search(r"\bnf[\s-]?se\b", b) or re.search(
-        r"\bnfse\b", b
-    ) or (re.search(r"nfs-?e", b) and not texto_recibo_comprovante_que_nao_e_nfs_e(texto)):
+    if (
+        re.search(r"\bnf[\s-]?se\b", b)
+        or re.search(r"\bnfse\b", b)
+        or (
+            re.search(r"nfs-?e", b)
+            and not texto_recibo_comprovante_que_nao_e_nfs_e(texto)
+        )
+    ):
         return "NFSe - Nota Fiscal de Serviços Eletrônica"
     if re.search(r"\bnf[\s-]?e\b", b) or re.search(r"\bnfe\b", b):
         return "NF-e - Nota Fiscal Eletrônica (modelo 55)"
@@ -429,7 +442,9 @@ def inferir_tipo_documento(texto: str, nome_arquivo: str = "") -> str:
     ):
         return "Documento de pensão alimentícia / judicial"
 
-    if "recibo" in b and any(x in b for x in ("médico", "medico", "clínica", "clinica", "odontologia")):
+    if "recibo" in b and any(
+        x in b for x in ("médico", "medico", "clínica", "clinica", "odontologia")
+    ):
         return "Recibo ou comprovante de serviço de saúde (sem layout de NF-e)"
 
     if re.search(r"recibo\s+de\s+pagamento", b) and any(
@@ -509,9 +524,7 @@ def inferir_tipo_documento_resumido(texto: str, nome_arquivo: str = "") -> str:
         return "Comprovante"
     d = inferir_tipo_documento(texto, nome_arquivo)
     if (not texto_recibo_comprovante_que_nao_e_nfs_e(texto)) and (
-        "nota fiscal de servi" in b
-        or re.search(r"\bnfse\b", b)
-        or "nfs-e" in b
+        "nota fiscal de servi" in b or re.search(r"\bnfse\b", b) or "nfs-e" in b
     ):
         return "NFS-e"
     if d.lower().startswith("comprovante") and "nota fiscal" not in d[:60].lower():
@@ -541,8 +554,7 @@ def inferir_categoria_conteudo(texto: str) -> str:
         r"recibo\s+de\s+pens|pens[aã]o\s+aliment",
         t,
     ) and re.search(
-        r"alimentante|alimentando|representante|judicial|"
-        r"processo|senten[çc]a|vara",
+        r"alimentante|alimentando|representante|judicial|" r"processo|senten[çc]a|vara",
         t,
     ):
         return "Pensão alimentícia"
@@ -562,13 +574,17 @@ def inferir_categoria_conteudo(texto: str) -> str:
         return "Educação / curso livre"
     if _texto_parece_saude(texto):
         return "Saúde"
-    if _texto_parece_curso_nao_mec(texto) and re.search(
-        r"recibo|comprovante|aluno|m[oó]dulo|especializ",
-        t,
-    ) and re.search(
-        r"idiom|ingl[êe]s|l[íi]ngua\s+estran|fisk|ccaa|wizard|speak|"
-        r"curso[s]?\s+livre|n[aã]o\s+dedut|curso\s+de\s+ingl|curso\s+de\s+idio",
-        t,
+    if (
+        _texto_parece_curso_nao_mec(texto)
+        and re.search(
+            r"recibo|comprovante|aluno|m[oó]dulo|especializ",
+            t,
+        )
+        and re.search(
+            r"idiom|ingl[êe]s|l[íi]ngua\s+estran|fisk|ccaa|wizard|speak|"
+            r"curso[s]?\s+livre|n[aã]o\s+dedut|curso\s+de\s+ingl|curso\s+de\s+idio",
+            t,
+        )
     ):
         return "Educação / curso livre"
     if _texto_parece_educacao(texto):
@@ -686,7 +702,9 @@ def _sinais_educacao_instrucao_dedutivel(texto: str) -> bool:
         t,
     ):
         return True
-    if re.search(r"dedu[çc][aã]o\s+irpf|irpf.*c[óo]digo|ficha.{0,40}pagamentos", t) and (
+    if re.search(
+        r"dedu[çc][aã]o\s+irpf|irpf.*c[óo]digo|ficha.{0,40}pagamentos", t
+    ) and (
         re.search(r"c[óo]digo\s*0?1\b|c[óo]digo\s*01", t)
         and re.search(
             r"instru[çc][aã]o|ensino\s+(m[ée]dio|regular|fundamental)|col[eé]gio|escola",
@@ -724,8 +742,7 @@ def _texto_parece_previdencia_pgbl(texto: str) -> bool:
         return False
     tem_pgbl = bool(
         re.search(
-            r"\bpgbl\b|plano\s+gerador\s+de\s+benef[íi]cio|"
-            r"plano\s+gerador",
+            r"\bpgbl\b|plano\s+gerador\s+de\s+benef[íi]cio|" r"plano\s+gerador",
             t,
         )
     )
@@ -829,9 +846,11 @@ def resumir_status_irpf(
             "Lançar em Pagamentos Efetuados (código 70) - aluguel pago a pessoa física",
             _MOT_IRPF_ALUGUEL_PF,
         )
-    if categoria_conteudo == "Pensão alimentícia" or (
-        categoria_interna == "Pensão Alimentícia"
-    ) or texto_eh_recibo_pensao_alimenticia(texto):
+    if (
+        categoria_conteudo == "Pensão alimentícia"
+        or (categoria_interna == "Pensão Alimentícia")
+        or texto_eh_recibo_pensao_alimenticia(texto)
+    ):
         if _texto_tem_sinais_pensao_judicial(texto):
             return par(
                 "Potencialmente dedutível - confirmar decisão judicial e "
@@ -842,19 +861,17 @@ def resumir_status_irpf(
             "Potencialmente dedutível - confirmar título e documentação de pensão",
             _MOT_IRPF_PENSAO_SEM,
         )
-    if _texto_parece_previdencia_pgbl(texto) or categoria_conteudo.startswith(
-        "Previdência"
-    ) or categoria_interna == "Previdência Privada":
+    if (
+        _texto_parece_previdencia_pgbl(texto)
+        or categoria_conteudo.startswith("Previdência")
+        or categoria_interna == "Previdência Privada"
+    ):
         return par(
             "Potencialmente dedutível - confirmar limite global de 12% e plano PGBL",
             _MOT_IRPF_PGBL,
         )
     alvo_sau = categoria_conteudo == "Saúde" or _texto_parece_saude(texto)
-    if (
-        len(nb) >= 3
-        and alvo_sau
-        and _texto_parece_odontologia(texto)
-    ):
+    if len(nb) >= 3 and alvo_sau and _texto_parece_odontologia(texto):
         return par(
             "Potencialmente dedutível - confirmar titular/dependente",
             _MOT_IRPF_ODO,
@@ -1081,48 +1098,160 @@ def info_categoria(categoria: str) -> dict:
 # Cada entrada: (padrões de detecção, mensagem de aviso, exceções que tornam dedutível)
 _PADROES_NAO_DEDUTIVEIS: list[tuple[list[str], str, list[str]]] = [
     (
-        ["roupa", "vestuário", "vestuario", "calçado", "calcado", "tênis", "tenis",
-         "camisa", "calça", "calca", "vestido", "saia", "blusa", "camiseta",
-         "sapato", "sandália", "sandalia", "moda", "confecção", "confeccao",
-         "renner", "riachuelo", "c&a ", " cea ", "marisa", "zara", "hering",
-         "track&field", "lupo", "reserva", "osklen", "animale", "shoulder",
-         "loja de roupas", "loja de calçados", "boutique"],
+        [
+            "roupa",
+            "vestuário",
+            "vestuario",
+            "calçado",
+            "calcado",
+            "tênis",
+            "tenis",
+            "camisa",
+            "calça",
+            "calca",
+            "vestido",
+            "saia",
+            "blusa",
+            "camiseta",
+            "sapato",
+            "sandália",
+            "sandalia",
+            "moda",
+            "confecção",
+            "confeccao",
+            "renner",
+            "riachuelo",
+            "c&a ",
+            " cea ",
+            "marisa",
+            "zara",
+            "hering",
+            "track&field",
+            "lupo",
+            "reserva",
+            "osklen",
+            "animale",
+            "shoulder",
+            "loja de roupas",
+            "loja de calçados",
+            "boutique",
+        ],
         "Roupas e calçados NÃO são dedutíveis no IRPF, independentemente do valor ou finalidade.",
         [],
     ),
     (
-        ["smartphone", "celular", "iphone", "notebook", "computador", "tablet",
-         "televisão", "televisao", "tv ", " tv\n", "monitor", "eletrodoméstico",
-         "eletrodomestico", "geladeira", "fogão", "fogao", "máquina de lavar",
-         "lava-louças", "ar condicionado", "aspirador", "liquidificador",
-         "americanas", "magazine luiza", "magalu", "casas bahia", "fast shop",
-         "kabum", "ponto frio", "extra.com"],
+        [
+            "smartphone",
+            "celular",
+            "iphone",
+            "notebook",
+            "computador",
+            "tablet",
+            "televisão",
+            "televisao",
+            "tv ",
+            " tv\n",
+            "monitor",
+            "eletrodoméstico",
+            "eletrodomestico",
+            "geladeira",
+            "fogão",
+            "fogao",
+            "máquina de lavar",
+            "lava-louças",
+            "ar condicionado",
+            "aspirador",
+            "liquidificador",
+            "americanas",
+            "magazine luiza",
+            "magalu",
+            "casas bahia",
+            "fast shop",
+            "kabum",
+            "ponto frio",
+            "extra.com",
+        ],
         "Eletrônicos e eletrodomésticos NÃO são dedutíveis no IRPF.",
         [],
     ),
     (
-        ["supermercado", "hipermercado", "mercado", "mercearia", "hortifruti",
-         "açougue", "padaria", "pão de açúcar", "carrefour", "extra ", "walmart",
-         "assaí", "atacadão", "comper", "savegnago", "send", "super muffato",
-         "condor", "rede mais", "mercadinhos são luiz"],
+        [
+            "supermercado",
+            "hipermercado",
+            "mercado",
+            "mercearia",
+            "hortifruti",
+            "açougue",
+            "padaria",
+            "pão de açúcar",
+            "carrefour",
+            "extra ",
+            "walmart",
+            "assaí",
+            "atacadão",
+            "comper",
+            "savegnago",
+            "send",
+            "super muffato",
+            "condor",
+            "rede mais",
+            "mercadinhos são luiz",
+        ],
         (
             "Compras de supermercado e alimentos NÃO são dedutíveis no IRPF. "
             "Exceto alimentos incluídos em conta hospitalar de internação."
         ),
-        ["internação", "conta hospitalar", "hospital", "dieta enteral", "nutrição parenteral"],
+        [
+            "internação",
+            "conta hospitalar",
+            "hospital",
+            "dieta enteral",
+            "nutrição parenteral",
+        ],
     ),
     (
-        ["combustível", "combustivel", "gasolina", "etanol", "diesel", "gnv",
-         "posto de combustível", "posto ipiranga", "posto shell", "posto petrobras",
-         "posto br", "ale combustíveis", "raízen"],
+        [
+            "combustível",
+            "combustivel",
+            "gasolina",
+            "etanol",
+            "diesel",
+            "gnv",
+            "posto de combustível",
+            "posto ipiranga",
+            "posto shell",
+            "posto petrobras",
+            "posto br",
+            "ale combustíveis",
+            "raízen",
+        ],
         "Combustível NÃO é dedutível no IRPF para pessoa física.",
         [],
     ),
     (
-        ["restaurante", "lanchonete", "pizzaria", "hamburger", "hambúrguer",
-         "churrascaria", "sushi", "delivery", "ifood", "uber eats", "rappi",
-         "mcdonalds", "mc donalds", "burguer king", "bob's", "subway",
-         "refeição", "almoço", "jantar", "café da manhã", "bar e restaurante"],
+        [
+            "restaurante",
+            "lanchonete",
+            "pizzaria",
+            "hamburger",
+            "hambúrguer",
+            "churrascaria",
+            "sushi",
+            "delivery",
+            "ifood",
+            "uber eats",
+            "rappi",
+            "mcdonalds",
+            "mc donalds",
+            "burguer king",
+            "bob's",
+            "subway",
+            "refeição",
+            "almoço",
+            "jantar",
+            "café da manhã",
+            "bar e restaurante",
+        ],
         (
             "Alimentação em restaurantes NÃO é dedutível no IRPF. "
             "Apenas alimentação prescrita como parte de tratamento hospitalar é dedutível."
@@ -1130,46 +1259,137 @@ _PADROES_NAO_DEDUTIVEIS: list[tuple[list[str], str, list[str]]] = [
         ["internação", "dieta hospitalar", "nutrição clínica"],
     ),
     (
-        ["curso de inglês", "curso de ingles", "curso de espanhol",
-         "curso de francês", "curso de frances", "curso de alemão", "curso de alemao",
-         "curso de mandarim", "curso de japonês", "curso de japonês",
-         "curso livre", "curso profissionalizante", "curso de idiomas",
-         "speak up", "wizard", "fisk", "ccaa", "cultura inglesa",
-         "yázigi", "yazigi", "skill idiomas", "english", "english school",
-         "ensino de idiomas", "língua estrangeira", "lingua estrangeira"],
+        [
+            "curso de inglês",
+            "curso de ingles",
+            "curso de espanhol",
+            "curso de francês",
+            "curso de frances",
+            "curso de alemão",
+            "curso de alemao",
+            "curso de mandarim",
+            "curso de japonês",
+            "curso de japonês",
+            "curso livre",
+            "curso profissionalizante",
+            "curso de idiomas",
+            "speak up",
+            "wizard",
+            "fisk",
+            "ccaa",
+            "cultura inglesa",
+            "yázigi",
+            "yazigi",
+            "skill idiomas",
+            "english",
+            "english school",
+            "ensino de idiomas",
+            "língua estrangeira",
+            "lingua estrangeira",
+        ],
         _MOT_IRPF_NAO_CURSO_LIVRE_IDIOMAS,
         [],
     ),
     (
-        ["perfume", "cosmético", "cosmetico", "maquiagem", "batom",
-         "creme facial", "creme corporal", "shampoo", "condicionador", "tintura",
-         "salão de beleza", "cabeleireiro", "manicure", "pedicure", "depilação",
-         "o boticário", "natura ", "avon ", "vult", "quem disse berenice",
-         "mac cosméticos", "sephora", "beauty", "perfumaria"],
+        [
+            "perfume",
+            "cosmético",
+            "cosmetico",
+            "maquiagem",
+            "batom",
+            "creme facial",
+            "creme corporal",
+            "shampoo",
+            "condicionador",
+            "tintura",
+            "salão de beleza",
+            "cabeleireiro",
+            "manicure",
+            "pedicure",
+            "depilação",
+            "o boticário",
+            "natura ",
+            "avon ",
+            "vult",
+            "quem disse berenice",
+            "mac cosméticos",
+            "sephora",
+            "beauty",
+            "perfumaria",
+        ],
         "Cosméticos, perfumes e serviços de beleza NÃO são dedutíveis no IRPF.",
         [
-            "base de cálculo", "base de calculo", "nota fiscal de servi",
-            "nfs-e", "nfse", "cultura inglesa", "ensino de idiomas",
+            "base de cálculo",
+            "base de calculo",
+            "nota fiscal de servi",
+            "nfs-e",
+            "nfse",
+            "cultura inglesa",
+            "ensino de idiomas",
         ],
     ),
     (
-        ["academia", "ginástica", "musculação", "musculacao", "crossfit",
-         "pilates", "yoga", "spinning", "smartfit", "bodytech", "bio ritmo",
-         "runner", "cia athletica", "swim", "natação", "natacao", "futebol",
-         "tênis esportivo", "clube esportivo", "mensalidade academia"],
+        [
+            "academia",
+            "ginástica",
+            "musculação",
+            "musculacao",
+            "crossfit",
+            "pilates",
+            "yoga",
+            "spinning",
+            "smartfit",
+            "bodytech",
+            "bio ritmo",
+            "runner",
+            "cia athletica",
+            "swim",
+            "natação",
+            "natacao",
+            "futebol",
+            "tênis esportivo",
+            "clube esportivo",
+            "mensalidade academia",
+        ],
         (
             "Academia e atividades físicas NÃO são dedutíveis como despesa médica no IRPF. "
             "Exceção: se prescrita por médico como tratamento de saúde, com laudo e CID, "
             "pode ser dedutível - consulte um contador."
         ),
-        ["prescrição médica", "prescricao medica", "laudo médico", "fisioterapia", "reabilitação"],
+        [
+            "prescrição médica",
+            "prescricao medica",
+            "laudo médico",
+            "fisioterapia",
+            "reabilitação",
+        ],
     ),
     (
-        ["farmácia", "farmacia", "drogaria", "drogasil", "raia drogasil",
-         "ultrafarma", "panvel", "droga raia", "pacheco", "pague menos",
-         "farmácias associadas", "medicamento", "remédio", "remedio",
-         "comprimido", "cápsula", "capsula", "xarope", "pomada", "antibiótico",
-         "antibiotic", "vitamina", "suplemento alimentar"],
+        [
+            "farmácia",
+            "farmacia",
+            "drogaria",
+            "drogasil",
+            "raia drogasil",
+            "ultrafarma",
+            "panvel",
+            "droga raia",
+            "pacheco",
+            "pague menos",
+            "farmácias associadas",
+            "medicamento",
+            "remédio",
+            "remedio",
+            "comprimido",
+            "cápsula",
+            "capsula",
+            "xarope",
+            "pomada",
+            "antibiótico",
+            "antibiotic",
+            "vitamina",
+            "suplemento alimentar",
+        ],
         (
             "Medicamentos adquiridos em farmácia NÃO são dedutíveis no IRPF. "
             "A única exceção é quando o medicamento está incluído na conta emitida pelo "
@@ -1203,7 +1423,13 @@ _PADROES_NAO_DEDUTIVEIS: list[tuple[list[str], str, list[str]]] = [
             "VGBL NÃO é dedutível no IRPF - é tratado como seguro de vida. "
             "Apenas PGBL (código 36) é dedutível, até 12% da renda bruta tributável."
         ),
-        ["pgbl", "p g b l", "plano pgbl", "plano pgb", "plano gerador de benefício livre"],
+        [
+            "pgbl",
+            "p g b l",
+            "plano pgbl",
+            "plano pgb",
+            "plano gerador de benefício livre",
+        ],
     ),
 ]
 
@@ -1254,7 +1480,9 @@ def avaliar_dedutibilidade_conteudo(texto: str, categoria: str) -> dict:
 
     # Verificação adicional: doação para pessoa física ou entidade não habilitada
     if categoria == "Doações":
-        if re.search(r"\b(cpf|pessoa física|amigo|familiar|vizinho|igreja|templo|culto)\b", t):
+        if re.search(
+            r"\b(cpf|pessoa física|amigo|familiar|vizinho|igreja|templo|culto)\b", t
+        ):
             return {
                 "dedutivel": False,
                 "aviso": (
@@ -1268,11 +1496,22 @@ def avaliar_dedutibilidade_conteudo(texto: str, categoria: str) -> dict:
     # Verificação: pensão alimentícia sem decisão judicial
     if categoria == "Pensão Alimentícia":
         tem_judicial = any(
-            p in t for p in [
-                "decisão judicial", "decisao judicial", "sentença", "sentenca",
-                "processo", "acordo judicial", "escritura pública", "escritura publica",
-                "homologado", "vara de família", "vara de familia",
-                "código 30", "codigo 30", "despach",
+            p in t
+            for p in [
+                "decisão judicial",
+                "decisao judicial",
+                "sentença",
+                "sentenca",
+                "processo",
+                "acordo judicial",
+                "escritura pública",
+                "escritura publica",
+                "homologado",
+                "vara de família",
+                "vara de familia",
+                "código 30",
+                "codigo 30",
+                "despach",
             ]
         )
         if not tem_judicial and re.search(

@@ -5,10 +5,11 @@ O perfil é armazenado apenas na sessão do backend (em memória por processo).
 Para persistência real entre sessões, o frontend usa seu próprio session_state.
 """
 
-from fastapi import APIRouter
+import logging
+
 from app.schemas.document import PerfilDeclarante, RespostaVerificacaoTitularidade
 from app.services.titularidade_service import verificar_titularidade
-import logging
+from fastapi import APIRouter
 
 logger = logging.getLogger(__name__)
 

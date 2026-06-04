@@ -11,10 +11,11 @@ O padrão Singleton garante que o modelo seja carregado uma única vez
 na memória durante toda a execução da aplicação.
 """
 
-from sentence_transformers import SentenceTransformer
-from typing import List
-from app.core.config import configuracoes
 import logging
+from typing import List
+
+from app.core.config import configuracoes
+from sentence_transformers import SentenceTransformer
 
 logger = logging.getLogger(__name__)
 
