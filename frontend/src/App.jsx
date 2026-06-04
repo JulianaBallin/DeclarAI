@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import Chat from "./pages/Chat";
 import Upload from "./pages/Upload";
 import BaseConhecimento from "./pages/BaseConhecimento";
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/status" element={<Status />} />
         </Routes>
       </main>
+      <Footer />
     </BrowserRouter>
   );
 }

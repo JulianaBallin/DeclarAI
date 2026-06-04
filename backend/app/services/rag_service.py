@@ -175,7 +175,6 @@ class ServicoRAG:
             "rag_inicializado": True,
             "chunks_indexados": self.banco_vetorial.total_chunks(),
             "modelo_embeddings": configuracoes.MODELO_EMBEDDINGS,
-            "modelo_embedding": configuracoes.MODELO_EMBEDDINGS,
             "modelo_llm": configuracoes.OLLAMA_MODELO,
             "ollama_url": configuracoes.OLLAMA_BASE_URL,
             "caminho_base_conhecimento": configuracoes.CAMINHO_BASE_CONHECIMENTO,

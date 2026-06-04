@@ -129,7 +129,7 @@ export default function Upload() {
       {dados && (
         <div className="card">
           <div className="card-header">
-            <h2>Dados Extraidos</h2>
+            <h2>Dados Extraídos</h2>
             <span className="badge">{dados.categoria || "Não classificado"}</span>
           </div>
 

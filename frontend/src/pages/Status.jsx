@@ -57,7 +57,7 @@ export default function Status() {
             </div>
             <div className="status-item">
               <span className="status-label">Modelo Embedding:</span>
-              <span className="status-value">{status.modelo_embedding || "-"}</span>
+              <span className="status-value">{status.modelo_embeddings || "-"}</span>
             </div>
           </div>
 

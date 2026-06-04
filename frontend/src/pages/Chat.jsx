@@ -1,13 +1,22 @@
 import { useState, useRef, useEffect } from "react";
-import { Send, Trash2, Bot, User } from "lucide-react";
+import { Send, Trash2, Bot, User, Sparkles } from "lucide-react";
 import { enviarPergunta } from "../services/api";
 
 const MENSAGEM_BOAS_VINDAS = {
   papel: "assistant",
   conteudo:
-    "Olá! Sou o DecAI, seu assistente para o Imposto de Renda.\n\nPode me perguntar sobre deduções, documentos necessários, prazos, categorias tributárias, rendimentos isentos... estou aqui para ajudar.",
+    "Olá! Sou o DeclaraAI, seu assistente para o Imposto de Renda.\n\nPode me perguntar sobre deduções, documentos necessários, prazos, categorias tributárias, rendimentos isentos e muito mais.",
   fontes: [],
 };
+
+const SUGESTOES = [
+  "Quais despesas médicas posso deduzir?",
+  "Qual o limite de dedução com educação?",
+  "Como funciona o PGBL no IR?",
+  "Quem é obrigado a declarar o IR?",
+  "Qual a diferença entre simplificada e completa?",
+  "Posso deduzir pensão alimentícia?",
+];
 
 const SAUDACOES = new Set([
   "oi", "ola", "olá", "hey", "hello", "hi", "e ai", "e aí", "eai",
@@ -60,6 +69,7 @@ export default function Chat() {
           conteudo: dados.resposta || "Sem resposta.",
           fontes: dados.fontes || [],
           chunks: dados.chunks_recuperados || 0,
+          score: dados.score_medio_contexto,
         },
       ]);
     } catch (err) {
@@ -76,6 +86,12 @@ export default function Chat() {
       setCarregando(false);
     }
   }
+
+  function usarSugestao(texto) {
+    setInput(texto);
+  }
+
+  const mostrarSugestoes = mensagens.length === 1;
 
   return (
     <div className="page-chat">
@@ -102,7 +118,12 @@ export default function Chat() {
                 ))}
               </div>
               {msg.chunks !== undefined && (
-                <span className="message-meta">{msg.chunks} trechos consultados</span>
+                <span className="message-meta">
+                  {msg.chunks} trechos consultados
+                  {msg.score !== undefined && msg.score > 0 && (
+                    <> &middot; score {msg.score.toFixed(3)}</>
+                  )}
+                </span>
               )}
               {msg.fontes && msg.fontes.length > 0 && (
                 <details className="fontes-details">
@@ -117,6 +138,25 @@ export default function Chat() {
             </div>
           </div>
         ))}
+
+        {mostrarSugestoes && (
+          <div className="sugestoes-area">
+            <p className="sugestoes-titulo">
+              <Sparkles size={14} /> Perguntas frequentes
+            </p>
+            <div className="sugestoes-grid">
+              {SUGESTOES.map((s, i) => (
+                <button
+                  key={i}
+                  className="sugestao-btn"
+                  onClick={() => usarSugestao(s)}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {carregando && (
           <div className="message message-assistant">

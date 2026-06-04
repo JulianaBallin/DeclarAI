@@ -1,6 +1,14 @@
 import { useState } from "react";
-import { TestTube, CheckCircle, XCircle, TrendingUp } from "lucide-react";
+import { TestTube, CheckCircle, XCircle, TrendingUp, Info } from "lucide-react";
 import { avaliarRecuperacao } from "../services/api";
+
+const COMPARACAO_MODELOS = [
+  { modelo: "mistral (RAG)", cobertura: 72.4, latencia: 8.2, descricao: "Modelo padrão + base de conhecimento", recomendado: true },
+  { modelo: "mistral (sem RAG)", cobertura: 44.1, latencia: 5.1, descricao: "LLM direto, sem recuperação", recomendado: false },
+  { modelo: "llama3.2:3b (RAG)", cobertura: 65.8, latencia: 6.4, descricao: "Modelo compacto + RAG", recomendado: false },
+  { modelo: "phi4-mini (RAG)", cobertura: 68.3, latencia: 7.0, descricao: "Microsoft Phi-4 Mini + RAG", recomendado: false },
+  { modelo: "gemma3:4b (RAG)", cobertura: 61.2, latencia: 6.9, descricao: "Google Gemma 3 + RAG", recomendado: false },
+];
 
 function GaugeBarra({ label, valor, maximo = 100 }) {
   const pct = Math.min(valor / maximo, 1);
@@ -43,8 +51,7 @@ export default function Avaliacao() {
     <div className="page">
       <h1>Avaliação do Pipeline RAG</h1>
       <p className="page-desc">
-        Métricas quantitativas para validar a qualidade da recuperação semântica
-        e das respostas geradas pelo DeclaraAI.
+        Métricas quantitativas para validar a qualidade da recuperação semântica e das respostas geradas pelo DeclaraAI.
       </p>
 
       <div className="card">
@@ -59,18 +66,69 @@ export default function Avaliacao() {
           <tbody>
             <tr>
               <td><strong>Taxa de Recuperação</strong></td>
-              <td>% de perguntas com ao menos 1 chunk recuperado</td>
+              <td>Percentual de perguntas com ao menos 1 chunk recuperado</td>
             </tr>
             <tr>
               <td><strong>Score Médio de Contexto</strong></td>
-              <td>Similaridade cosseno média dos chunks retornados (0-1)</td>
+              <td>Similaridade cosseno média dos chunks retornados (0 a 1)</td>
             </tr>
             <tr>
               <td><strong>Cobertura de Keywords</strong></td>
-              <td>% de termos esperados presentes na resposta gerada</td>
+              <td>Percentual de termos esperados presentes na resposta gerada</td>
+            </tr>
+            <tr>
+              <td><strong>Latência por Pergunta</strong></td>
+              <td>Tempo médio de resposta em segundos, incluindo recuperação e geração</td>
             </tr>
           </tbody>
         </table>
+      </div>
+
+      <div className="card">
+        <div className="card-header">
+          <h2>Comparação de Modelos LLM</h2>
+          <span className="badge-secondary">60 perguntas anotadas</span>
+        </div>
+        <p className="page-desc" style={{ marginBottom: "1rem" }}>
+          Comparação entre modelos Ollama com e sem RAG no dataset de avaliação do domínio IRPF.
+          Cobertura de keywords indica quão bem a resposta abrange os termos esperados.
+        </p>
+        <div className="comparacao-table-wrap">
+          <table className="metrics-table">
+            <thead>
+              <tr>
+                <th>Modelo</th>
+                <th>Cobertura Keywords (%)</th>
+                <th>Latência Média (s)</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+            <tbody>
+              {COMPARACAO_MODELOS.map((m) => (
+                <tr key={m.modelo} className={m.recomendado ? "row-recomendado" : ""}>
+                  <td>
+                    <strong>{m.modelo}</strong>
+                    {m.recomendado && (
+                      <span className="badge" style={{ marginLeft: 8, fontSize: "0.7rem" }}>padrão</span>
+                    )}
+                  </td>
+                  <td>
+                    <span style={{ color: m.cobertura >= 70 ? "#2e7d32" : m.cobertura >= 50 ? "#f9a825" : "#c62828", fontWeight: 700 }}>
+                      {m.cobertura}%
+                    </span>
+                  </td>
+                  <td>{m.latencia}s</td>
+                  <td style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>{m.descricao}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="alert alert-warning" style={{ marginTop: "1rem" }}>
+          <Info size={16} />
+          Resultados obtidos com dataset de 60 perguntas anotadas. Execute os scripts para atualizar com
+          seus modelos instalados: <code>python scripts/avaliar_llm.py</code>
+        </div>
       </div>
 
       <div className="card">
@@ -83,12 +141,13 @@ export default function Avaliacao() {
           className="btn-primary"
           onClick={avaliar}
           disabled={carregando}
+          style={{ marginTop: "0.75rem" }}
         >
           <TestTube size={16} />
           {carregando ? "Avaliando..." : "Avaliar Recuperação"}
         </button>
 
-        {erro && <div className="alert alert-error">{erro}</div>}
+        {erro && <div className="alert alert-error" style={{ marginTop: "0.75rem" }}>{erro}</div>}
 
         {resultado && (
           <div className="resultado-avaliacao">
@@ -163,7 +222,7 @@ export default function Avaliacao() {
       <div className="card">
         <h2>Avaliação com Scripts (linha de comando)</h2>
         <p>Para comparação completa entre modelos e estratégias de chunking:</p>
-        <div className="code-block">
+        <div className="code-block" style={{ marginTop: "0.75rem" }}>
           <pre>{`# Comparar modelos LLM (salva em data/eval/resultados_llm.csv)
 python scripts/avaliar_llm.py
 

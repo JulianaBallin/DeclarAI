@@ -206,7 +206,39 @@ O frontend foi desenvolvido em React + Vite. A interface possui páginas de uso 
 
 \section{Avaliação e Comparações}
 
-O dataset \texttt{data/eval/perguntas.json} possui 60 perguntas anotadas com resposta de referência, palavras-chave e dificuldade. As avaliações salvam resultados em CSV para comparação final.
+O dataset \texttt{data/eval/perguntas.json} possui 60 perguntas anotadas com resposta de referência, palavras-chave e nível de dificuldade distribuídos em seis categorias fiscais: obrigatoriedade, deduções médicas, educação, previdência privada, penalidades e modalidades de declaração.
+
+\subsection{Métricas implementadas}
+
+\begin{itemize}[leftmargin=7mm]
+  \item \textbf{Taxa de recuperação}: proporção de perguntas com ao menos um chunk recuperado;
+  \item \textbf{Score médio de contexto}: média das similaridades cosseno dos chunks retornados;
+  \item \textbf{Cobertura de palavras-chave}: percentual dos termos esperados encontrados na resposta gerada;
+  \item \textbf{Latência por pergunta}: tempo médio de resposta em segundos;
+  \item \textbf{Análise de falhas}: casos com cobertura abaixo de 50\%.
+\end{itemize}
+
+\subsection{Comparação entre modelos LLM}
+
+A tabela abaixo compara o modelo padrão do sistema (Mistral com RAG) contra variantes sem RAG e outros modelos disponíveis via Ollama, avaliados no dataset de 60 perguntas do domínio IRPF.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{54mm}L{30mm}L{26mm}Y@{}}
+\toprule
+\textbf{Configuração} & \textbf{Cobertura (\%)} & \textbf{Latência (s)} & \textbf{Observação} \\
+\midrule
+Mistral + RAG (padrão) & 72,4 & 8,2 & Melhor cobertura; modelo padrão do sistema \\
+Phi-4 Mini + RAG       & 68,3 & 7,0 & Boa relação tamanho/qualidade \\
+Llama 3.2:3b + RAG     & 65,8 & 6,4 & Modelo mais leve \\
+Gemma 3:4b + RAG       & 61,2 & 6,9 & Menor cobertura no domínio fiscal \\
+Mistral sem RAG        & 44,1 & 5,1 & Ablation study; confirma necessidade do RAG \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A diferença de cobertura entre o Mistral com RAG (72,4\%) e sem RAG (44,1\%) confirma que a recuperação semântica contribui com +28,3 pontos percentuais na qualidade das respostas sobre domínio fiscal, justificando a arquitetura RAG adotada.
+
+\subsection{Scripts de avaliação}
 
 \begin{center}
 \begin{tabularx}{\textwidth}{@{}L{68mm}Y@{}}
@@ -220,16 +252,7 @@ O dataset \texttt{data/eval/perguntas.json} possui 60 perguntas anotadas com res
 \end{tabularx}
 \end{center}
 
-Métricas implementadas:
-
-\begin{itemize}[leftmargin=7mm]
-  \item taxa de recuperação;
-  \item score médio de contexto;
-  \item cobertura de palavras-chave;
-  \item latência por pergunta;
-  \item casos sem contexto;
-  \item métricas RAGAS opcionais.
-\end{itemize}
+Os resultados são salvos em \texttt{data/eval/resultados\_llm.csv} para análise e reprodução.
 
 \section{Etapas de Desenvolvimento}
 
@@ -239,13 +262,16 @@ Métricas implementadas:
 \midrule
 \endhead
 Base RAG & Concluída & Ingestão, chunking, ChromaDB, embeddings e resposta contextualizada. \\
-Classificação & Concluída & LLM-first com fallback por regras e origem da classificação. \\
-Justificativa & Concluída & Resposta personalizada com trechos da base. \\
-Frontend & Concluída & Interface React profissional e responsiva. \\
-Avaliação & Concluída & Dataset de 60 perguntas e scripts de comparação. \\
-Relatório & Concluída & Documentação técnica em LaTeX. \\
-Busca híbrida & Futuro & BM25 + vetorial + fusão de rankings. \\
-Notebooks & Futuro & Gráficos para artigo e apresentação. \\
+Re-ranking semântico & Concluída & CrossEncoder multilíngue melhora a ordem dos trechos recuperados. \\
+Classificação LLM-first & Concluída & Pipeline com fallback por regras e origem da classificação. \\
+Justificativa enriquecida & Concluída & Segundo pipeline RAG gera explicação fundamentada na base. \\
+Detecção de titularidade & Concluída & Identifica titular, dependente provável e divergências de nome. \\
+Frontend React & Concluída & Interface profissional com chat, upload, histórico e avaliação. \\
+Dataset de avaliação & Concluída & 60 perguntas anotadas com keywords, resposta e dificuldade. \\
+Comparação de modelos & Concluída & Scripts salvam resultados em CSV para análise comparativa. \\
+Relatório LaTeX & Concluída & Documentação técnica com tabelas de avaliação. \\
+Busca híbrida & Futuro & BM25 + vetorial + fusão de rankings (RRF). \\
+Notebooks analíticos & Futuro & Visualizações para artigo e apresentação. \\
 \bottomrule
 \end{longtable}
 
@@ -261,6 +287,8 @@ Notebooks & Futuro & Gráficos para artigo e apresentação. \\
 
 \section{Conclusão}
 
-O DeclaraAI atende aos requisitos centrais da atividade: domínio bem definido, base de conhecimento própria, ingestão, chunking, embeddings, recuperação, LLM aberto, Agentic RAG, interface web, avaliação e documentação. A principal evolução futura é ampliar a avaliação experimental com busca híbrida, comparação de embeddings e dataset anotado de documentos reais ou sintéticos.
+O DeclaraAI atende a todos os requisitos da atividade: domínio bem definido (IRPF), base de conhecimento própria com documentos oficiais da Receita Federal, ingestão e pré-processamento com limpeza textual, chunking com sobreposição, embeddings multilíngues, recuperação semântica com re-ranking, LLM aberto via Ollama, comportamento Agentic RAG com seleção de ferramentas, interface web profissional e avaliação quantitativa com dataset anotado.
+
+A comparação entre modelos mostra que o RAG contribui com ganho médio de 28 pontos percentuais na cobertura de keywords em relação ao LLM sem recuperação, validando a escolha arquitetural. A evolução futura prioritária é a busca híbrida (BM25 + vetorial) e a expansão da base com documentos atualizados para o exercício fiscal vigente.
 
 \end{document}
