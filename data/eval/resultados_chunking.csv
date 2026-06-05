@@ -1,0 +1,11 @@
+configuracao,tipo_chunking,chunk_size,chunk_overlap,pergunta_id,categoria,dificuldade,pergunta,chunks_recuperados,score_medio_contexto,cobertura_keywords_pct,contexto_encontrado,latencia_segundos,data_execucao
+fixo_600_80,fixo,600,80,1,obrigatoriedade,facil,Quem é obrigado a declarar imposto de renda em 2024?,5,0.7396,60.0,True,0.45,2026-06-05T19:27:50.532365
+fixo_600_80,fixo,600,80,2,obrigatoriedade,media,Pessoa que vendeu um imóvel precisa declarar imposto de renda?,5,0.7191,60.0,True,0.47,2026-06-05T19:27:51.005817
+fixo_600_80,fixo,600,80,3,obrigatoriedade,media,Quem recebe apenas um salário mínimo precisa declarar?,5,0.6174,25.0,True,0.42,2026-06-05T19:27:51.423485
+fixo_600_80,fixo,600,80,4,deducoes_medicas,facil,Consulta médica pode ser deduzida no imposto de renda?,5,0.7094,25.0,True,0.44,2026-06-05T19:27:51.860485
+fixo_600_80,fixo,600,80,5,deducoes_medicas,facil,Plano de saúde é dedutível no imposto de renda?,5,0.7311,40.0,True,0.45,2026-06-05T19:27:52.313465
+fixo_600_80,fixo,600,80,6,deducoes_medicas,media,Academia de ginástica pode ser deduzida do imposto de renda?,5,0.5419,0.0,True,0.44,2026-06-05T19:27:52.753355
+fixo_600_80,fixo,600,80,7,deducoes_medicas,facil,Dentista é dedutível no IRPF?,5,0.4614,20.0,True,0.43,2026-06-05T19:27:53.187133
+fixo_600_80,fixo,600,80,8,deducoes_medicas,facil,Internação hospitalar e dedução de imposto de renda?,5,0.6972,75.0,True,0.45,2026-06-05T19:27:53.633663
+fixo_600_80,fixo,600,80,9,deducoes_medicas,media,Remédios comprados em farmácia são dedutíveis?,5,0.4863,50.0,True,0.44,2026-06-05T19:27:54.069731
+fixo_600_80,fixo,600,80,10,deducoes_educacao,facil,Mensalidade de faculdade é dedutível no imposto de renda?,5,0.6681,0.0,True,0.4,2026-06-05T19:27:54.468765

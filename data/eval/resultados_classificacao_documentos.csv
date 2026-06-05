@@ -1,0 +1,7 @@
+caso_id,documento,metodo,esperado_categoria,esperado_status_irpf,previsto_categoria,previsto_status_irpf,previsto_tipo_documento,origem_classificacao,confianca,latencia_classificacao_ms,tentativas_llm,acertou,observacao,modo_execucao,data_execucao
+1,recibo_curso_ingles.txt,llm-first,Comprovante Educacional,Não dedutível,Comprovante Educacional,Não dedutível,Recibo,llm,alta,54711.5,1,Sim,Conforme esperado.,api,2026-06-05T07:54:00
+2,recibo_dentista_declarante.txt,llm-first,Recibo Médico,Dedutível,Recibo Médico,Potencialmente dedutível - confirmar titular/dependente,Recibo,llm,alta,56649.8,1,Sim,Conforme esperado.,api,2026-06-05T07:55:56
+3,recibo_dentista_dependente.txt,llm-first,Recibo Médico,Potencialmente dedutível,Recibo Médico,Potencialmente dedutível - confirmar titular/dependente,Recibo,llm,alta,55652.9,1,Sim,Conforme esperado.,api,2026-06-05T07:57:51
+4,recibo_medico_consulta.txt,llm-first,Recibo Médico,Dedutível,Recibo Médico,Dedutível,Recibo,llm,alta,50777.1,1,Sim,Conforme esperado.,api,2026-06-05T07:59:45
+5,documento_generico.txt,llm-first,Documento Não Classificado,Revisar manualmente,Documento Não Classificado,Revisar manualmente,Tipo não identificado automaticamente - verifique o PDF ou a categ…,llm,alta,36262.3,1,Sim,Conforme esperado.,api,2026-06-05T08:01:21
+6,nfce_roupas.txt,llm-first,Nota Fiscal,Não dedutível,Nota Fiscal,Não dedutível,NFC-e,llm,alta,55794.8,1,Sim,Conforme esperado.,api,2026-06-05T08:03:12
