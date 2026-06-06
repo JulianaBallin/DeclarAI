@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 360" width="800" height="360" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrTeal" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#0F766E"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="360" fill="#F8FAFC"/>
+
+  <!-- Título -->
+  <text x="400" y="34" font-size="17" font-weight="700" fill="#0F766E" text-anchor="middle">Ingestão e Pré-processamento de Documentos</text>
+  <line x1="80" y1="44" x2="720" y2="44" stroke="#0F766E" stroke-width="1.2" opacity="0.2"/>
+
+  <!-- ETAPA 1: Fontes de dados -->
+  <rect x="24" y="68" width="100" height="56" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
+  <text x="74" y="88" font-size="10" font-weight="700" fill="#0F766E" text-anchor="middle">Fonte PDF</text>
+  <text x="74" y="102" font-size="9.5" fill="#64748B" text-anchor="middle">pr-irpf-2024.pdf</text>
+  <text x="74" y="116" font-size="9" fill="#64748B" text-anchor="middle">Receita Federal</text>
+
+  <rect x="24" y="140" width="100" height="56" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
+  <text x="74" y="160" font-size="10" font-weight="700" fill="#0F766E" text-anchor="middle">Fonte TXT</text>
+  <text x="74" y="174" font-size="9.5" fill="#64748B" text-anchor="middle">guia_imposto</text>
+  <text x="74" y="188" font-size="9.5" fill="#64748B" text-anchor="middle">_renda.txt</text>
+
+  <!-- Setas fontes -> loader -->
+  <line x1="124" y1="96" x2="154" y2="118" stroke="#64748B" stroke-width="1.4" marker-end="url(#arr)"/>
+  <line x1="124" y1="168" x2="154" y2="148" stroke="#64748B" stroke-width="1.4" marker-end="url(#arr)"/>
+
+  <!-- ETAPA 2: Loader / Extração -->
+  <rect x="154" y="96" width="120" height="76" rx="8" fill="#E8F5F4" stroke="#0F766E" stroke-width="2"/>
+  <text x="214" y="118" font-size="10.5" font-weight="700" fill="#0F766E" text-anchor="middle">Extração de Texto</text>
+  <text x="214" y="134" font-size="9.5" fill="#0B4F4A" text-anchor="middle">pdfplumber (PDF)</text>
+  <text x="214" y="148" font-size="9.5" fill="#0B4F4A" text-anchor="middle">BeautifulSoup (HTML)</text>
+  <text x="214" y="162" font-size="9.5" fill="#0B4F4A" text-anchor="middle">arquivo.read() (TXT)</text>
+
+  <!-- Seta loader -> limpeza -->
+  <line x1="274" y1="134" x2="304" y2="134" stroke="#64748B" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- ETAPA 3: Limpeza -->
+  <rect x="304" y="96" width="116" height="76" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
+  <text x="362" y="118" font-size="10.5" font-weight="700" fill="#0F766E" text-anchor="middle">Limpeza Textual</text>
+  <text x="362" y="134" font-size="9.5" fill="#64748B" text-anchor="middle">remoção de ruido</text>
+  <text x="362" y="148" font-size="9.5" fill="#64748B" text-anchor="middle">normalização</text>
+  <text x="362" y="162" font-size="9.5" fill="#64748B" text-anchor="middle">Unicode + espaços</text>
+
+  <!-- Seta limpeza -> chunking -->
+  <line x1="420" y1="134" x2="450" y2="134" stroke="#64748B" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- ETAPA 4: Chunking (destaque) -->
+  <rect x="450" y="88" width="134" height="92" rx="10" fill="#FFF7ED" stroke="#F97316" stroke-width="2.4"/>
+  <text x="517" y="110" font-size="10.5" font-weight="700" fill="#F97316" text-anchor="middle">Chunking</text>
+  <text x="517" y="126" font-size="10" fill="#92400E" text-anchor="middle" font-weight="600">tamanho: 600 chars</text>
+  <text x="517" y="142" font-size="10" fill="#92400E" text-anchor="middle" font-weight="600">overlap: 80 chars</text>
+  <text x="517" y="158" font-size="9.5" fill="#92400E" text-anchor="middle">metadados preservados</text>
+  <text x="517" y="172" font-size="9" fill="#92400E" text-anchor="middle">(fonte, posição)</text>
+
+  <!-- Seta chunking -> embeddings -->
+  <line x1="584" y1="134" x2="614" y2="134" stroke="#64748B" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- ETAPA 5: Embeddings -->
+  <rect x="614" y="96" width="120" height="76" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
+  <text x="674" y="118" font-size="10.5" font-weight="700" fill="#0F766E" text-anchor="middle">Embeddings</text>
+  <text x="674" y="134" font-size="9.5" fill="#64748B" text-anchor="middle">MiniLM-L12-v2</text>
+  <text x="674" y="148" font-size="9.5" fill="#64748B" text-anchor="middle">384 dimensões</text>
+  <text x="674" y="162" font-size="9.5" fill="#64748B" text-anchor="middle">multilingual PT/EN</text>
+
+  <!-- Seta embeddings -> ChromaDB (para baixo) -->
+  <line x1="674" y1="172" x2="674" y2="208" stroke="#64748B" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- ETAPA 6: ChromaDB -->
+  <rect x="564" y="208" width="220" height="72" rx="10" fill="#E8F5F4" stroke="#0F766E" stroke-width="2.2"/>
+  <text x="674" y="232" font-size="11" font-weight="700" fill="#0F766E" text-anchor="middle">ChromaDB - Armazenamento Vetorial</text>
+  <text x="674" y="250" font-size="9.5" fill="#0B4F4A" text-anchor="middle">persistência em disco | cosine similarity</text>
+  <text x="674" y="266" font-size="9.5" fill="#0B4F4A" text-anchor="middle">re-indexação automática no startup da API</text>
+
+  <!-- Métricas de resultado -->
+  <rect x="24" y="240" width="480" height="92" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+  <text x="264" y="264" font-size="11" font-weight="700" fill="#172033" text-anchor="middle">Resultados do Pipeline de Ingestão</text>
+  <line x1="44" y1="272" x2="484" y2="272" stroke="#E2E8F0" stroke-width="1"/>
+
+  <rect x="40" y="282" width="100" height="38" rx="6" fill="#E8F5F4"/>
+  <text x="90" y="298" font-size="14" font-weight="800" fill="#0F766E" text-anchor="middle">600</text>
+  <text x="90" y="312" font-size="9" fill="#64748B" text-anchor="middle">chars por chunk</text>
+
+  <rect x="152" y="282" width="100" height="38" rx="6" fill="#E8F5F4"/>
+  <text x="202" y="298" font-size="14" font-weight="800" fill="#0F766E" text-anchor="middle">80</text>
+  <text x="202" y="312" font-size="9" fill="#64748B" text-anchor="middle">chars de overlap</text>
+
+  <rect x="264" y="282" width="100" height="38" rx="6" fill="#FFF7ED"/>
+  <text x="314" y="298" font-size="14" font-weight="800" fill="#F97316" text-anchor="middle">384</text>
+  <text x="314" y="312" font-size="9" fill="#64748B" text-anchor="middle">dims por vetor</text>
+
+  <rect x="376" y="282" width="100" height="38" rx="6" fill="#E8F5F4"/>
+  <text x="426" y="298" font-size="14" font-weight="800" fill="#0F766E" text-anchor="middle">cosine</text>
+  <text x="426" y="312" font-size="9" fill="#64748B" text-anchor="middle">métrica de busca</text>
+</svg>
