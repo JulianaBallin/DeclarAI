@@ -1,376 +1,308 @@
-# Prompt para NotebookLLM — Slides DeclaraAI: Agentic RAG
+# Prompt para Notebook LLM - Slides DeclaraAI: Agentic RAG
 
-Use o seguinte conteudo para gerar uma apresentacao de slides profissional sobre o projeto DeclaraAI.
+Use este conteúdo como prompt para gerar uma apresentação profissional sobre o DeclaraAI. A apresentação deve priorizar as melhorias implementadas desde a última entrega na branch `main`, destacando a evolução atual da branch `develop`.
 
-## Instrucoes de Design para o NotebookLLM
+## Direção Visual
 
-- **Fundo de todos os slides:** off-white (#FAF9F6) ou branco levemente marfim
-- **Cor primaria:** laranja (#F97316) para titulos, destaques e icones
-- **Cor secundaria:** amarelo dourado (#FBBF24) para subtitulos e badges
-- **Texto principal:** preto suave (#1A1A1A) ou grafite escuro (#172033)
-- **Blocos de destaque:** fundo laranja claro (#FFF7ED) com borda laranja
-- **Graficos e tabelas:** usar verde-teal (#0F766E) para barras de destaque
-- **Estilo geral:** moderno, limpo, sem excessos visuais, fontes sem serifa
-
----
+- Todos os slides devem ter fundo off-white, preferencialmente `#FAF9F6`.
+- Usar laranja `#F97316` para títulos, destaques e ícones principais.
+- Usar amarelo dourado `#FBBF24` para badges, chamadas e divisores.
+- Usar preto suave `#1A1A1A` e grafite `#172033` para textos.
+- Usar verde-teal `#0F766E` apenas como cor de apoio para métricas e barras.
+- Evitar fundo escuro, gradientes pesados, blocos poluídos e setas sobrepostas.
+- Preferir diagramas simples, com muito respiro, cartões claros e tipografia sem serifa.
 
 ## Contexto do Projeto
 
-**Titulo:** DeclaraAI: Agentic RAG para Declaracao do IRPF
+**Título geral:** DeclaraAI: Agentic RAG para apoio à declaração do IRPF
 
-**Instituicao:** Universidade do Estado do Amazonas (UEA)
+**Instituição:** Universidade do Estado do Amazonas
 
 **Disciplina:** Oficina e Desenvolvimento de Sistemas I
 
-**Equipe:** Juliana Ballin Lima (2315310011) e Fernando Luiz Da Silva Freire (2315310007)
+**Equipe:** Juliana Ballin Lima, 2315310011, e Fernando Luiz Da Silva Freire, 2315310007
 
 **Data:** Junho de 2026
 
-**Repositorio:** branch develop (apresentacao final com todas as melhorias)
-
----
+**Repositório:** apresentar a branch `develop`
 
 ## Slide 1: Capa
 
-**Titulo principal:** DeclaraAI
+**Título:** DeclaraAI
 
-**Subtitulo:** Agentic RAG para apoio inteligente a declaracao do IRPF
+**Subtítulo:** Agentic RAG para apoio inteligente à declaração do IRPF
 
-**Descricao curta:** Micro SaaS academico com LLM aberto, base de conhecimento oficial e pipeline de classificacao automatica de documentos fiscais
+**Mensagem principal:** Micro SaaS acadêmico com LLM aberto, execução local, base de conhecimento fiscal e classificação automática de documentos.
 
-**Elementos visuais sugeridos:**
-- Logo DeclaraAI com icone de documento e badge "AI" em laranja
-- Badge "IRPF 2026" em laranja
-- Nome dos integrantes e instituicao no rodape
+**Visual sugerido:** logo DeclaraAI, selo IRPF 2026, nomes dos integrantes e UEA no rodapé.
 
----
+## Slide 2: Problema Real
 
-## Slide 2: O Problema Real
+**Título:** Por que o DeclaraAI é necessário?
 
-**Titulo:** Por Que Precisamos do DeclaraAI?
+A declaração do IRPF exige que contribuintes organizem recibos, notas fiscais, informes e comprovantes ao longo do ano. Usuários que não são contadores costumam ter dificuldades para:
 
-**Problema central:**
-A declaracao do IRPF exige que contribuintes organizem recibos, notas fiscais, informes e comprovantes ao longo do ano. Quem nao e contador facilmente:
+- identificar despesas dedutíveis;
+- evitar despesas que a Receita Federal não aceita;
+- separar documentos do titular, dependentes e terceiros;
+- entender limites, regras e comprovantes necessários.
 
-- perde deducoes validas (medicas, educacionais, previdencia privada)
-- lanca despesas que a Receita Federal nao aceita
-- nao sabe distinguir documentos do titular dos de terceiros
+**Proposta de valor:** um assistente especializado no domínio fiscal brasileiro, com respostas fundamentadas em documentos de referência e processamento local de dados sensíveis.
 
-**Proposta de valor:**
-Sistema RAG especializado no dominio fiscal brasileiro que classifica documentos automaticamente, responde perguntas sobre deducoes e gera justificativas baseadas em normas da Receita Federal, funcionando 100% localmente sem envio de dados para APIs externas.
+## Slide 3: Arquitetura Geral
 
----
+**Título:** Arquitetura do DeclaraAI
 
-## Slide 3: Arquitetura da Solucao
-
-**Titulo:** Arquitetura Geral do DeclaraAI
-
-**Tabela de camadas (formato visual recomendado: icone + nome + descricao):**
+Use um diagrama por camadas:
 
 | Camada | Tecnologia | Papel |
 |---|---|---|
-| Frontend | React + Vite | 6 paginas: chat, upload, base, historico, avaliacao, status |
-| API | FastAPI (Python) | Endpoints REST + Swagger + orquestracao |
-| Pipeline RAG | ChromaDB + MiniLM | Indexacao, busca vetorial, re-ranking |
-| LLM | Mistral via Ollama | Geracao de respostas e classificacao |
-| Persistencia | SQLite + ChromaDB | Historico de documentos e vetores |
+| Frontend | React + Vite | Chat, upload, base, histórico, avaliação e status |
+| API | FastAPI | Rotas REST, Swagger e orquestração dos serviços |
+| RAG | MiniLM + ChromaDB | Indexação, embeddings e recuperação semântica |
+| Re-ranking | CrossEncoder | Reordenação contextual dos trechos recuperados |
+| LLM | Mistral via Ollama | Geração de respostas, classificação e justificativas |
+| Persistência | SQLite + ChromaDB | Histórico de documentos e vetores |
 
-**Diferencial:** execucao 100% local, sem envio de documentos fiscais para nuvem.
+**Diferencial:** execução local, sem envio de documentos fiscais para APIs externas.
 
----
+## Slide 4: Agentic RAG
 
-## Slide 4: Como Funciona o Agentic RAG
+**Título:** O agente escolhe a ferramenta certa
 
-**Titulo:** O Agente Decide Qual Ferramenta Usar
+Mostrar um diagrama de decisão:
 
-**Descricao do fluxo (use diagrama de decisao):**
-
-```
-Usuario envia pergunta ou documento
-         |
-   Orquestrador detecta intencao
-         |
-    +----+----+----------+
-    |         |          |
-Pergunta   Upload    Historico
-    |         |          |
-Chat RAG  Classificacao  SQLite
-    |     + Titularidade + query
-Mistral   + Justificativa
-    |         |
-Resposta  Categoria
-com fontes + Aviso
+```text
+Entrada do usuário
+  |
+  + Pergunta sobre IRPF -> Chat RAG
+  + Documento enviado -> Upload fiscal
+  + Consulta de documentos -> Histórico SQLite
+  + Avaliação -> Métricas do pipeline
 ```
 
 **Ferramentas implementadas:**
-1. Busca Vetorial: ChromaDB top-15 com CrossEncoder top-5
-2. Classificacao LLM-first: Mistral classifica, regras como fallback
-3. Verificacao de Titularidade: titular / dependente / terceiro
-4. Justificativa Enriquecida: segundo pipeline RAG por categoria
-5. Consulta ao Historico: SQLite com filtros por categoria e data
 
----
+1. Busca vetorial com ChromaDB.
+2. Re-ranking com CrossEncoder.
+3. Classificação LLM-first com fallback por regras.
+4. Verificação de titularidade.
+5. Justificativa enriquecida com segundo pipeline RAG.
+6. Consulta ao histórico e resumo anual.
 
-## Slide 5: Melhoria 1 (Desde a Entrega Anterior) — Re-ranking com CrossEncoder
+## Slide 5: Melhoria 1 Desde a Main - Re-ranking
 
-**Titulo:** Re-ranking Semantico com CrossEncoder
+**Título:** Re-ranking semântico com CrossEncoder
 
-**O problema:**
-O ChromaDB recupera chunks por similaridade de embedding (bi-encoder). Bi-encoders representam consulta e documento separadamente, o que pode deixar passar relacoes contextuais como negacoes ("nao e dedutivel").
+**Antes:** a busca vetorial retornava trechos apenas por similaridade de embedding.
 
-**A solucao implementada:**
+**Depois:** o ChromaDB recupera top-15 candidatos e o CrossEncoder reordena os pares pergunta + trecho, retornando os top-5 mais relevantes.
 
-```
-Bi-encoder (ChromaDB)
-  recupera top-15 candidatos por similaridade
+**Impacto técnico:**
 
-CrossEncoder mmarco-mMiniLMv2-L12-H384-v1
-  avalia cada par (consulta, chunk) em conjunto
-  reordena os 15 candidatos por relevancia real
+- melhora perguntas com negações fiscais, como "não é dedutível";
+- reduz contexto irrelevante enviado ao LLM;
+- aumenta a confiança das fontes exibidas ao usuário.
 
-Top-5 finais enviados ao LLM (Mistral)
-```
+**Arquivo principal:** `backend/app/rag/retriever.py`
 
-**Justificativa tecnica:**
-- Treinado no MS MARCO multilingual, suporta portugues nativamente
-- Avalia o par completo, captando negacoes e termos fiscais especificos
-- Singleton: carregado uma vez, reutilizado em todas as consultas
-- Implementado em: backend/app/rag/retriever.py
+## Slide 6: Melhoria 2 Desde a Main - Classificação LLM-first
 
----
+**Título:** Classificação mais flexível de documentos fiscais
 
-## Slide 6: Melhoria 2 (Desde a Entrega Anterior) — Classificacao LLM-first
+**Antes:** classificação por palavras-chave fixas.
 
-**Titulo:** Classificacao LLM-first com Fallback por Regras
+**Depois:** o Mistral tenta classificar primeiro. Se o resultado for inválido ou incerto, o sistema usa fallback por regras.
 
-**Antes (branch main):**
-Classificacao por palavras-chave fixas. Documentos atipicos ou com linguagem informal eram classificados como "outros".
+Fluxo:
 
-**Depois (branch develop):**
-
-```
-Texto extraido do documento
-    |
-  LLM (Mistral) classifica a categoria
-    |
-  Categoria valida?
-    |                |
-  SIM               NAO
-  usa LLM           Fallback por regras
-  origin: "llm"     (palavras-chave)
-                    origin: "regras"
+```text
+Texto extraído
+  |
+  + Mistral classifica categoria
+  |
+  + Categoria válida? sim -> origem_classificacao = llm
+  |
+  + Categoria válida? não -> fallback por regras
 ```
 
-**8 categorias fiscais reconhecidas:**
-despesa_medica, despesa_educacional, previdencia_privada, rendimentos, deducao_aluguel, pensao_alimenticia, doacoes, outros_nao_dedutivel
+Categorias reconhecidas:
 
-**Campo `origem_classificacao`** no response permite auditoria de qual metodo foi usado.
+- `despesa_medica`
+- `despesa_educacional`
+- `previdencia_privada`
+- `rendimentos`
+- `deducao_aluguel`
+- `pensao_alimenticia`
+- `doacoes`
+- `outros_nao_dedutivel`
 
----
+## Slide 7: Melhoria 3 Desde a Main - Titularidade
 
-## Slide 7: Melhoria 3 (Desde a Entrega Anterior) — Justificativa Enriquecida
+**Título:** Verificação de titular, dependente ou terceiro
 
-**Titulo:** Justificativa Baseada na Base de Conhecimento
+**Problema resolvido:** despesas de terceiros não dependentes não são dedutíveis, mesmo quando foram pagas pelo declarante.
 
-**Antes (branch main):**
-Justificativa estatica: "Despesa medica, dedutivel sem limite."
+**Implementação:**
 
-**Depois (branch develop) — Segundo Pipeline RAG:**
+- `POST /declarante/perfil` registra nome e CPF do declarante.
+- `POST /declarante/verificar-titularidade` compara beneficiário e declarante.
+- O frontend agora exibe o resultado na tela de upload.
 
-```
-Categoria classificada
-    |
-Consulta semantica especializada por categoria
-(top-3 chunks relevantes da base de conhecimento)
-    |
-Prompt estruturado com dados do documento
-(emitente, valor, data + trechos relevantes)
-    |
-Mistral gera explicacao com referencia normativa
-```
+Estados possíveis:
 
-**Exemplo de saida:**
-"De acordo com as instrucoes da Receita Federal, consultas a profissionais com registro ativo no CRM sao integralmente dedutíveis no IRPF. O documento enviado (Dra. Ana Lima, R$ 250,00) se enquadra nessa categoria."
-
-**Impacto:** o usuario entende por que o documento e dedutivel e qual norma fundamenta a decisao.
-
----
-
-## Slide 8: Melhoria 4 (Desde a Entrega Anterior) — Verificacao de Titularidade
-
-**Titulo:** Verificacao de Titularidade do Documento
-
-**Problema resolvido:**
-Despesas de terceiros nao dependentes NAO sao dedutíveis, mas o sistema anterior classificava qualquer despesa medica como dedutivel sem verificar o beneficiario.
-
-**Solucao:**
-- `POST /declarante/perfil`: registra nome e CPF do declarante
-- `POST /declarante/verificar-titularidade`: compara o beneficiario do documento
-
-**Tres situacoes possiveis:**
-
-| Situacao | Classificacao | Impacto |
-|---|---|---|
-| Nome coincide com declarante | Titular | Dedutivel normalmente |
-| Nome parece de familiar | Dependente provavel | Verificar se esta incluido |
-| Nome diferente, sem parentesco | Terceiro | Despesa nao dedutivel, aviso destacado |
-
----
-
-## Slide 9: Melhoria 5 (Desde a Entrega Anterior) — Frontend Profissional
-
-**Titulo:** Interface React com 6 Paginas Funcionais
-
-**O que foi entregue (branch develop):**
-- **Chat RAG:** perguntas com sugestoes automaticas, fontes citadas, score de similaridade
-- **Upload Fiscal:** drag-and-drop, dados extraidos, justificativa e aviso de titularidade
-- **Base de Conhecimento:** adicionar, listar e remover documentos de referencia
-- **Historico:** agrupado por categoria, filtros, exclusao individual
-- **Avaliacao:** metricas RAGAS ao vivo + tabela comparativa de modelos
-- **Status:** chips de saude do sistema (Ollama, chunks indexados, modelos)
-
-**Tecnologias do frontend:**
-React 18 + Vite + React Router + Axios + Lucide Icons + CSS personalizado
-
----
-
-## Slide 10: Base de Conhecimento e Ingestao
-
-**Titulo:** Base de Conhecimento Oficial da Receita Federal
-
-**Documentos indexados:**
-
-| Arquivo | Tipo | Conteudo | Chunks |
-|---|---|---|---|
-| guia_imposto_renda.txt | TXT | Regras de obrigatoriedade, deducoes, prazos | variavel |
-| pr-irpf-2024.pdf | PDF | P&R oficiais da Receita Federal | variavel |
-
-**Pipeline de ingestao:**
-Carregamento (pdfplumber/BS4) → Limpeza textual → Chunking (600 chars, 80 overlap) → Embeddings MiniLM → ChromaDB
-
-**Categorias cobertas:**
-obrigatoriedade, deducoes medicas, deducoes educacionais, previdencia privada, dependentes, alugueis, autonomos, prazos, penalidades, rendimentos isentos
-
-**Expansao:** a base pode ser ampliada pela interface sem reiniciar o sistema.
-
----
-
-## Slide 11: Avaliacao Quantitativa — Dataset e Metricas
-
-**Titulo:** Como Medimos a Qualidade do Sistema
-
-**Dataset de avaliacao:** 60 perguntas anotadas (data/eval/perguntas.json)
-
-- 12 categorias fiscais (5 perguntas cada)
-- 3 niveis de dificuldade (20 faceis, 20 medias, 20 dificeis)
-- Cada pergunta tem: resposta de referencia, palavras-chave esperadas, nivel
-
-**Metricas implementadas (inspiradas no RAGAS):**
-
-| Metrica | Definicao |
+| Resultado | Ação recomendada |
 |---|---|
-| Taxa de Recuperacao | % de perguntas com ao menos 1 chunk recuperado |
-| Score Medio de Contexto | Media das similaridades cosseno dos chunks retornados (0 a 1) |
-| Cobertura de Keywords | % dos termos esperados presentes na resposta gerada |
-| Latencia por Pergunta | Tempo total de recuperacao + geracao (segundos) |
+| Titular | Documento pode seguir para revisão |
+| Dependente provável | Usuário deve confirmar vínculo |
+| Terceiro | Sistema exibe alerta antes de salvar |
 
----
+## Slide 8: Melhoria 4 Desde a Main - Justificativa RAG
 
-## Slide 12: Resultados — Comparacao de Modelos LLM
+**Título:** Justificativa enriquecida com base de conhecimento
 
-**Titulo:** Mistral + RAG: Melhor Resultado no Dominio Fiscal
+**Antes:** justificativas estáticas e genéricas.
 
-**Dados da avaliacao (60 perguntas, temperatura 0.1):**
+**Depois:** após a classificação, o sistema consulta a base por categoria, recupera os top-3 trechos e gera uma justificativa curta com Mistral.
 
-| Modelo | Cobertura Keywords | Latencia Media | Nota |
-|---|---|---|---|
-| **mistral + RAG** | **72,4%** | **8,2 s** | **Padrao do sistema** |
-| phi4-mini + RAG | 68,3% | 7,0 s | Bom custo-beneficio |
-| llama3.2:3b + RAG | 65,8% | 6,4 s | Mais rapido |
-| gemma3:4b + RAG | 61,2% | 6,9 s | Menor cobertura |
-| mistral SEM RAG | 44,1% | 5,1 s | Linha de base |
+**Dados usados no prompt:**
 
-**Conclusao principal:**
-O pipeline RAG acrescenta em media +22,8 pontos percentuais de cobertura. O dominio fiscal e altamente especifico: valores de limites (R$ 3.561,50 educacao, 12% PGBL) nao estao memorizados nos modelos generalistas com precisao suficiente.
+- categoria tributária;
+- tipo do documento;
+- emitente;
+- beneficiário;
+- valor;
+- situação no IRPF;
+- trechos recuperados da base.
 
----
+**Impacto:** o usuário entende por que o documento recebeu aquela categoria e quais cuidados precisa verificar.
 
-## Slide 13: Ablation Study — RAG vs. Sem RAG
+## Slide 9: Melhoria 5 Desde a Main - Frontend
 
-**Titulo:** O RAG Faz Diferenca: Evidencia Quantitativa
+**Título:** Interface React mais completa
 
-**Ganho individual de cada modelo com RAG:**
+Páginas funcionais:
 
-| Modelo | Com RAG | Sem RAG | Ganho |
-|---|---|---|---|
-| Mistral | 72,4% | 44,1% | +28,3 pp |
-| Phi4-mini | 68,3% | ~44% | +24,2 pp |
-| Llama3.2:3b | 65,8% | ~44% | +21,7 pp |
-| Gemma3:4b | 61,2% | ~44% | +17,1 pp |
+- **Chat RAG:** sugestões, fontes consultadas, quantidade de chunks e score médio.
+- **Upload Fiscal:** drag-and-drop, extração, classificação, titularidade e salvamento revisado.
+- **Base de Conhecimento:** adicionar, remover e re-indexar documentos.
+- **Histórico:** filtros, exclusão, agrupamento por categoria e resumo anual.
+- **Avaliação:** métricas de recuperação e comparação de modelos.
+- **Status:** Ollama, modelos, chunks e estado do pipeline.
 
-**Por que o RAG ajuda tanto neste dominio:**
-- Limites e valores mudam a cada exercicio fiscal
-- Regras de deducibilidade sao especificas e nao estao em dados gerais de treinamento
-- A base oficial da Receita Federal fornece o contexto exato necessario
+## Slide 10: Base de Conhecimento
 
----
+**Título:** Documentos próprios e relevantes ao domínio
 
-## Slide 14: Conformidade com os Criterios da Atividade
-
-**Titulo:** Todos os Requisitos Tecnicos Atendidos
-
-| Criterio | Pontos | Status |
+| Arquivo | Tipo | Relevância |
 |---|---|---|
-| Definicao do problema e dominio | 1,0 | Atendido: IRPF, publico-alvo, motivacao clara |
-| Construcao da base de conhecimento | 1,5 | Atendido: PDF oficial RFB + guia TXT |
-| Pipeline Agentic RAG | 2,5 | Atendido: RAG + re-ranking + 5 ferramentas do agente |
-| Modelo de linguagem e justificativa | 1,0 | Atendido: Mistral via Ollama, justificativa RAG |
-| Interface ou usabilidade | 1,0 | Atendido: React, 6 paginas, design proprio |
-| Avaliacao da solucao | 1,5 | Atendido: 60 perguntas, 4 metricas, 3 scripts |
-| Documentacao e repositorio | 1,0 | Atendido: README + LaTeX + SVGs + testes smoke |
-| Apresentacao e demonstracao ao vivo | 1,5 | A realizar |
-| **Total** | **10,0** | |
+| `guia_imposto_renda.txt` | TXT | Regras resumidas de obrigatoriedade, deduções e documentos |
+| `pr-irpf-2024.pdf` | PDF | Perguntas e respostas oficiais da Receita Federal |
 
----
+**Pipeline de ingestão:**
 
-## Slide 15: Limitacoes e Proximos Passos
+```text
+Carregamento -> limpeza textual -> chunking 600/80 -> embeddings MiniLM -> ChromaDB
+```
 
-**Titulo:** Limitacoes Conhecidas e Evolucoes Futuras
+A base pode ser ampliada pela interface, e a re-indexação aceita diferentes configurações para experimentos.
 
-**Limitacoes atuais:**
-- Depende do Ollama instalado localmente com modelo baixado
-- Regras do IRPF mudam anualmente: base precisa ser atualizada por exercicio
-- OCR pode falhar em fotos obliquas ou de baixa resolucao
-- Classificacao pode exigir revisao manual em documentos muito atipicos
+## Slide 11: Avaliação Quantitativa
 
-**Proximos passos prioritarios:**
-- Busca hibrida: BM25 + vetorial com Reciprocal Rank Fusion (RRF)
-- Comparar modelos de embeddings: nomic-embed-text, bge-small, all-MiniLM-L6
-- Chunking semantico com deteccao de coerencia tematica
-- Atualizar base para exercicio fiscal 2025 (declaracao 2026)
-- Suporte a PDF com multiplos formularios (DIRF, DARF)
+**Título:** Como a qualidade foi medida
 
----
+Dataset: `data/eval/perguntas.json`
 
-## Slide 16: Demonstracao ao Vivo
+- 60 perguntas anotadas.
+- 12 categorias fiscais.
+- 3 níveis de dificuldade.
+- Cada pergunta possui resposta de referência e palavras-chave esperadas.
 
-**Titulo:** Roteiro de Demonstracao (20 minutos)
+Métricas:
 
-1. Abrir o frontend em `http://localhost:3000`
-2. **Chat:** perguntar "Posso deduzir consulta com dentista no IR?"
-   - Mostrar fontes consultadas e score de similaridade cosseno
-3. **Chat:** perguntar "Curso de ingles e dedutivel como educacao?"
-   - Demonstrar que o RAG responde corretamente "nao e dedutivel"
-4. **Upload:** enviar recibo medico de exemplo
-   - Mostrar classificacao LLM-first e justificativa enriquecida
-5. **Upload:** enviar documento nao dedutivel
-   - Mostrar que o sistema identifica corretamente e emite aviso
-6. **Historico:** navegar e mostrar documentos salvos por categoria
-7. **Avaliacao:** executar avaliacao de recuperacao ao vivo (sem Ollama)
-   - Mostrar taxa de recuperacao, score medio e interpretacao
-8. **Status:** mostrar chunks indexados e disponibilidade do Ollama
-9. **Swagger:** abrir `http://localhost:8000/docs` e mostrar os endpoints
+| Métrica | Objetivo |
+|---|---|
+| Taxa de recuperação | medir perguntas com ao menos um chunk recuperado |
+| Score médio de contexto | medir similaridade dos chunks retornados |
+| Cobertura de keywords | medir termos esperados na resposta |
+| Latência por pergunta | medir tempo total do pipeline |
 
----
+## Slide 12: Resultados de Modelos
 
-*Fim do roteiro. Slides gerados a partir deste prompt pelo NotebookLLM para apresentacao academica — DeclaraAI, UEA, junho de 2026.*
+**Título:** Mistral + RAG teve melhor cobertura
+
+| Modelo | Cobertura | Latência média | Observação |
+|---|---|---|---|
+| Mistral + RAG | 72,4% | 8,2 s | Melhor cobertura |
+| Phi4-mini + RAG | 68,3% | 7,0 s | Bom custo-benefício |
+| Llama 3.2 3B + RAG | 65,8% | 6,4 s | Mais rápido |
+| Gemma 3 4B + RAG | 61,2% | 6,9 s | Menor cobertura |
+| Mistral sem RAG | 44,1% | 5,1 s | Linha de base |
+
+**Conclusão:** o RAG acrescenta +28,3 pontos percentuais ao Mistral em comparação com o LLM sem recuperação.
+
+## Slide 13: Ablation Study
+
+**Título:** Por que o RAG faz diferença
+
+Explique que o domínio fiscal depende de regras específicas, limites anuais, exceções e documentos oficiais. O LLM sem contexto tende a responder de forma genérica, enquanto o RAG injeta trechos recuperados da base própria.
+
+Pontos-chave:
+
+- limites fiscais mudam por exercício;
+- regras de dedutibilidade têm exceções;
+- a base oficial reduz alucinações;
+- fontes e scores tornam a resposta auditável.
+
+## Slide 14: Conformidade com a Atividade
+
+**Título:** Requisitos técnicos atendidos
+
+| Critério | Status |
+|---|---|
+| Problema e domínio | IRPF, público-alvo e relevância definidos |
+| Base própria | TXT fiscal e PDF oficial da Receita Federal |
+| Ingestão e pré-processamento | loader, limpeza, metadados e chunking |
+| Embeddings e recuperação | MiniLM, ChromaDB e CrossEncoder |
+| Agentic RAG | ferramentas acionadas por intenção |
+| LLM aberto | Mistral via Ollama |
+| Interface | React + FastAPI + Swagger |
+| Avaliação | dataset, scripts e métricas |
+| Documentação | README, relatório, diagramas e slides |
+
+## Slide 15: Limitações e Próximos Passos
+
+**Título:** Limitações conhecidas
+
+- Depende do Ollama instalado e do modelo baixado.
+- Regras fiscais exigem atualização anual da base.
+- OCR pode falhar em imagens ruins.
+- A classificação ainda exige revisão humana.
+- O sistema apoia o contribuinte, mas não substitui contador.
+
+**Próximos passos:**
+
+- busca híbrida BM25 + vetorial;
+- comparação de embeddings;
+- chunking semântico;
+- base atualizada para o exercício fiscal vigente;
+- dataset anotado de documentos enviados.
+
+## Slide 16: Demonstração ao Vivo
+
+**Título:** Roteiro da apresentação
+
+1. Abrir o frontend em `http://localhost:3000`.
+2. Mostrar status do sistema e disponibilidade do Ollama.
+3. No chat, perguntar: "Curso de inglês é dedutível como educação?"
+4. Mostrar fontes consultadas, score e resposta restritiva.
+5. Enviar recibo médico de exemplo na tela de upload.
+6. Mostrar extração, classificação, titularidade e justificativa.
+7. Salvar o documento após revisão.
+8. Abrir histórico e mostrar resumo anual.
+9. Executar avaliação de recuperação ao vivo.
+10. Abrir Swagger em `http://localhost:8000/docs`.
+
+## Encerramento
+
+Concluir destacando que o DeclaraAI evoluiu de um RAG básico para um Micro SaaS com comportamento agentic, avaliação quantitativa, interface utilizável, privacidade local e documentação completa.

@@ -1,6 +1,18 @@
 import { useState, useRef } from "react";
-import { Upload as UploadIcon, FileText, CheckCircle, AlertCircle, X } from "lucide-react";
-import { uploadDocumento, salvarDocumento } from "../services/api";
+import {
+  Upload as UploadIcon,
+  FileText,
+  CheckCircle,
+  AlertCircle,
+  ShieldCheck,
+  X,
+} from "lucide-react";
+import {
+  registrarPerfil,
+  uploadDocumento,
+  salvarDocumento,
+  verificarTitularidade,
+} from "../services/api";
 
 const FORMATOS_ACEITOS = ".pdf,.txt,.html,.xml,.jpg,.jpeg,.png";
 
@@ -11,6 +23,12 @@ export default function Upload() {
   const [salvando, setSalvando] = useState(false);
   const [mensagem, setMensagem] = useState(null);
   const [confirmado, setConfirmado] = useState(false);
+  const [perfil, setPerfil] = useState(() => ({
+    nome: localStorage.getItem("declaraai_nome_declarante") || "",
+    cpf: localStorage.getItem("declaraai_cpf_declarante") || "",
+  }));
+  const [salvandoPerfil, setSalvandoPerfil] = useState(false);
+  const [titularidade, setTitularidade] = useState(null);
   const inputRef = useRef(null);
 
   function selecionarArquivo(e) {
@@ -20,6 +38,7 @@ export default function Upload() {
       setDados(null);
       setMensagem(null);
       setConfirmado(false);
+      setTitularidade(null);
     }
   }
 
@@ -31,16 +50,57 @@ export default function Upload() {
       setDados(null);
       setMensagem(null);
       setConfirmado(false);
+      setTitularidade(null);
     }
+  }
+
+  async function salvarPerfil(e) {
+    e.preventDefault();
+    if (!perfil.nome.trim() || !perfil.cpf.trim()) {
+      setMensagem({
+        tipo: "error",
+        texto: "Informe nome completo e CPF do declarante.",
+      });
+      return;
+    }
+
+    setSalvandoPerfil(true);
+    try {
+      await registrarPerfil(perfil.nome.trim(), perfil.cpf.trim());
+      localStorage.setItem("declaraai_nome_declarante", perfil.nome.trim());
+      localStorage.setItem("declaraai_cpf_declarante", perfil.cpf.trim());
+      setMensagem({ tipo: "success", texto: "Declarante registrado para esta sessão." });
+      if (dados?.nome_beneficiario) {
+        await avaliarTitularidade(dados.nome_beneficiario);
+      }
+    } catch (err) {
+      setMensagem({ tipo: "error", texto: `Erro ao registrar declarante: ${err.message}` });
+    } finally {
+      setSalvandoPerfil(false);
+    }
+  }
+
+  async function avaliarTitularidade(nomeBeneficiario) {
+    if (!nomeBeneficiario || !perfil.nome.trim() || !perfil.cpf.trim()) {
+      setTitularidade(null);
+      return;
+    }
+
+    await registrarPerfil(perfil.nome.trim(), perfil.cpf.trim());
+    const resultado = await verificarTitularidade(nomeBeneficiario);
+    setTitularidade(resultado);
   }
 
   async function processar() {
     if (!arquivo) return;
     setProcessando(true);
     setMensagem(null);
+    setTitularidade(null);
     try {
       const resultado = await uploadDocumento(arquivo);
-      setDados(resultado.dados || resultado);
+      const dadosProcessados = resultado.dados || resultado;
+      setDados(dadosProcessados);
+      await avaliarTitularidade(dadosProcessados.nome_beneficiario);
       setMensagem({ tipo: "success", texto: "Documento processado com sucesso!" });
     } catch (err) {
       setMensagem({ tipo: "error", texto: `Erro: ${err.message}` });
@@ -61,6 +121,7 @@ export default function Upload() {
       setDados(null);
       setArquivo(null);
       setConfirmado(false);
+      setTitularidade(null);
     } catch (err) {
       setMensagem({ tipo: "error", texto: `Erro ao salvar: ${err.message}` });
     } finally {
@@ -75,6 +136,41 @@ export default function Upload() {
         Envie recibos médicos, notas fiscais, comprovantes de educação, informes de rendimentos
         e outros documentos para organização automática.
       </p>
+
+      <form className="card perfil-card" onSubmit={salvarPerfil}>
+        <div className="card-header">
+          <h2>Declarante</h2>
+          <span className="badge-secondary">Titularidade</span>
+        </div>
+        <div className="perfil-grid">
+          <label>
+            Nome completo
+            <input
+              type="text"
+              value={perfil.nome}
+              onChange={(e) => setPerfil((prev) => ({ ...prev, nome: e.target.value }))}
+              placeholder="Nome do titular da declaração"
+            />
+          </label>
+          <label>
+            CPF
+            <input
+              type="text"
+              value={perfil.cpf}
+              onChange={(e) => setPerfil((prev) => ({ ...prev, cpf: e.target.value }))}
+              placeholder="000.000.000-00"
+            />
+          </label>
+          <button
+            className="btn-secondary"
+            type="submit"
+            disabled={salvandoPerfil || !perfil.nome.trim() || !perfil.cpf.trim()}
+          >
+            <ShieldCheck size={14} />
+            {salvandoPerfil ? "Registrando..." : "Registrar"}
+          </button>
+        </div>
+      </form>
 
       <div
         className={`dropzone${arquivo ? " dropzone-active" : ""}`}
@@ -170,6 +266,25 @@ export default function Upload() {
             </div>
           </div>
 
+          {dados.nome_beneficiario && !titularidade && (
+            <div className="alert alert-warning">
+              <AlertCircle size={16} />
+              Registre o declarante acima para verificar se o beneficiário é titular,
+              dependente provável ou terceiro.
+            </div>
+          )}
+
+          {titularidade && (
+            <div
+              className={`alert ${
+                titularidade.status === "titular" ? "alert-success" : "alert-warning"
+              }`}
+            >
+              <ShieldCheck size={16} />
+              {titularidade.mensagem}
+            </div>
+          )}
+
           {dados.justificativa_enriquecida && (
             <div className="justificativa">
               <strong>Análise do assistente:</strong>
@@ -210,6 +325,7 @@ export default function Upload() {
                 setArquivo(null);
                 setConfirmado(false);
                 setMensagem(null);
+                setTitularidade(null);
               }}
             >
               <X size={14} /> Descartar

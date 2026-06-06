@@ -5,7 +5,7 @@ Schemas Pydantic para validação e serialização de dados da API.
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 # ---------------------------------------------------------------------------
 # Schemas de Documento
@@ -107,18 +107,18 @@ class RequisicaoChat(BaseModel):
 
     pergunta: str
     modelo: Optional[str] = None
-    historico: Optional[List[dict]] = []
+    historico: List[dict] = Field(default_factory=list)
 
 
 class RespostaChat(BaseModel):
     """Resposta gerada pelo pipeline RAG."""
 
     resposta: str
-    contexto_utilizado: Optional[List[str]] = []
-    fontes: Optional[List[str]] = []
-    chunks_recuperados: Optional[int] = 0
-    scores_contexto: Optional[List[float]] = []  # Scores de similaridade (0 a 1)
-    score_medio_contexto: Optional[float] = 0.0
+    contexto_utilizado: List[str] = Field(default_factory=list)
+    fontes: List[str] = Field(default_factory=list)
+    chunks_recuperados: int = 0
+    scores_contexto: List[float] = Field(default_factory=list)
+    score_medio_contexto: float = 0.0
 
 
 # ---------------------------------------------------------------------------

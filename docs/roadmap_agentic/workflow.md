@@ -69,7 +69,7 @@ A API também permite re-indexação experimental por `POST /knowledge/reindex`,
 |---|---|---|
 | Busca vetorial | Perguntas abertas sobre IRPF | `backend/app/rag/retriever.py` |
 | Busca em documento do usuário | Perguntas sobre arquivos salvos | ChromaDB com metadados de fonte |
-| Classificação de documento | Após upload | `ServicoClassificacaoLLM` com fallback |
+| Classificação de documento | Após upload | `ServicoClassificaçãoLLM` com fallback |
 | Verificação de titularidade | Antes de concluir dedutibilidade | `titularidade_service.py` |
 | Justificativa enriquecida | Após classificar documento | `justificativa_service.py` |
 | Consulta ao histórico | Resumos e documentos salvos | `history_service.py` e SQLite |

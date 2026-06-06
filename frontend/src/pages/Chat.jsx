@@ -188,6 +188,8 @@ export default function Chat() {
         <button
           className="btn-primary chat-send-btn"
           type="submit"
+          aria-label="Enviar pergunta"
+          title="Enviar pergunta"
           disabled={!input.trim() || carregando}
         >
           <Send size={18} />

@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 510" width="900" height="510">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0D0D0D"/>
-      <stop offset="100%" style="stop-color:#1a1a1a"/>
+      <stop offset="0%" style="stop-color:#FAF9F6"/>
+      <stop offset="100%" style="stop-color:#FFFFFF"/>
     </linearGradient>
     <marker id="arrO" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
       <polygon points="0 0, 9 3.5, 0 7" fill="#FF6B35"/>
     </marker>
     <marker id="arrG" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
-      <polygon points="0 0, 9 3.5, 0 7" fill="#888888"/>
+      <polygon points="0 0, 9 3.5, 0 7" fill="#64748B"/>
     </marker>
     <marker id="arrY" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
       <polygon points="0 0, 9 3.5, 0 7" fill="#FFD700"/>
@@ -28,21 +28,21 @@
 
   <!-- ===== USER: Contribuinte (x=48, y=110, w=168, h=200) ===== -->
   <g transform="translate(48, 110)" filter="url(#glowBox)">
-    <rect x="0" y="0" width="168" height="200" rx="10" fill="#1a1a1a" stroke="#FF6B35" stroke-width="2"/>
+    <rect x="0" y="0" width="168" height="200" rx="10" fill="#FFFFFF" stroke="#FF6B35" stroke-width="2"/>
     <!-- Person icon -->
     <circle cx="84" cy="52" r="24" fill="#FF6B35" opacity="0.25" stroke="#FF6B35" stroke-width="1.5"/>
     <circle cx="84" cy="44" r="14" fill="#FF6B35" opacity="0.7"/>
     <ellipse cx="84" cy="78" rx="24" ry="14" fill="#FF6B35" opacity="0.45"/>
     <text x="84" y="118" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#FF6B35">Contribuinte</text>
-    <text x="84" y="136" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#888">[Pessoa Fisica]</text>
-    <text x="84" y="155" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#777">Usuario que deseja</text>
-    <text x="84" y="170" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#777">organizar e declarar</text>
-    <text x="84" y="185" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#777">o imposto de renda</text>
+    <text x="84" y="136" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#64748B">[Pessoa Física]</text>
+    <text x="84" y="155" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">Usuário que deseja</text>
+    <text x="84" y="170" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">organizar e declarar</text>
+    <text x="84" y="185" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">o imposto de renda</text>
   </g>
 
   <!-- ===== SYSTEM: DeclaraAI (x=295, y=70, w=245, h=270) ===== -->
   <g transform="translate(295, 70)">
-    <rect x="0" y="0" width="245" height="270" rx="12" fill="#1a1a1a" stroke="#FFD700" stroke-width="2.5"/>
+    <rect x="0" y="0" width="245" height="270" rx="12" fill="#FFFFFF" stroke="#FFD700" stroke-width="2.5"/>
     <rect x="0" y="0" width="245" height="34" rx="12" fill="#FFD700" opacity="0.12"/>
     <rect x="0" y="22" width="245" height="12" fill="#FFD700" opacity="0.12"/>
     <text x="122" y="20" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" fill="#FFD700" opacity="0.85">[Sistema de Software]</text>
@@ -56,78 +56,78 @@
     <line x1="123" y1="41" x2="123" y2="45" stroke="#FFD700" stroke-width="2"/>
     <circle cx="123" cy="38" r="4" fill="#FF6B35"/>
     <text x="122" y="135" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="18" font-weight="800" fill="#FFD700">DeclaraAI</text>
-    <text x="122" y="158" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#aaa">Assistente RAG para</text>
-    <text x="122" y="173" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#aaa">organizacao fiscal e suporte</text>
-    <text x="122" y="188" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#aaa">a declaracao do IRPF</text>
-    <text x="122" y="210" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#FF6B35">FastAPI + Streamlit</text>
+    <text x="122" y="158" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">Assistente RAG para</text>
+    <text x="122" y="173" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">organização fiscal e suporte</text>
+    <text x="122" y="188" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">a declaração do IRPF</text>
+    <text x="122" y="210" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#FF6B35">FastAPI + React</text>
     <text x="122" y="226" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#FF6B35">ChromaDB + Ollama</text>
-    <text x="122" y="248" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#555">localhost:8000 / 8501</text>
+    <text x="122" y="248" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">localhost:8000 / 3000</text>
   </g>
 
   <!-- ===== EXTERNAL: Receita Federal (x=630, y=70, w=195, h=155) ===== -->
   <g transform="translate(630, 70)">
-    <rect x="0" y="0" width="195" height="155" rx="10" fill="#1a1a1a" stroke="#555" stroke-width="1.5"/>
-    <rect x="0" y="0" width="195" height="28" rx="10" fill="#333" opacity="0.7"/>
-    <rect x="0" y="16" width="195" height="12" fill="#333" opacity="0.7"/>
-    <text x="97" y="17" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#888">[Sistema Externo]</text>
+    <rect x="0" y="0" width="195" height="155" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.5"/>
+    <rect x="0" y="0" width="195" height="28" rx="10" fill="#E2E8F0" opacity="0.7"/>
+    <rect x="0" y="16" width="195" height="12" fill="#E2E8F0" opacity="0.7"/>
+    <text x="97" y="17" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">[Sistema Externo]</text>
     <text x="97" y="62" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="24">🏛️</text>
-    <text x="97" y="88" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#aaa">Receita Federal</text>
-    <text x="97" y="108" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#666">Regulamentacoes e</text>
-    <text x="97" y="123" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#666">normas do IRPF</text>
-    <text x="97" y="143" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#444">Base de conhecimento</text>
+    <text x="97" y="88" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#172033">Receita Federal</text>
+    <text x="97" y="108" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">Regulamentações e</text>
+    <text x="97" y="123" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">normas do IRPF</text>
+    <text x="97" y="143" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#CBD5E1">Base de conhecimento</text>
   </g>
 
   <!-- ===== EXTERNAL: Documentos Fiscais (x=630, y=265, w=195, h=145) ===== -->
   <g transform="translate(630, 265)">
-    <rect x="0" y="0" width="195" height="145" rx="10" fill="#1a1a1a" stroke="#555" stroke-width="1.5"/>
-    <rect x="0" y="0" width="195" height="28" rx="10" fill="#333" opacity="0.7"/>
-    <rect x="0" y="16" width="195" height="12" fill="#333" opacity="0.7"/>
-    <text x="97" y="17" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#888">[Sistema Externo]</text>
+    <rect x="0" y="0" width="195" height="145" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.5"/>
+    <rect x="0" y="0" width="195" height="28" rx="10" fill="#E2E8F0" opacity="0.7"/>
+    <rect x="0" y="16" width="195" height="12" fill="#E2E8F0" opacity="0.7"/>
+    <text x="97" y="17" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">[Sistema Externo]</text>
     <text x="97" y="60" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="24">📄</text>
-    <text x="97" y="84" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#aaa">Docs Fiscais</text>
-    <text x="97" y="104" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#666">Recibos, notas fiscais</text>
-    <text x="97" y="119" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#666">e informes de rendimento</text>
-    <text x="97" y="136" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#444">PDF / TXT / HTML</text>
+    <text x="97" y="84" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#172033">Docs Fiscais</text>
+    <text x="97" y="104" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">Recibos, notas fiscais</text>
+    <text x="97" y="119" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">e informes de rendimento</text>
+    <text x="97" y="136" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#CBD5E1">PDF / TXT / HTML</text>
   </g>
 
   <!-- ===== ARROWS ===== -->
   <!-- User -> DeclaraAI (at y=200, arrow from right of User to left of System) -->
   <line x1="217" y1="205" x2="293" y2="205" stroke="#FF6B35" stroke-width="2" marker-end="url(#arrO)"/>
   <!-- Label above arrow -->
-  <rect x="224" y="188" width="62" height="14" rx="3" fill="#0D0D0D" opacity="0.95"/>
+  <rect x="224" y="188" width="62" height="14" rx="3" fill="#FAF9F6" opacity="0.95"/>
   <text x="255" y="199" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#FF6B35">Perguntas e docs</text>
 
   <!-- DeclaraAI -> User (at y=225, dashed, return) -->
   <line x1="293" y1="228" x2="217" y2="228" stroke="#FFD700" stroke-width="1.8" stroke-dasharray="5,3" marker-end="url(#arrY)"/>
   <!-- Label below arrow -->
-  <rect x="222" y="234" width="68" height="14" rx="3" fill="#0D0D0D" opacity="0.95"/>
+  <rect x="222" y="234" width="68" height="14" rx="3" fill="#FAF9F6" opacity="0.95"/>
   <text x="256" y="245" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#FFD700">Respostas e guias</text>
 
   <!-- Receita Federal -> DeclaraAI (diagonal, dashed) -->
   <!-- Receita: x=630,y=70 -> left edge x=630, center-y=70+77=147. DeclaraAI right edge x=540, y=70+135=205 -->
-  <line x1="628" y1="148" x2="542" y2="192" stroke="#888" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrG)"/>
+  <line x1="628" y1="148" x2="542" y2="192" stroke="#64748B" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrG)"/>
   <!-- Label: midpoint (585, 170), offset above -->
-  <rect x="546" y="153" width="76" height="26" rx="3" fill="#0D0D0D" opacity="0.95"/>
-  <text x="584" y="165" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#777">Normas IRPF</text>
-  <text x="584" y="177" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#555">base conhecimento</text>
+  <rect x="546" y="153" width="76" height="26" rx="3" fill="#FAF9F6" opacity="0.95"/>
+  <text x="584" y="165" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">Normas IRPF</text>
+  <text x="584" y="177" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">base conhecimento</text>
 
   <!-- Docs Fiscais -> DeclaraAI (diagonal) -->
   <!-- Docs: x=630,y=265 -> left edge x=630, center-y=265+72=337. DeclaraAI right x=540, y=70+200=270 -->
-  <line x1="628" y1="320" x2="542" y2="268" stroke="#888" stroke-width="1.5" marker-end="url(#arrG)"/>
+  <line x1="628" y1="320" x2="542" y2="268" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrG)"/>
   <!-- Label: midpoint approx (585, 294), offset right -->
-  <rect x="548" y="276" width="76" height="26" rx="3" fill="#0D0D0D" opacity="0.95"/>
-  <text x="586" y="288" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#888">Upload de docs</text>
-  <text x="586" y="300" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#555">PDF / TXT / HTML</text>
+  <rect x="548" y="276" width="76" height="26" rx="3" fill="#FAF9F6" opacity="0.95"/>
+  <text x="586" y="288" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">Upload de docs</text>
+  <text x="586" y="300" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">PDF / TXT / HTML</text>
 
   <!-- Legend -->
-  <rect x="36" y="428" width="470" height="54" rx="8" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
-  <text x="270" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#666">LEGENDA</text>
+  <rect x="36" y="428" width="470" height="54" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="270" y="446" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="10" font-weight="700" fill="#64748B">LEGENDA</text>
   <line x1="55" y1="460" x2="88" y2="460" stroke="#FF6B35" stroke-width="2"/>
-  <text x="96" y="464" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#aaa">Interação síncrona (usuário - sistema)</text>
-  <line x1="55" y1="474" x2="88" y2="474" stroke="#888" stroke-width="1.8" stroke-dasharray="5,3"/>
-  <text x="96" y="478" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#aaa">Dados externos (offline / referencia)</text>
+  <text x="96" y="464" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">Interação síncrona (usuário - sistema)</text>
+  <line x1="55" y1="474" x2="88" y2="474" stroke="#64748B" stroke-width="1.8" stroke-dasharray="5,3"/>
+  <text x="96" y="478" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">Dados externos (offline / referência)</text>
 
   <!-- C4 badge -->
   <rect x="750" y="430" width="110" height="30" rx="6" fill="#FFD700" opacity="0.12" stroke="#FFD700" stroke-width="1"/>
-  <text x="805" y="449" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#FFD700">C4 - Nivel 1</text>
+  <text x="805" y="449" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#FFD700">C4 - Nível 1</text>
 </svg>

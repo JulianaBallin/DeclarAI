@@ -28,6 +28,7 @@ from app.services.history_service import ServicoHistorico
 from app.services.justificativa_service import ServicoJustificativa
 from app.services.llm_classification_service import ServicoClassificacaoLLM
 from app.services.rag_service import get_servico_rag
+from app.utils.filenames import nome_arquivo_seguro
 from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from sqlalchemy.orm import Session
 
@@ -52,7 +53,8 @@ EXTENSOES_PERMITIDAS = {
     "/upload",
     summary="Upload e processamento de documento",
     description=(
-        "Recebe um arquivo (PDF, TXT ou HTML), extrai o texto e os metadados "
+        "Recebe um arquivo (PDF, TXT, HTML, XML, JPG ou PNG), extrai o texto "
+        "e os metadados "
         "(data, valor, emitente) e sugere uma categoria tributária. "
         "Não salva automaticamente - o usuário decide após ver os resultados."
     ),
@@ -69,7 +71,8 @@ async def upload_documento(arquivo: UploadFile = File(...)):
     5. Retorna o resultado para o usuário decidir se salva
     """
     # Validação do tipo de arquivo
-    extensao = Path(arquivo.filename or "arquivo.txt").suffix.lower()
+    nome_original = nome_arquivo_seguro(arquivo.filename, fallback="documento.txt")
+    extensao = Path(nome_original).suffix.lower()
     if extensao not in EXTENSOES_PERMITIDAS:
         raise HTTPException(
             status_code=400,
@@ -80,7 +83,7 @@ async def upload_documento(arquivo: UploadFile = File(...)):
         )
 
     # Salva o arquivo com nome único para evitar colisões
-    nome_unico = f"{uuid.uuid4().hex}_{arquivo.filename}"
+    nome_unico = f"{uuid.uuid4().hex}_{nome_original}"
     caminho_arquivo = Path(configuracoes.CAMINHO_UPLOADS) / nome_unico
     caminho_arquivo.parent.mkdir(parents=True, exist_ok=True)
 
@@ -96,7 +99,7 @@ async def upload_documento(arquivo: UploadFile = File(...)):
         # Classificação LLM-first (fallback por regras se o LLM falhar)
         resultado_cls = ServicoClassificacaoLLM().classificar(
             texto=dados["texto_extraido"],
-            nome_arquivo=arquivo.filename or "",
+            nome_arquivo=nome_original,
         )
         categoria = resultado_cls.categoria
         confianca = resultado_cls.confianca
@@ -110,11 +113,11 @@ async def upload_documento(arquivo: UploadFile = File(...)):
 
         tipo_detalhe = inferir_tipo_documento(
             dados["texto_extraido"],
-            arquivo.filename or "",
+            nome_original,
         )
         tipo_exib = inferir_tipo_documento_resumido(
             dados["texto_extraido"],
-            arquivo.filename or "",
+            nome_original,
         )
         categoria = ajustar_categoria_irpf_por_tipo_documento(
             tipo_exib, categoria, dados["texto_extraido"]
@@ -124,7 +127,7 @@ async def upload_documento(arquivo: UploadFile = File(...)):
             val_ok = False
 
         # Substitui o nome técnico pelo nome original do arquivo
-        dados["nome_arquivo"] = arquivo.filename or nome_unico
+        dados["nome_arquivo"] = nome_original
         dados["categoria"] = categoria
         dados["confianca_classificacao"] = confianca
         dados["origem_classificacao"] = resultado_cls.origem

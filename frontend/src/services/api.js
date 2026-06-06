@@ -10,6 +10,18 @@ const api = axios.create({
   timeout: 180000,
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const detalhe = error.response?.data?.detail;
+    const mensagem =
+      typeof detalhe === "string"
+        ? detalhe
+        : error.response?.statusText || error.message || "Erro inesperado";
+    return Promise.reject(new Error(mensagem));
+  }
+);
+
 export async function enviarPergunta(pergunta, modelo) {
   const response = await api.post("/chat", { pergunta, modelo });
   return response.data;
@@ -40,6 +52,13 @@ export async function excluirDocumento(id) {
   return response.data;
 }
 
+export async function obterResumoAnual(ano) {
+  const response = await api.get("/history/summary", {
+    params: ano ? { ano } : undefined,
+  });
+  return response.data;
+}
+
 export async function listarArquivosBase() {
   const response = await api.get("/knowledge/files");
   return response.data;
@@ -50,6 +69,13 @@ export async function uploadArquivoBase(arquivo) {
   formData.append("arquivo", arquivo);
   const response = await api.post("/knowledge/upload", formData, {
     headers: { "Content-Type": "multipart/form-data" },
+    timeout: 180000,
+  });
+  return response.data;
+}
+
+export async function reindexarBase(configuracao) {
+  const response = await api.post("/knowledge/reindex", configuracao, {
     timeout: 180000,
   });
   return response.data;

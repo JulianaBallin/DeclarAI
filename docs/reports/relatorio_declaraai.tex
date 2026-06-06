@@ -162,7 +162,7 @@ O agente decide qual ferramenta usar conforme a intenção do usuário. Pergunta
 
 \subsection{Ferramentas do Agente}
 
-O sistema implementa cinco ferramentas distintas, cada uma acionada de acordo com a natureza da entrada do usuário:
+O sistema implementa seis ferramentas distintas, cada uma acionada de acordo com a natureza da entrada do usuário:
 
 \begin{center}
 \begin{tabularx}{\textwidth}{@{}L{46mm}L{36mm}Y@{}}
@@ -174,6 +174,7 @@ Classificação LLM-first & upload de documento & LLM analisa categoria, fallbac
 Extração de Dados & upload de documento & extrai emitente, CNPJ, valor, data e nome do beneficiário \\
 Verificação de Titularidade & após classificação & compara beneficiário com perfil do declarante; retorna: titular, dependente provável ou terceiro \\
 Justificativa Enriquecida & após classificação & segundo pipeline RAG: top-3 chunks por categoria, prompt com dados do documento, Mistral gera explicação normativa \\
+Consulta ao Histórico & histórico e resumo anual & SQLite retorna documentos, totais estimados, alertas de limite e economia projetada \\
 \bottomrule
 \end{tabularx}
 \end{center}
@@ -215,12 +216,31 @@ O frontend foi desenvolvido em React + Vite. A interface possui páginas de uso 
 
 \begin{itemize}[leftmargin=7mm]
   \item Chat RAG com fontes consultadas;
-  \item Upload de documentos com revisão antes de salvar;
-  \item Base de conhecimento para adicionar ou remover fontes;
-  \item Histórico de documentos salvos;
+  \item Upload de documentos com perfil do declarante, verificação de titularidade e revisão antes de salvar;
+  \item Base de conhecimento para adicionar, remover e re-indexar fontes;
+  \item Histórico de documentos salvos, com resumo anual e economia estimada;
   \item Avaliação do pipeline;
   \item Status do sistema, incluindo Ollama, modelos e chunks indexados.
 \end{itemize}
+
+\section{Diagramas e Identidade Visual}
+
+A documentação visual foi atualizada com fundo claro, textos acentuados e espaçamento suficiente para evitar sobreposição de setas e componentes. A nova marca do DeclaraAI foi gerada em SVG e exportada para PNG, sendo usada no relatório e no frontend.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash\ttfamily\scriptsize}p{92mm}Y@{}}
+\toprule
+\textbf{Arquivo} & \textbf{Conteúdo} \\
+\midrule
+docs/diagrams/logo.svg & Logo horizontal do DeclaraAI. \\
+docs/diagrams/logo\_icon.svg & Ícone usado no frontend. \\
+docs/diagrams/rag/recuperacao\_reranking.svg & Fluxo de recuperação, re-ranking e geração da resposta. \\
+docs/diagrams/agentic\_rag/titularidade\_justificativa.svg & Fluxo agentic de upload, titularidade, justificativa e salvamento. \\
+docs/diagrams/rag/indexacao\_e\_ingestao.svg & Ingestão, limpeza, chunking, embeddings e ChromaDB. \\
+docs/diagrams/agentic\_rag/ferramentas\_agente.svg & Ferramentas disponíveis ao agente. \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 \section{Avaliação e Comparações}
 

@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520" font-family="'Segoe UI', Arial, sans-serif">
   <rect width="800" height="520" fill="#F8FAFC"/>
 
-  <!-- Titulo -->
-  <text x="400" y="34" font-size="17" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing="0.5">Pipeline RAG Classico — DeclaraAI</text>
+  <!-- Título -->
+  <text x="400" y="34" font-size="17" font-weight="700" fill="#0F766E" text-anchor="middle" letter-spacing="0.5">Pipeline RAG Clássico - DeclaraAI</text>
   <line x1="80" y1="44" x2="720" y2="44" stroke="#0F766E" stroke-width="1.2" opacity="0.2"/>
 
-  <!-- ==== FASE 1: INDEXACAO ==== -->
-  <text x="400" y="72" font-size="12" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing="1.5">FASE DE INDEXACAO DA BASE DE CONHECIMENTO</text>
+  <!-- ==== FASE 1: INDEXAÇÃO ==== -->
+  <text x="400" y="72" font-size="12" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing="1.5">FASE DE INDEXAÇÃO DA BASE DE CONHECIMENTO</text>
 
   <!-- Box 1: Documentos -->
   <rect x="30" y="84" width="118" height="70" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
@@ -39,7 +39,7 @@
   <rect x="456" y="84" width="118" height="70" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
   <text x="515" y="108" font-size="11" font-weight="700" fill="#0F766E" text-anchor="middle">Embeddings</text>
   <text x="515" y="122" font-size="9.5" fill="#64748B" text-anchor="middle">MiniLM-L12-v2</text>
-  <text x="515" y="136" font-size="10" fill="#64748B" text-anchor="middle">384 dimensoes</text>
+  <text x="515" y="136" font-size="10" fill="#64748B" text-anchor="middle">384 dimensões</text>
   <text x="515" y="148" font-size="9" fill="#64748B" text-anchor="middle">(multilingual)</text>
 
   <!-- Seta 4->5 -->
@@ -55,12 +55,12 @@
   <line x1="30" y1="188" x2="770" y2="188" stroke="#CBD5E1" stroke-width="1" stroke-dasharray="6,4"/>
 
   <!-- ==== FASE 2: CONSULTA ==== -->
-  <text x="400" y="210" font-size="12" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing="1.5">FASE DE CONSULTA E GERACAO DE RESPOSTA</text>
+  <text x="400" y="210" font-size="12" font-weight="700" fill="#64748B" text-anchor="middle" letter-spacing="1.5">FASE DE CONSULTA E GERAÇÃO DE RESPOSTA</text>
 
   <!-- Box A: Pergunta -->
   <rect x="30" y="224" width="118" height="64" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
   <text x="89" y="248" font-size="11" font-weight="700" fill="#0F766E" text-anchor="middle">Pergunta</text>
-  <text x="89" y="264" font-size="10" fill="#64748B" text-anchor="middle">do usuario</text>
+  <text x="89" y="264" font-size="10" fill="#64748B" text-anchor="middle">do usuário</text>
   <text x="89" y="279" font-size="9" fill="#64748B" text-anchor="middle">(texto livre)</text>
 
   <!-- Seta A->B -->
@@ -93,11 +93,11 @@
   <!-- Seta D->E -->
   <line x1="574" y1="256" x2="598" y2="256" stroke="#64748B" stroke-width="1.6" marker-end="url(#arr)"/>
 
-  <!-- Box E: Geracao LLM -->
+  <!-- Box E: Geração LLM -->
   <rect x="598" y="224" width="118" height="64" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
-  <text x="657" y="248" font-size="11" font-weight="700" fill="#0F766E" text-anchor="middle">Geracao</text>
+  <text x="657" y="248" font-size="11" font-weight="700" fill="#0F766E" text-anchor="middle">Geração</text>
   <text x="657" y="264" font-size="10" fill="#64748B" text-anchor="middle">Mistral (Ollama)</text>
-  <text x="657" y="279" font-size="9" fill="#64748B" text-anchor="middle">temp. 0.3</text>
+  <text x="657" y="279" font-size="9" fill="#64748B" text-anchor="middle">temp. 0.1</text>
 
   <!-- ==== FASE 3: RESPOSTA ==== -->
   <!-- Seta vertical de E para baixo -->
@@ -109,7 +109,7 @@
   <text x="656" y="366" font-size="10" fill="#64748B" text-anchor="middle">texto gerado + fontes citadas</text>
   <text x="656" y="382" font-size="9.5" fill="#64748B" text-anchor="middle">score de similaridade cosseno</text>
 
-  <!-- Seta do ChromaDB (indexacao) para Busca (consulta) - indica que e o mesmo banco -->
+  <!-- Seta do ChromaDB (indexação) para Busca (consulta) - indica que e o mesmo banco -->
   <path d="M657 154 Q657 174 657 194 Q657 210 657 224" fill="none" stroke="#F97316" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#arrOrange)" opacity="0.7"/>
   <text x="670" y="190" font-size="9" fill="#F97316" opacity="0.8">mesmo banco</text>
 
@@ -121,9 +121,9 @@
   <rect x="50" y="472" width="14" height="10" rx="3" fill="#FFF7ED" stroke="#F97316" stroke-width="1.5"/>
   <text x="70" y="481" font-size="10" fill="#64748B">Componente de armazenamento / busca vetorial</text>
   <line x1="240" y1="458" x2="265" y2="458" stroke="#F97316" stroke-width="1.3" stroke-dasharray="4,3"/>
-  <text x="270" y="462" font-size="10" fill="#64748B">Reutilizacao entre fases</text>
+  <text x="270" y="462" font-size="10" fill="#64748B">Reutilização entre fases</text>
 
-  <!-- Definicao das setas -->
+  <!-- Definição das setas -->
   <defs>
     <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
       <path d="M0,0 L0,6 L8,3 z" fill="#64748B"/>

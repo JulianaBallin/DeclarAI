@@ -17,8 +17,8 @@ O DeclaraAI atende pessoas físicas brasileiras que precisam organizar recibos, 
 | Classificação | Classifica documentos por categoria tributária com LLM-first e fallback por regras |
 | Justificativa | Gera explicação fundamentada com RAG após a classificação |
 | Titularidade | Verifica se o beneficiário é titular, dependente provável ou terceiro |
-| Histórico | Salva documentos revisados e permite consulta por categoria |
-| Base de conhecimento | Lista, adiciona e remove documentos de referência |
+| Histórico | Salva documentos revisados, filtra por categoria e mostra resumo anual |
+| Base de conhecimento | Lista, adiciona, remove e re-indexa documentos de referência |
 | Avaliação | Mede recuperação, cobertura de palavras-chave e comparação de modelos |
 
 ## Arquitetura
@@ -179,8 +179,10 @@ make test            # executa testes Python
 | `POST` | `/documents/upload` | Processa documento fiscal |
 | `POST` | `/documents/save` | Salva documento no histórico |
 | `GET` | `/history` | Lista documentos salvos |
+| `GET` | `/history/summary` | Gera resumo anual por categoria |
 | `GET` | `/knowledge/files` | Lista arquivos da base |
 | `POST` | `/knowledge/upload` | Adiciona documento à base |
+| `POST` | `/knowledge/reindex` | Re-indexa a base com configuração de chunking |
 | `POST` | `/evaluation/recuperacao` | Avalia recuperação no dataset anotado |
 | `POST` | `/evaluation/recuperacao-pergunta` | Avalia uma pergunta isolada |
 
@@ -219,6 +221,9 @@ Saídas esperadas:
 | `docs/roadmap_agentic/workflow.md` | Workflow Agentic RAG do DeclaraAI |
 | `docs/reports/relatorio_declaraai.tex` | Relatório técnico em LaTeX |
 | `docs/diagrams/` | Diagramas de arquitetura, RAG e classificação |
+| `docs/diagrams/rag/recuperacao_reranking.svg` | Fluxo de recuperação e re-ranking |
+| `docs/diagrams/agentic_rag/titularidade_justificativa.svg` | Fluxo de upload, titularidade e justificativa |
+| `docs/slides_agentic_rag.md` | Prompt revisado para gerar slides da apresentação |
 
 ## Privacidade e LGPD
 

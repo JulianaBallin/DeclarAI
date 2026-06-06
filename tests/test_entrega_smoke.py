@@ -7,6 +7,7 @@ RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "backend"))
 
 from app.rag.chunker import ChunkerTexto
+from app.utils.filenames import nome_arquivo_seguro
 
 
 def test_chunker_respeita_tamanho_e_preserva_sobreposicao():
@@ -42,3 +43,9 @@ def test_arquivos_internos_estao_protegidos_no_gitignore():
 
     assert "AGENTE.md" in gitignore
     assert "Atividade.pdf" in gitignore
+
+
+def test_nome_arquivo_seguro_remove_traversal_e_caracteres_invalidos():
+    assert nome_arquivo_seguro("../../Atividade.pdf") == "Atividade.pdf"
+    assert nome_arquivo_seguro(r"..\\segredo?.txt") == "segredo_.txt"
+    assert nome_arquivo_seguro("\x00  ") == "arquivo"

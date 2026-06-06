@@ -2,7 +2,7 @@
 Rotas para perfil do declarante e verificação de titularidade.
 
 O perfil é armazenado apenas na sessão do backend (em memória por processo).
-Para persistência real entre sessões, o frontend usa seu próprio session_state.
+Para persistência local entre sessões, o frontend usa localStorage.
 """
 
 import logging
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 roteador = APIRouter()
 
-# Armazenamento em memória (session-level - adequado para uso single-user/local)
+# Armazenamento em memória por processo, adequado para uso local de usuário único.
 _perfil_sessao: dict = {}
 
 

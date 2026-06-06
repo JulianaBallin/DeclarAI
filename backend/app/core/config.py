@@ -40,7 +40,7 @@ class Configuracoes(BaseSettings):
     )
 
     # Integração com Ollama (LLM local)
-    OLLAMA_BASE_URL: str = "http://ollama:11434"
+    OLLAMA_BASE_URL: str = "http://localhost:11434"
     OLLAMA_MODELO: str = "mistral"
 
     # Recuperação semântica

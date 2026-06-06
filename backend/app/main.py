@@ -99,11 +99,14 @@ async def ciclo_de_vida(app: FastAPI):
         from app.rag.embeddings import GeradorEmbeddings
         from app.rag.generator import GeradorResposta
 
-        logger.info("Aquecendo modelo de embeddings...")
-        loop = asyncio.get_event_loop()
-        await loop.run_in_executor(None, GeradorEmbeddings().gerar, "aquecimento")
-        logger.info("Modelo de embeddings pré-carregado.")
-        await GeradorResposta().aquecer()
+        try:
+            logger.info("Aquecendo modelo de embeddings...")
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, GeradorEmbeddings().gerar, "aquecimento")
+            logger.info("Modelo de embeddings pré-carregado.")
+            await GeradorResposta().aquecer()
+        except Exception as erro:
+            logger.warning("Aquecimento em segundo plano falhou: %s", erro)
 
     asyncio.create_task(_aquecer_tudo())
     logger.info("Aquecimento de modelos iniciado em segundo plano.")

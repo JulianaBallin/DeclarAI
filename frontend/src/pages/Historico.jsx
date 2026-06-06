@@ -11,7 +11,7 @@ import {
   Stethoscope,
   Trash2,
 } from "lucide-react";
-import { listarHistorico, excluirDocumento } from "../services/api";
+import { listarHistorico, excluirDocumento, obterResumoAnual } from "../services/api";
 
 const CATEGORIAS_ICONES = [
   ["Recibo Médico", Stethoscope],
@@ -49,6 +49,8 @@ export default function Historico() {
   const [carregando, setCarregando] = useState(false);
   const [filtroCategoria, setFiltroCategoria] = useState("");
   const [mensagem, setMensagem] = useState(null);
+  const [resumo, setResumo] = useState(null);
+  const [anoResumo, setAnoResumo] = useState(new Date().getFullYear());
 
   async function carregar() {
     setCarregando(true);
@@ -64,9 +66,22 @@ export default function Historico() {
     }
   }
 
+  async function carregarResumo() {
+    try {
+      const dados = await obterResumoAnual(anoResumo);
+      setResumo(dados);
+    } catch (err) {
+      setMensagem({ tipo: "error", texto: `Erro no resumo: ${err.message}` });
+    }
+  }
+
   useEffect(() => {
     carregar();
   }, [filtroCategoria]);
+
+  useEffect(() => {
+    carregarResumo();
+  }, [anoResumo]);
 
   async function excluir(id, nome) {
     if (!confirm(`Excluir "${nome}"?`)) return;
@@ -74,6 +89,7 @@ export default function Historico() {
       await excluirDocumento(id);
       setDocumentos((prev) => prev.filter((d) => d.id !== id));
       setMensagem({ tipo: "success", texto: `"${nome}" removido.` });
+      carregarResumo();
     } catch (err) {
       setMensagem({ tipo: "error", texto: `Erro: ${err.message}` });
     }
@@ -86,12 +102,23 @@ export default function Historico() {
   }, {});
 
   const categorias = Object.keys(contagem).sort();
+  const categoriasResumo = Object.entries(resumo?.categorias || {});
+  const moeda = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
 
   return (
     <div className="page">
       <div className="page-header">
         <h1>Histórico de Documentos</h1>
-        <button className="btn-secondary btn-sm" onClick={carregar}>
+        <button
+          className="btn-secondary btn-sm"
+          onClick={() => {
+            carregar();
+            carregarResumo();
+          }}
+        >
           <RefreshCw size={14} /> Atualizar
         </button>
       </div>
@@ -116,6 +143,16 @@ export default function Historico() {
             <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>
+        <label className="ano-resumo">
+          Ano do resumo
+          <input
+            type="number"
+            min="2000"
+            max="2100"
+            value={anoResumo}
+            onChange={(e) => setAnoResumo(Number(e.target.value))}
+          />
+        </label>
       </div>
 
       <div className="stats-cards">
@@ -132,6 +169,41 @@ export default function Historico() {
           </div>
         ))}
       </div>
+
+      {resumo && (
+        <div className="card resumo-card">
+          <div className="card-header">
+            <h2>Resumo Anual {resumo.ano}</h2>
+            <span className="badge-secondary">{resumo.total_documentos} documentos</span>
+          </div>
+          <div className="resumo-totais">
+            <div>
+              <span className="stat-label">Deduções estimadas</span>
+              <strong>{moeda.format(resumo.total_deducoes_estimado || 0)}</strong>
+            </div>
+            <div>
+              <span className="stat-label">Economia estimada</span>
+              <strong>{moeda.format(resumo.economia_estimada || 0)}</strong>
+            </div>
+          </div>
+          {resumo.aviso_estimativa && (
+            <p className="resumo-aviso">{resumo.aviso_estimativa}</p>
+          )}
+          {categoriasResumo.length > 0 && (
+            <div className="resumo-categorias">
+              {categoriasResumo.map(([categoria, dadosCategoria]) => (
+                <div key={categoria} className="resumo-categoria">
+                  <span>{categoria}</span>
+                  <strong>{moeda.format(dadosCategoria.total_numerico || 0)}</strong>
+                  {dadosCategoria.alerta_limite && (
+                    <small>{dadosCategoria.alerta_limite}</small>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       {carregando && <p className="loading-text">Carregando...</p>}
 

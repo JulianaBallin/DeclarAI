@@ -10,7 +10,12 @@ import {
   Trash2,
   Upload,
 } from "lucide-react";
-import { listarArquivosBase, uploadArquivoBase, removerArquivoBase } from "../services/api";
+import {
+  listarArquivosBase,
+  reindexarBase,
+  uploadArquivoBase,
+  removerArquivoBase,
+} from "../services/api";
 
 const ICONES = { pdf: FileType, txt: FileText, html: FileCode2, htm: FileCode2 };
 
@@ -25,6 +30,10 @@ export default function BaseConhecimento() {
   const [arquivo, setArquivo] = useState(null);
   const [enviando, setEnviando] = useState(false);
   const [mensagem, setMensagem] = useState(null);
+  const [tipoChunking, setTipoChunking] = useState("fixo");
+  const [chunkSize, setChunkSize] = useState(600);
+  const [chunkOverlap, setChunkOverlap] = useState(80);
+  const [reindexando, setReindexando] = useState(false);
 
   async function carregar() {
     setCarregando(true);
@@ -71,6 +80,26 @@ export default function BaseConhecimento() {
     }
   }
 
+  async function reindexar() {
+    setReindexando(true);
+    try {
+      const resultado = await reindexarBase({
+        tipo: tipoChunking,
+        chunk_size: Number(chunkSize),
+        chunk_overlap: Number(chunkOverlap),
+      });
+      setMensagem({
+        tipo: "success",
+        texto: `Base re-indexada com ${resultado.chunks_indexados} trechos (${resultado.tipo}, ${resultado.chunk_size}/${resultado.chunk_overlap}).`,
+      });
+      carregar();
+    } catch (err) {
+      setMensagem({ tipo: "error", texto: `Erro ao re-indexar: ${err.message}` });
+    } finally {
+      setReindexando(false);
+    }
+  }
+
   return (
     <div className="page">
       <div className="page-header">
@@ -99,7 +128,7 @@ export default function BaseConhecimento() {
         <div className="upload-row">
           <input
             type="file"
-            accept=".pdf,.txt,.html"
+            accept=".pdf,.txt,.html,.htm"
             onChange={(e) => setArquivo(e.target.files?.[0] || null)}
           />
           <button
@@ -115,6 +144,51 @@ export default function BaseConhecimento() {
             Arquivo selecionado: <strong>{arquivo.name}</strong> ({(arquivo.size / 1024).toFixed(1)} KB)
           </p>
         )}
+      </div>
+
+      <div className="card">
+        <h2>Re-indexar Base</h2>
+        <div className="reindex-grid">
+          <label>
+            Estratégia
+            <select
+              value={tipoChunking}
+              onChange={(e) => setTipoChunking(e.target.value)}
+            >
+              <option value="fixo">Fixo</option>
+              <option value="sentenca">Sentença</option>
+              <option value="semantico">Semântico</option>
+            </select>
+          </label>
+          <label>
+            Tamanho
+            <input
+              type="number"
+              min="50"
+              max="4000"
+              value={chunkSize}
+              onChange={(e) => setChunkSize(e.target.value)}
+            />
+          </label>
+          <label>
+            Sobreposição
+            <input
+              type="number"
+              min="0"
+              max="1000"
+              value={chunkOverlap}
+              onChange={(e) => setChunkOverlap(e.target.value)}
+            />
+          </label>
+          <button
+            className="btn-secondary"
+            onClick={reindexar}
+            disabled={reindexando}
+          >
+            <RefreshCw size={14} />
+            {reindexando ? "Re-indexando..." : "Re-indexar"}
+          </button>
+        </div>
       </div>
 
       <div className="card">
@@ -147,6 +221,8 @@ export default function BaseConhecimento() {
             <button
               className="btn-danger btn-sm"
               onClick={() => remover(arq.nome)}
+              aria-label={`Remover ${arq.nome}`}
+              title={`Remover ${arq.nome}`}
             >
               <Trash2 size={12} />
             </button>

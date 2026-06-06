@@ -55,7 +55,7 @@
   <rect x="32" y="164" width="264" height="20" rx="4" fill="#FF6B35"/>
   <text x="164" y="178" text-anchor="middle"
         font-family="Arial,Helvetica,sans-serif" font-size="10" font-weight="bold" fill="#FFFFFF">CHUNK 1 - 600 chars</text>
-  <!-- Linhas de conteudo simulado -->
+  <!-- Linhas de conteúdo simulado -->
   <rect x="46" y="194" width="230" height="8" rx="2" fill="#DDDDDD"/>
   <rect x="46" y="208" width="210" height="8" rx="2" fill="#DDDDDD"/>
   <rect x="46" y="222" width="185" height="8" rx="2" fill="#DDDDDD"/>
@@ -128,20 +128,20 @@
   <rect x="32" y="306" width="396" height="22" rx="4" fill="#FF6B35"/>
   <text x="230" y="321" text-anchor="middle"
         font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">Por que 600 chars?</text>
-  <!-- Conteudo -->
-  <text x="50" y="344" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#333333">
+  <!-- Conteúdo -->
+  <text x="50" y="344" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#E2E8F0333">
     • Captura um comprovante completo em 1 chunk
   </text>
-  <text x="50" y="361" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#333333">
+  <text x="50" y="361" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#E2E8F0333">
     • Evita diluição semântica com chunks muito longos
   </text>
-  <text x="50" y="378" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#333333">
+  <text x="50" y="378" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#E2E8F0333">
     • Mantém emitente, valor e data no mesmo trecho
   </text>
-  <text x="50" y="395" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#333333">
+  <text x="50" y="395" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#E2E8F0333">
     • Equilibra precisão e recall no ChromaDB
   </text>
-  <text x="50" y="420" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#888888">
+  <text x="50" y="420" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748B">
     ~150 tokens por chunk (padrão para documentos fiscais)
   </text>
 
@@ -152,25 +152,25 @@
   <rect x="472" y="306" width="396" height="22" rx="4" fill="#E07B00"/>
   <text x="670" y="321" text-anchor="middle"
         font-family="Arial,Helvetica,sans-serif" font-size="11" font-weight="bold" fill="#FFFFFF">Por que 80 chars de sobreposição?</text>
-  <text x="490" y="344" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#333333">
+  <text x="490" y="344" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#E2E8F0333">
     • Preserva frases cortadas na fronteira do chunk
   </text>
-  <text x="490" y="361" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#333333">
+  <text x="490" y="361" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#E2E8F0333">
     • Evita perder valores (ex: "R$ 350,00" dividido)
   </text>
-  <text x="490" y="378" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#333333">
+  <text x="490" y="378" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#E2E8F0333">
     • Contexto de transição entre parágrafos mantido
   </text>
-  <text x="490" y="395" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#333333">
+  <text x="490" y="395" font-family="Arial,Helvetica,sans-serif" font-size="10" fill="#E2E8F0333">
     • Garante recuperação do contexto no chunk seguinte
   </text>
-  <text x="490" y="420" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#888888">
+  <text x="490" y="420" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748B">
     ~13% de sobreposição (equilíbrio padrão em NLP)
   </text>
 
   <!-- ===== BARRA DE RESULTADO (y=440 a y=458) ===== -->
-  <rect x="30" y="440" width="840" height="18" rx="3" fill="#F5F5F5" stroke="#DDDDDD" stroke-width="1"/>
-  <text x="50" y="453" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#555555">
+  <rect x="30" y="440" width="840" height="18" rx="3" fill="#172033" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="50" y="453" font-family="Arial,Helvetica,sans-serif" font-size="9" fill="#64748B">
     Resultado: guia_imposto_renda.txt + pr-irpf-2024.pdf  ->  31 chunks indexados no ChromaDB
   </text>
   <text x="862" y="453" text-anchor="end"

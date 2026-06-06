@@ -12,6 +12,7 @@ from pathlib import Path
 from app.core.config import configuracoes
 from app.rag.chunker import ChunkerTexto
 from app.services.rag_service import get_servico_rag
+from app.utils.filenames import nome_arquivo_seguro
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
@@ -136,7 +137,8 @@ async def adicionar_a_base(arquivo: UploadFile = File(...)):
     3. Re-indexa toda a base de conhecimento no ChromaDB
     4. Retorna número de chunks gerados
     """
-    extensao = Path(arquivo.filename or "arquivo.txt").suffix.lower()
+    nome_original = nome_arquivo_seguro(arquivo.filename, fallback="documento.txt")
+    extensao = Path(nome_original).suffix.lower()
     if extensao not in EXTENSOES_PERMITIDAS:
         raise HTTPException(
             status_code=400,
@@ -150,7 +152,7 @@ async def adicionar_a_base(arquivo: UploadFile = File(...)):
     diretorio.mkdir(parents=True, exist_ok=True)
 
     # Usa o nome original - permite substituir versões antigas do mesmo arquivo
-    nome_destino = arquivo.filename or f"documento{extensao}"
+    nome_destino = nome_original or f"documento{extensao}"
     caminho_destino = diretorio / nome_destino
 
     try:

@@ -12,7 +12,7 @@ Este roadmap unifica os planejamentos anteriores do artigo e organiza as próxim
 | Dataset de avaliação | Concluído | `data/eval/perguntas.json` com 60 perguntas |
 | Scripts de avaliação | Concluído | LLMs, chunking e RAGAS |
 | Workflow Agentic RAG | Concluído | `docs/roadmap_agentic/workflow.md` |
-| Relatório técnico | Concluído | `docs/reports/relatorio_declaraai.tex` |
+| Relatório técnico | Concluído | `docs/reports/relatório_declaraai.tex` |
 | Busca híbrida BM25 + vetorial | Futuro | Boa contribuição para artigo |
 | Comparação de embeddings | Futuro | Avaliar MiniLM, E5 e nomic |
 | Dataset anotado de documentos | Futuro | Necessário para medir classificação |
@@ -144,8 +144,8 @@ Notebooks recomendados:
 | `01_experimentos_chunking.ipynb` | Gráficos de chunking |
 | `01b_retrieval_strategies.ipynb` | Busca vetorial, BM25 e híbrida |
 | `02_comparacao_llm.ipynb` | Modelos, latência e ablation study |
-| `03_classificacao_documentos.ipynb` | Classificação e matriz de confusão |
-| `04_visao_geral_sistema.ipynb` | Arquitetura, dados e métricas gerais |
+| `03_classificação_documentos.ipynb` | Classificação e matriz de confusão |
+| `04_visão_geral_sistema.ipynb` | Arquitetura, dados e métricas gerais |
 
 ## 10. Privacidade e LGPD
 

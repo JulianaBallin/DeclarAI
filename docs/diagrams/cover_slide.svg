@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
   <defs>
     <linearGradient id="bgCover" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#080808"/>
-      <stop offset="60%" style="stop-color:#0D0D0D"/>
-      <stop offset="100%" style="stop-color:#161616"/>
+      <stop offset="0%" style="stop-color:#FAF9F6"/>
+      <stop offset="60%" style="stop-color:#FAF9F6"/>
+      <stop offset="100%" style="stop-color:#FFFFFF"/>
     </linearGradient>
     <linearGradient id="glowOrange" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:0.18"/>
@@ -89,13 +89,13 @@
   <circle cx="1050" cy="340" r="30" fill="url(#nodeGlow)" filter="url(#blur8)"/>
 
   <!-- Network nodes -->
-  <circle cx="820" cy="160" r="7" fill="#1a1a1a" stroke="#FF6B35" stroke-width="1.8"/>
+  <circle cx="820" cy="160" r="7" fill="#FFFFFF" stroke="#FF6B35" stroke-width="1.8"/>
   <circle cx="950" cy="240" r="12" fill="#1e1e1e" stroke="#FF6B35" stroke-width="2.2"/>
-  <circle cx="1080" cy="180" r="8" fill="#1a1a1a" stroke="#FFD700" stroke-width="1.8"/>
+  <circle cx="1080" cy="180" r="8" fill="#FFFFFF" stroke="#FFD700" stroke-width="1.8"/>
   <circle cx="860" cy="310" r="10" fill="#1e1e1e" stroke="#FFD700" stroke-width="2"/>
   <circle cx="1050" cy="340" r="10" fill="#1e1e1e" stroke="#FF6B35" stroke-width="2"/>
-  <circle cx="920" cy="450" r="8" fill="#1a1a1a" stroke="#FF6B35" stroke-width="1.6"/>
-  <circle cx="1130" cy="300" r="7" fill="#1a1a1a" stroke="#FFD700" stroke-width="1.5"/>
+  <circle cx="920" cy="450" r="8" fill="#FFFFFF" stroke="#FF6B35" stroke-width="1.6"/>
+  <circle cx="1130" cy="300" r="7" fill="#FFFFFF" stroke="#FFD700" stroke-width="1.5"/>
   <!-- Center node highlight -->
   <circle cx="950" cy="240" r="4" fill="#FF6B35" opacity="0.9"/>
   <circle cx="860" cy="310" r="3" fill="#FFD700" opacity="0.9"/>
@@ -103,8 +103,8 @@
   <!-- Floating document cards (decorative) -->
   <!-- Card 1 -->
   <g transform="translate(790,480)" opacity="0.7">
-    <rect width="120" height="80" rx="6" fill="#1a1a1a" stroke="#FF6B35" stroke-width="1.2"/>
-    <rect x="10" y="12" width="100" height="7" rx="2" fill="#2a2a2a"/>
+    <rect width="120" height="80" rx="6" fill="#FFFFFF" stroke="#FF6B35" stroke-width="1.2"/>
+    <rect x="10" y="12" width="100" height="7" rx="2" fill="#E2E8F0"/>
     <rect x="10" y="25" width="80" height="5" rx="2" fill="#222"/>
     <rect x="10" y="36" width="90" height="5" rx="2" fill="#222"/>
     <rect x="10" y="47" width="70" height="5" rx="2" fill="#222"/>
@@ -112,8 +112,8 @@
   </g>
   <!-- Card 2 -->
   <g transform="translate(1000,490)" opacity="0.6">
-    <rect width="110" height="74" rx="6" fill="#1a1a1a" stroke="#FFD700" stroke-width="1.2"/>
-    <rect x="9" y="11" width="92" height="7" rx="2" fill="#2a2a2a"/>
+    <rect width="110" height="74" rx="6" fill="#FFFFFF" stroke="#FFD700" stroke-width="1.2"/>
+    <rect x="9" y="11" width="92" height="7" rx="2" fill="#E2E8F0"/>
     <rect x="9" y="24" width="72" height="5" rx="2" fill="#222"/>
     <rect x="9" y="35" width="82" height="5" rx="2" fill="#222"/>
     <rect x="9" y="46" width="60" height="5" rx="2" fill="#222"/>
@@ -121,8 +121,8 @@
   </g>
   <!-- Card 3 -->
   <g transform="translate(1100,420)" opacity="0.5">
-    <rect width="100" height="68" rx="6" fill="#1a1a1a" stroke="#FF6B35" stroke-width="1"/>
-    <rect x="8" y="10" width="84" height="6" rx="2" fill="#2a2a2a"/>
+    <rect width="100" height="68" rx="6" fill="#FFFFFF" stroke="#FF6B35" stroke-width="1"/>
+    <rect x="8" y="10" width="84" height="6" rx="2" fill="#E2E8F0"/>
     <rect x="8" y="22" width="66" height="5" rx="2" fill="#222"/>
     <rect x="8" y="33" width="74" height="5" rx="2" fill="#222"/>
     <text x="50" y="58" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="7" fill="#FF6B35" opacity="0.7">Informe Bancário</text>
@@ -138,8 +138,8 @@
   <!-- Subtitle line -->
   <rect x="88" y="282" width="560" height="2" rx="1" fill="url(#titleGrad)" opacity="0.6"/>
 
-  <text x="90" y="320" font-family="'Segoe UI',Arial,sans-serif" font-size="22" font-weight="300" fill="#ccc" letter-spacing="1">Assistente Inteligente para Declaração de IRPF</text>
-  <text x="90" y="350" font-family="'Segoe UI',Arial,sans-serif" font-size="16" font-weight="300" fill="#777" letter-spacing="0.5">Retrieval-Augmented Generation · FastAPI · ChromaDB · Mistral 7B</text>
+  <text x="90" y="320" font-family="'Segoe UI',Arial,sans-serif" font-size="22" font-weight="300" fill="#172033" letter-spacing="1">Assistente Inteligente para Declaração de IRPF</text>
+  <text x="90" y="350" font-family="'Segoe UI',Arial,sans-serif" font-size="16" font-weight="300" fill="#64748B" letter-spacing="0.5">Retrieval-Augmented Generation · FastAPI · ChromaDB · Mistral 7B</text>
 
   <!-- Tag pills -->
   <rect x="90" y="378" width="110" height="24" rx="12" fill="#FF6B35" opacity="0.15" stroke="#FF6B35" stroke-width="1"/>
@@ -152,16 +152,16 @@
   <text x="431" y="394" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#50C878">Justificativa por LLM+RAG</text>
 
   <!-- Author block -->
-  <rect x="88" y="450" width="580" height="80" rx="8" fill="#111" stroke="#2a2a2a" stroke-width="1"/>
-  <text x="110" y="474" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#555" letter-spacing="2">EQUIPE</text>
-  <text x="110" y="496" font-family="'Segoe UI',Arial,sans-serif" font-size="14" font-weight="600" fill="#ccc">Juliana Ballin Lima</text>
-  <text x="110" y="496" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#555" dx="180">2315310011</text>
-  <text x="110" y="516" font-family="'Segoe UI',Arial,sans-serif" font-size="14" font-weight="600" fill="#ccc">Fernando Luiz Da Silva Freire</text>
-  <text x="110" y="516" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#555" dx="243">2315310007</text>
+  <rect x="88" y="450" width="580" height="80" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>
+  <text x="110" y="474" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#64748B" letter-spacing="2">EQUIPE</text>
+  <text x="110" y="496" font-family="'Segoe UI',Arial,sans-serif" font-size="14" font-weight="600" fill="#172033">Juliana Ballin Lima</text>
+  <text x="110" y="496" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#64748B" dx="180">2315310011</text>
+  <text x="110" y="516" font-family="'Segoe UI',Arial,sans-serif" font-size="14" font-weight="600" fill="#172033">Fernando Luiz Da Silva Freire</text>
+  <text x="110" y="516" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#64748B" dx="243">2315310007</text>
 
   <!-- Bottom bar -->
-  <rect x="0" y="640" width="1200" height="35" fill="#0a0a0a"/>
+  <rect x="0" y="640" width="1200" height="35" fill="#FAF9F6"/>
   <line x1="0" y1="640" x2="1200" y2="640" stroke="#FF6B35" stroke-width="0.8" opacity="0.4"/>
-  <text x="90" y="661" font-family="'Segoe UI',Arial,sans-serif" font-size="10" fill="#555">Disciplina de RAG - UEA · 2026</text>
+  <text x="90" y="661" font-family="'Segoe UI',Arial,sans-serif" font-size="10" fill="#64748B">Disciplina de RAG - UEA · 2026</text>
   <text x="1110" y="661" text-anchor="end" font-family="'Segoe UI',Arial,sans-serif" font-size="10" fill="#FF6B35" opacity="0.7">github.com/declaraai</text>
 </svg>

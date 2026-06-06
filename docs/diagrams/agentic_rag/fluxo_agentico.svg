@@ -13,21 +13,21 @@
 
   <rect width="800" height="580" fill="#F8FAFC"/>
 
-  <!-- Titulo -->
-  <text x="400" y="34" font-size="17" font-weight="700" fill="#0F766E" text-anchor="middle">Fluxo Agentico — DeclaraAI</text>
+  <!-- Título -->
+  <text x="400" y="34" font-size="17" font-weight="700" fill="#0F766E" text-anchor="middle">Fluxo Agêntico - DeclaraAI</text>
   <line x1="80" y1="44" x2="720" y2="44" stroke="#0F766E" stroke-width="1.2" opacity="0.2"/>
 
-  <!-- Usuario -->
+  <!-- Usuário -->
   <ellipse cx="400" cy="82" rx="78" ry="28" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
-  <text x="400" y="87" font-size="12" font-weight="700" fill="#0F766E" text-anchor="middle">Usuario (Frontend)</text>
+  <text x="400" y="87" font-size="12" font-weight="700" fill="#0F766E" text-anchor="middle">Usuário (Frontend)</text>
 
-  <!-- Seta usuario -> dispatcher -->
+  <!-- Seta usuário -> dispatcher -->
   <line x1="400" y1="110" x2="400" y2="136" stroke="#64748B" stroke-width="1.6" marker-end="url(#arr)"/>
 
   <!-- Dispatcher / Orquestrador -->
   <polygon points="400,136 520,172 400,208 280,172" fill="#E8F5F4" stroke="#0F766E" stroke-width="2"/>
   <text x="400" y="168" font-size="11" font-weight="700" fill="#0F766E" text-anchor="middle">Orquestrador</text>
-  <text x="400" y="183" font-size="10" fill="#0B4F4A" text-anchor="middle">DeteccAo de Intencao</text>
+  <text x="400" y="183" font-size="10" fill="#0B4F4A" text-anchor="middle">Detecção de Intenção</text>
 
   <!-- 3 setas para as 3 ferramentas -->
   <!-- Seta para Chat RAG (esquerda) -->
@@ -38,9 +38,9 @@
   <line x1="400" y1="208" x2="400" y2="258" stroke="#F97316" stroke-width="1.5" marker-end="url(#arrO)"/>
   <text x="408" y="240" font-size="9" fill="#F97316">upload</text>
 
-  <!-- Seta para Historico (direita) -->
+  <!-- Seta para Histórico (direita) -->
   <line x1="515" y1="172" x2="614" y2="240" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
-  <text x="570" y="220" font-size="9" fill="#64748B">historico</text>
+  <text x="570" y="220" font-size="9" fill="#64748B">histórico</text>
 
   <!-- ===== FERRAMENTA 1: Chat RAG ===== -->
   <rect x="30" y="258" width="228" height="172" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
@@ -62,25 +62,25 @@
   <rect x="286" y="278" width="228" height="10" rx="0" fill="#F97316"/>
   <text x="400" y="279" font-size="11" font-weight="700" fill="white" text-anchor="middle">Ferramenta 2: Upload Fiscal</text>
 
-  <text x="306" y="310" font-size="10" fill="#172033">1. Extracao do texto</text>
-  <text x="306" y="328" font-size="10" fill="#172033">2. Classificacao LLM-first</text>
+  <text x="306" y="310" font-size="10" fill="#172033">1. Extração do texto</text>
+  <text x="306" y="328" font-size="10" fill="#172033">2. Classificação LLM-first</text>
   <text x="306" y="346" font-size="10" fill="#172033">   + fallback por regras</text>
-  <text x="306" y="364" font-size="10" fill="#172033">3. Verificacao de titularidade</text>
+  <text x="306" y="364" font-size="10" fill="#172033">3. Verificação de titularidade</text>
   <text x="306" y="382" font-size="10" fill="#172033">   (declarante vs. terceiro)</text>
   <text x="306" y="400" font-size="10" fill="#172033">4. Justificativa enriquecida</text>
-  <text x="306" y="418" font-size="10" fill="#172033">   (2o pipeline RAG)</text>
+  <text x="306" y="418" font-size="10" fill="#172033">   (2º pipeline RAG)</text>
   <text x="306" y="440" font-size="9.5" fill="#64748B">Resultado: categoria + aviso</text>
 
-  <!-- ===== FERRAMENTA 3: Historico ===== -->
+  <!-- ===== FERRAMENTA 3: Histórico ===== -->
   <rect x="542" y="258" width="228" height="172" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="2"/>
   <rect x="542" y="258" width="228" height="30" rx="10" fill="#475569"/>
   <rect x="542" y="278" width="228" height="10" rx="0" fill="#475569"/>
-  <text x="656" y="279" font-size="11" font-weight="700" fill="white" text-anchor="middle">Ferramenta 3: Historico</text>
+  <text x="656" y="279" font-size="11" font-weight="700" fill="white" text-anchor="middle">Ferramenta 3: Histórico</text>
 
   <text x="562" y="310" font-size="10" fill="#172033">1. Consulta SQLite</text>
   <text x="562" y="328" font-size="10" fill="#172033">2. Filtros: categoria, data</text>
   <text x="562" y="346" font-size="10" fill="#172033">3. Resumo por categorias</text>
-  <text x="562" y="364" font-size="10" fill="#172033">4. Exclusao de documentos</text>
+  <text x="562" y="364" font-size="10" fill="#172033">4. Exclusão de documentos</text>
   <text x="562" y="400" font-size="9.5" fill="#64748B">Resultado: lista paginada</text>
   <text x="562" y="415" font-size="9.5" fill="#64748B">de documentos salvos</text>
 
@@ -96,11 +96,11 @@
 
   <rect x="210" y="508" width="148" height="42" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
   <text x="284" y="524" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle">Ollama (Mistral)</text>
-  <text x="284" y="539" font-size="9" fill="#64748B" text-anchor="middle">LLM local | temp. 0.3</text>
+  <text x="284" y="539" font-size="9" fill="#64748B" text-anchor="middle">LLM local | temp. 0.1</text>
 
   <rect x="370" y="508" width="148" height="42" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
   <text x="444" y="524" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle">SQLite + SQLAlchemy</text>
-  <text x="444" y="539" font-size="9" fill="#64748B" text-anchor="middle">historico de documentos</text>
+  <text x="444" y="539" font-size="9" fill="#64748B" text-anchor="middle">histórico de documentos</text>
 
   <rect x="530" y="508" width="210" height="42" rx="6" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1"/>
   <text x="635" y="524" font-size="9.5" font-weight="700" fill="#0F766E" text-anchor="middle">MiniLM-L12-v2 + CrossEncoder</text>

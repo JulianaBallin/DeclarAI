@@ -10,6 +10,15 @@ Atividade.pdf
 AGENTE.md
 .history/
 
+# Artefatos auxiliares do relatório LaTeX
+docs/reports/*.aux
+docs/reports/*.out
+docs/reports/*.toc
+docs/reports/*.log
+docs/reports/*.fls
+docs/reports/*.fdb_latexmk
+docs/reports/*.synctex.gz
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
