@@ -14,7 +14,7 @@
     </linearGradient>
     <linearGradient id="barYellow" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" style="stop-color:#6b5800"/>
-      <stop offset="100%" style="stop-color:#FFD700"/>
+      <stop offset="100%" style="stop-color:#0F766E"/>
     </linearGradient>
   </defs>
 
@@ -23,7 +23,7 @@
   <rect width="900" height="480" fill="none" stroke="#FF6B35" stroke-width="1.2" opacity="0.3"/>
 
   <!-- Title -->
-  <text x="450" y="30" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="16" font-weight="700" fill="#FFD700">Avaliação do Pipeline RAG - DeclaraAI</text>
+  <text x="450" y="30" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="16" font-weight="700" fill="#0F766E">Avaliação do Pipeline RAG - DeclaraAI</text>
   <line x1="50" y1="40" x2="850" y2="40" stroke="#FF6B35" stroke-width="0.8" opacity="0.4"/>
 
   <!-- Subtitle -->
@@ -70,9 +70,9 @@
   <text x="820" y="187" font-size="18">🟡</text>
 
   <!-- ===== METRIC 3: COBERTURA DE KEYWORDS ===== -->
-  <rect x="40" y="240" width="810" height="68" rx="8" fill="#FFFFFF" stroke="#FFD700" stroke-width="1.6"/>
+  <rect x="40" y="240" width="810" height="68" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.6"/>
 
-  <text x="62" y="264" font-family="'Segoe UI',Arial,sans-serif" font-size="12" font-weight="700" fill="#FFD700">Cobertura de Keywords</text>
+  <text x="62" y="264" font-family="'Segoe UI',Arial,sans-serif" font-size="12" font-weight="700" fill="#0F766E">Cobertura de Keywords</text>
   <text x="62" y="280" font-family="'Segoe UI',Arial,sans-serif" font-size="9.5" fill="#64748B">% de termos-chave esperados presentes na resposta gerada pelo LLM</text>
 
   <!-- Bar track -->
@@ -87,7 +87,7 @@
   <text x="466" y="283" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="8" fill="#64748B">50%</text>
   <text x="554" y="283" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="8" fill="#64748B">75%</text>
   <text x="642" y="283" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="8" fill="#64748B">100%</text>
-  <text x="742" y="266" font-family="'Segoe UI',Arial,sans-serif" font-size="13" font-weight="700" fill="#FFD700">~75%</text>
+  <text x="742" y="266" font-family="'Segoe UI',Arial,sans-serif" font-size="13" font-weight="700" fill="#0F766E">~75%</text>
   <text x="742" y="284" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#64748B">pipeline LLM</text>
   <text x="820" y="271" font-size="18">🟡</text>
 
@@ -116,8 +116,8 @@
   <text x="358" y="415" font-family="'Segoe UI',Arial,sans-serif" font-size="9.5" fill="#172033">Como incluir dependentes</text>
 
   <!-- Nota sobre avaliação -->
-  <rect x="600" y="362" width="228" height="64" rx="6" fill="#FFFFFF" stroke="#FFD700" stroke-width="0.8" opacity="0.9"/>
-  <text x="714" y="378" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="9.5" font-weight="700" fill="#FFD700">Inspirado no RAGAS</text>
+  <rect x="600" y="362" width="228" height="64" rx="6" fill="#FFFFFF" stroke="#0F766E" stroke-width="0.8" opacity="0.9"/>
+  <text x="714" y="378" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="9.5" font-weight="700" fill="#0F766E">Inspirado no RAGAS</text>
   <text x="614" y="394" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#172033">• Context Precision (bi-encoder)</text>
   <text x="614" y="408" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#172033">• Answer Relevancy (keywords)</text>
   <text x="614" y="422" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#172033">• Faithfulness (sem LLM judge)</text>

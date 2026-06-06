@@ -8,7 +8,7 @@
       <polygon points="0 0, 9 3.5, 0 7" fill="#FF6B35"/>
     </marker>
     <marker id="arrY" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
-      <polygon points="0 0, 9 3.5, 0 7" fill="#FFD700"/>
+      <polygon points="0 0, 9 3.5, 0 7" fill="#0F766E"/>
     </marker>
     <marker id="arrG" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
       <polygon points="0 0, 9 3.5, 0 7" fill="#64748B"/>
@@ -20,7 +20,7 @@
   <rect width="1020" height="590" fill="none" stroke="#FF6B35" stroke-width="1.5" opacity="0.35"/>
 
   <!-- Title -->
-  <text x="510" y="36" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="19" font-weight="700" fill="#FFD700">[C2] Diagrama de Contêineres - DeclaraAI</text>
+  <text x="510" y="36" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="19" font-weight="700" fill="#0F766E">[C2] Diagrama de Contêineres - DeclaraAI</text>
   <line x1="60" y1="46" x2="960" y2="46" stroke="#FF6B35" stroke-width="1" opacity="0.45"/>
 
   <!-- System boundary -->
@@ -46,13 +46,13 @@
 
   <!-- ===== Backend (x=310, y=75, w=220, h=250) ===== -->
   <g transform="translate(310, 75)">
-    <rect x="0" y="0" width="220" height="250" rx="10" fill="#FFFFFF" stroke="#FFD700" stroke-width="2.5"/>
-    <rect x="0" y="0" width="220" height="34" rx="10" fill="#FFD700" opacity="0.13"/>
-    <rect x="0" y="22" width="220" height="12" fill="#FFD700" opacity="0.13"/>
-    <text x="110" y="20" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#FFD700">[Contêiner: API]</text>
+    <rect x="0" y="0" width="220" height="250" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="2.5"/>
+    <rect x="0" y="0" width="220" height="34" rx="10" fill="#0F766E" opacity="0.13"/>
+    <rect x="0" y="22" width="220" height="12" fill="#0F766E" opacity="0.13"/>
+    <text x="110" y="20" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#0F766E">[Contêiner: API]</text>
     <text x="110" y="60" text-anchor="middle" font-size="22">⚡</text>
     <text x="110" y="88" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="14" font-weight="700" fill="#172033">Backend</text>
-    <text x="110" y="106" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#FFD700">FastAPI 0.111 / Python 3.11</text>
+    <text x="110" y="106" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#0F766E">FastAPI 0.111 / Python 3.11</text>
     <text x="110" y="128" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#172033">Pipeline RAG completo</text>
     <text x="110" y="143" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">routes_chat / routes_documents</text>
     <text x="110" y="158" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">routes_history / routes_evaluation</text>
@@ -81,13 +81,13 @@
 
   <!-- ===== Ollama LLM (x=860, y=75, w=118, h=200) ===== -->
   <g transform="translate(860, 75)">
-    <rect x="0" y="0" width="118" height="200" rx="10" fill="#FFFFFF" stroke="#FFD700" stroke-width="1.8"/>
-    <rect x="0" y="0" width="118" height="30" rx="10" fill="#FFD700" opacity="0.10"/>
-    <rect x="0" y="18" width="118" height="12" fill="#FFD700" opacity="0.10"/>
-    <text x="59" y="17" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#FFD700">[Contêiner: LLM]</text>
+    <rect x="0" y="0" width="118" height="200" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
+    <rect x="0" y="0" width="118" height="30" rx="10" fill="#0F766E" opacity="0.10"/>
+    <rect x="0" y="18" width="118" height="12" fill="#0F766E" opacity="0.10"/>
+    <text x="59" y="17" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#0F766E">[Contêiner: LLM]</text>
     <text x="59" y="56" text-anchor="middle" font-size="22">🤖</text>
     <text x="59" y="84" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#172033">Ollama</text>
-    <text x="59" y="100" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#FFD700">Mistral 7B</text>
+    <text x="59" y="100" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#0F766E">Mistral 7B</text>
     <text x="59" y="120" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#172033">Geração de</text>
     <text x="59" y="135" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#172033">respostas RAG</text>
     <text x="59" y="152" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">temp: 0.1</text>
@@ -122,22 +122,22 @@
   <text x="275" y="173" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="8.5" fill="#FF6B35">HTTP / REST</text>
 
   <!-- Backend -> ChromaDB -->
-  <line x1="531" y1="185" x2="598" y2="185" stroke="#FFD700" stroke-width="2" marker-end="url(#arrY)"/>
+  <line x1="531" y1="185" x2="598" y2="185" stroke="#0F766E" stroke-width="2" marker-end="url(#arrY)"/>
   <!-- Label above -->
   <rect x="534" y="167" width="60" height="14" rx="3" fill="#FAF9F6" opacity="0.95"/>
-  <text x="564" y="178" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="8.5" fill="#FFD700">busca vetorial</text>
+  <text x="564" y="178" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="8.5" fill="#0F766E">busca vetorial</text>
 
   <!-- ChromaDB -> Backend (return, below) -->
-  <line x1="598" y1="208" x2="531" y2="208" stroke="#FFD700" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrY)"/>
+  <line x1="598" y1="208" x2="531" y2="208" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrY)"/>
   <!-- Label below -->
   <rect x="534" y="212" width="60" height="14" rx="3" fill="#FAF9F6" opacity="0.95"/>
-  <text x="564" y="223" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="8.5" fill="#FFD700">top-5 chunks</text>
+  <text x="564" y="223" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="8.5" fill="#0F766E">top-5 chunks</text>
 
   <!-- Backend -> Ollama (horizontal, above ChromaDB) -->
-  <line x1="531" y1="155" x2="858" y2="155" stroke="#FFD700" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrY)"/>
+  <line x1="531" y1="155" x2="858" y2="155" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrY)"/>
   <!-- Label above line -->
   <rect x="650" y="138" width="88" height="14" rx="3" fill="#FAF9F6" opacity="0.95"/>
-  <text x="694" y="149" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="8.5" fill="#FFD700">prompt + contexto RAG</text>
+  <text x="694" y="149" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="8.5" fill="#0F766E">prompt + contexto RAG</text>
 
   <!-- Backend -> SQLite (down) -->
   <line x1="420" y1="326" x2="420" y2="343" stroke="#64748B" stroke-width="1.5" marker-end="url(#arrG)"/>
@@ -151,19 +151,19 @@
   <!-- Row 1 -->
   <line x1="55" y1="516" x2="90" y2="516" stroke="#FF6B35" stroke-width="2"/>
   <text x="98" y="520" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">Comunicação síncrona (HTTP/REST)</text>
-  <line x1="310" y1="516" x2="345" y2="516" stroke="#FFD700" stroke-width="2"/>
+  <line x1="310" y1="516" x2="345" y2="516" stroke="#0F766E" stroke-width="2"/>
   <text x="353" y="520" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">Busca e recuperação vetorial</text>
   <!-- Row 2 -->
-  <line x1="55" y1="536" x2="90" y2="536" stroke="#FFD700" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <line x1="55" y1="536" x2="90" y2="536" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="5,3"/>
   <text x="98" y="540" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">Chamada ao LLM (Ollama API)</text>
   <line x1="310" y1="536" x2="345" y2="536" stroke="#64748B" stroke-width="1.5"/>
   <text x="353" y="540" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">Persistência de dados (CRUD)</text>
   <!-- Row 3 -->
-  <line x1="55" y1="555" x2="90" y2="555" stroke="#FFD700" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <circle cx="72" cy="555" r="1.5" fill="#FFD700"/>
+  <line x1="55" y1="555" x2="90" y2="555" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <circle cx="72" cy="555" r="1.5" fill="#0F766E"/>
   <text x="98" y="559" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#172033">Retorno de chunks / resposta gerada</text>
 
   <!-- C4 badge -->
-  <rect x="850" y="484" width="130" height="30" rx="6" fill="#FFD700" opacity="0.12" stroke="#FFD700" stroke-width="1"/>
-  <text x="915" y="503" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#FFD700">C4 - Nível 2</text>
+  <rect x="850" y="484" width="130" height="30" rx="6" fill="#0F766E" opacity="0.12" stroke="#0F766E" stroke-width="1"/>
+  <text x="915" y="503" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="12" font-weight="700" fill="#0F766E">C4 - Nível 2</text>
 </svg>
