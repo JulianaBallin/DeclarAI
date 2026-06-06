@@ -31,7 +31,7 @@
   footskip=12mm
 }
 
-\graphicspath{{../}{../diagrams/}}
+\graphicspath{{../}{../diagrams/}{../diagrams/rag/}{../diagrams/agentic_rag/}}
 \onehalfspacing
 \setlength{\emergencystretch}{3em}
 \renewcommand{\arraystretch}{1.25}
@@ -160,6 +160,24 @@ O pipeline segue oito etapas:
 
 O agente decide qual ferramenta usar conforme a intenção do usuário. Perguntas abertas acionam busca vetorial. Uploads acionam extração, classificação, verificação de titularidade e justificativa enriquecida. Consultas sobre documentos salvos usam histórico e metadados.
 
+\subsection{Ferramentas do Agente}
+
+O sistema implementa cinco ferramentas distintas, cada uma acionada de acordo com a natureza da entrada do usuário:
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{46mm}L{36mm}Y@{}}
+\toprule
+\textbf{Ferramenta} & \textbf{Acionada quando} & \textbf{Funcionamento} \\
+\midrule
+Busca Vetorial & pergunta de texto livre & embedding da consulta, ChromaDB top-15, CrossEncoder top-5, geração com Mistral \\
+Classificação LLM-first & upload de documento & LLM analisa categoria, fallback por palavras-chave; campo \texttt{origem\_classificacao} indica o método usado \\
+Extração de Dados & upload de documento & extrai emitente, CNPJ, valor, data e nome do beneficiário \\
+Verificação de Titularidade & após classificação & compara beneficiário com perfil do declarante; retorna: titular, dependente provável ou terceiro \\
+Justificativa Enriquecida & após classificação & segundo pipeline RAG: top-3 chunks por categoria, prompt com dados do documento, Mistral gera explicação normativa \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
 \section{Base de Conhecimento}
 
 \begin{longtable}{@{}L{56mm}L{15mm}L{84mm}@{}}
@@ -275,6 +293,21 @@ Busca híbrida & Futuro & BM25 + vetorial + fusão de rankings (RRF). \\
 Notebooks analíticos & Futuro & Visualizações para artigo e apresentação. \\
 \bottomrule
 \end{longtable}
+
+\section{Divisão de Tarefas}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{62mm}Y@{}}
+\toprule
+\textbf{Integrante} & \textbf{Responsabilidades principais} \\
+\midrule
+Juliana Ballin Lima & Arquitetura do pipeline RAG, re-ranking com CrossEncoder, classificação LLM-first, verificação de titularidade, frontend React (design system, componentes e páginas), diagramas e relatório técnico. \\
+Fernando Luiz Da Silva Freire & Ingestão e pré-processamento de documentos, extração de dados fiscais, serviço de justificativa enriquecida, dataset de avaliação, scripts de comparação de modelos e configuração Docker/CI. \\
+\midrule
+Compartilhado & Definição dos requisitos, base de conhecimento, testes de integração, revisão de código e apresentação. \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 \section{Limitações e Riscos}
 

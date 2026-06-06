@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460" width="800" height="460" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#64748B"/>
+    </marker>
+  </defs>
+
+  <rect width="800" height="460" fill="#F8FAFC"/>
+
+  <!-- Titulo -->
+  <text x="400" y="34" font-size="17" font-weight="700" fill="#0F766E" text-anchor="middle">Ferramentas do Agente DeclaraAI</text>
+  <text x="400" y="54" font-size="11" fill="#64748B" text-anchor="middle">Cada ferramenta e acionada conforme a intencao detectada na entrada do usuario</text>
+  <line x1="80" y1="66" x2="720" y2="66" stroke="#0F766E" stroke-width="1.2" opacity="0.2"/>
+
+  <!-- Centro: Agente -->
+  <ellipse cx="400" cy="240" rx="72" ry="44" fill="#0F766E" />
+  <text x="400" y="236" font-size="13" font-weight="800" fill="white" text-anchor="middle">Agente</text>
+  <text x="400" y="252" font-size="10" fill="#CCFBF1" text-anchor="middle">DeclaraAI</text>
+
+  <!-- FERRAMENTA 1: Busca Vetorial -->
+  <rect x="28" y="78" width="196" height="110" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+  <rect x="28" y="78" width="196" height="28" rx="10" fill="#0F766E"/>
+  <rect x="28" y="96" width="196" height="10" fill="#0F766E"/>
+  <text x="126" y="97" font-size="10.5" font-weight="700" fill="white" text-anchor="middle">Busca Vetorial</text>
+  <text x="42" y="122" font-size="9.5" fill="#172033">Quando: pergunta do usuario</text>
+  <text x="42" y="138" font-size="9.5" fill="#172033">Como: embedding + ChromaDB</text>
+  <text x="42" y="154" font-size="9.5" fill="#172033">top-15 + CrossEncoder top-5</text>
+  <text x="42" y="170" font-size="9" fill="#64748B">Saida: trechos relevantes</text>
+  <!-- Seta para agente -->
+  <line x1="224" y1="140" x2="326" y2="214" stroke="#0F766E" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- FERRAMENTA 2: Classificacao LLM-first -->
+  <rect x="28" y="226" width="196" height="110" rx="10" fill="#FFFFFF" stroke="#F97316" stroke-width="2"/>
+  <rect x="28" y="226" width="196" height="28" rx="10" fill="#F97316"/>
+  <rect x="28" y="244" width="196" height="10" fill="#F97316"/>
+  <text x="126" y="245" font-size="10.5" font-weight="700" fill="white" text-anchor="middle">Classificacao LLM-first</text>
+  <text x="42" y="270" font-size="9.5" fill="#172033">Quando: upload de documento</text>
+  <text x="42" y="286" font-size="9.5" fill="#172033">Como: LLM analisa categoria</text>
+  <text x="42" y="302" font-size="9.5" fill="#172033">fallback por palavras-chave</text>
+  <text x="42" y="318" font-size="9" fill="#64748B">8 categorias fiscais</text>
+  <!-- Seta para agente -->
+  <line x1="224" y1="270" x2="326" y2="253" stroke="#F97316" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- FERRAMENTA 3: Extracao de Dados -->
+  <rect x="28" y="374" width="196" height="74" rx="10" fill="#FFFFFF" stroke="#64748B" stroke-width="1.8"/>
+  <rect x="28" y="374" width="196" height="28" rx="10" fill="#475569"/>
+  <rect x="28" y="392" width="196" height="10" fill="#475569"/>
+  <text x="126" y="393" font-size="10.5" font-weight="700" fill="white" text-anchor="middle">Extracao de Dados</text>
+  <text x="42" y="418" font-size="9.5" fill="#172033">emitente, CNPJ, valor, data</text>
+  <text x="42" y="434" font-size="9.5" fill="#172033">nome do beneficiario</text>
+  <!-- Seta para agente -->
+  <line x1="224" y1="400" x2="336" y2="272" stroke="#64748B" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- FERRAMENTA 4: Verificacao de Titularidade -->
+  <rect x="576" y="78" width="196" height="110" rx="10" fill="#FFFFFF" stroke="#0F766E" stroke-width="2"/>
+  <rect x="576" y="78" width="196" height="28" rx="10" fill="#0F766E"/>
+  <rect x="576" y="96" width="196" height="10" fill="#0F766E"/>
+  <text x="674" y="97" font-size="10.5" font-weight="700" fill="white" text-anchor="middle">Verificacao Titularidade</text>
+  <text x="590" y="122" font-size="9.5" fill="#172033">Quando: apos classificacao</text>
+  <text x="590" y="138" font-size="9.5" fill="#172033">Como: comparacao de nomes</text>
+  <text x="590" y="154" font-size="9.5" fill="#172033">titular | dependente | terceiro</text>
+  <text x="590" y="170" font-size="9" fill="#64748B">Saida: aviso de deducibilidade</text>
+  <!-- Seta para agente -->
+  <line x1="576" y1="140" x2="474" y2="214" stroke="#0F766E" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- FERRAMENTA 5: Justificativa Enriquecida -->
+  <rect x="576" y="226" width="196" height="110" rx="10" fill="#FFFFFF" stroke="#F97316" stroke-width="2"/>
+  <rect x="576" y="226" width="196" height="28" rx="10" fill="#F97316"/>
+  <rect x="576" y="244" width="196" height="10" fill="#F97316"/>
+  <text x="674" y="245" font-size="10.5" font-weight="700" fill="white" text-anchor="middle">Justificativa Enriquecida</text>
+  <text x="590" y="270" font-size="9.5" fill="#172033">Quando: apos classificacao</text>
+  <text x="590" y="286" font-size="9.5" fill="#172033">Como: 2o pipeline RAG</text>
+  <text x="590" y="302" font-size="9.5" fill="#172033">top-3 chunks por categoria</text>
+  <text x="590" y="318" font-size="9" fill="#64748B">Saida: explicacao normativa</text>
+  <!-- Seta para agente -->
+  <line x1="576" y1="270" x2="474" y2="253" stroke="#F97316" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Legenda de categorias fiscais na base -->
+  <rect x="270" y="308" width="260" height="130" rx="10" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
+  <text x="400" y="328" font-size="10" font-weight="700" fill="#172033" text-anchor="middle">Categorias Fiscais Reconhecidas</text>
+  <line x1="282" y1="336" x2="518" y2="336" stroke="#E2E8F0" stroke-width="0.8"/>
+  <text x="290" y="352" font-size="9" fill="#64748B">despesa_medica</text>
+  <text x="290" y="366" font-size="9" fill="#64748B">despesa_educacional</text>
+  <text x="290" y="380" font-size="9" fill="#64748B">previdencia_privada</text>
+  <text x="290" y="394" font-size="9" fill="#64748B">rendimentos</text>
+  <text x="400" y="352" font-size="9" fill="#64748B">deducao_aluguel</text>
+  <text x="400" y="366" font-size="9" fill="#64748B">pensao_alimenticia</text>
+  <text x="400" y="380" font-size="9" fill="#64748B">doacoes</text>
+  <text x="400" y="394" font-size="9" fill="#64748B">outros_nao_dedutivel</text>
+  <text x="400" y="426" font-size="9" fill="#0F766E" text-anchor="middle" font-weight="600">origem_classificacao: llm | regras</text>
+</svg>
