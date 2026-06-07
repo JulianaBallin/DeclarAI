@@ -36,9 +36,13 @@ services:
       - CHUNK_OVERLAP=80
       - TOP_K_RESULTADOS=5
       - DEBUG=false
+      - HF_HUB_DISABLE_XET=1
     volumes:
       # Monta o diretório de dados do host no contêiner
       - ./data:/app/data
+    extra_hosts:
+      # Evita falha de DNS ao baixar pesos do HuggingFace/Xet no ambiente de demo.
+      - "cas-bridge.xethub.hf.co:3.171.38.25"
     depends_on:
       ollama:
         condition: service_started
