@@ -21,17 +21,17 @@
   </defs>
 
   <!-- Background -->
-  <rect width="1000" height="640" fill="url(#bg)"/>
+  <rect width="1000" height="640" fill="#FAF9F6"/>
   <rect width="1000" height="640" fill="none" stroke="#FF6B35" stroke-width="1.5" opacity="0.35"/>
 
   <!-- Title -->
   <text x="500" y="36" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="19" font-weight="700" fill="#0F766E">Pipeline RAG - DeclaraAI</text>
   <line x1="60" y1="46" x2="940" y2="46" stroke="#FF6B35" stroke-width="1" opacity="0.45"/>
 
-  <!-- ===== FASE 1: INGESTAO ===== -->
+  <!-- ===== FASE 1: INGESTÃO ===== -->
   <rect x="28" y="58" width="810" height="208" rx="12" fill="url(#ph1fill)" stroke="#FF6B35" stroke-width="1.5" stroke-dasharray="7,4" opacity="0.9"/>
   <rect x="44" y="50" width="146" height="20" rx="5" fill="#FAF9F6"/>
-  <text x="117" y="64" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FF6B35">FASE 1 - INGESTAO (offline)</text>
+  <text x="117" y="64" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="11.5" font-weight="700" fill="#FF6B35">FASE 1 - INGESTÃO (offline)</text>
 
   <!-- Node: Documentos (x=42, w=145, h=95) -->
   <g transform="translate(42, 80)">
@@ -101,7 +101,7 @@
   <text x="870" y="115" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#FF6B35" opacity="0.8">Executado uma vez</text>
   <text x="870" y="130" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B" opacity="0.8">ou via POST /ingest</text>
   <text x="870" y="150" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B" opacity="0.8">Auto-ingest na</text>
-  <text x="870" y="163" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B" opacity="0.8">inicializacao se vazio</text>
+  <text x="870" y="163" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B" opacity="0.8">inicialização se vazio</text>
 
   <!-- ===== FASE 2: CONSULTA ===== -->
   <rect x="28" y="282" width="945" height="296" rx="12" fill="url(#ph2fill)" stroke="#0F766E" stroke-width="1.5" stroke-dasharray="7,4" opacity="0.9"/>

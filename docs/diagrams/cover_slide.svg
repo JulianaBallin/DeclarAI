@@ -148,8 +148,8 @@
   <rect x="212" y="378" width="132" height="24" rx="12" fill="#FFD700" opacity="0.12" stroke="#FFD700" stroke-width="1"/>
   <text x="278" y="394" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#FFD700">Classificação Híbrida</text>
 
-  <rect x="356" y="378" width="150" height="24" rx="12" fill="#50C878" opacity="0.12" stroke="#50C878" stroke-width="1"/>
-  <text x="431" y="394" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#50C878">Justificativa por LLM+RAG</text>
+  <rect x="356" y="378" width="150" height="24" rx="12" fill="#15803D" opacity="0.12" stroke="#15803D" stroke-width="1"/>
+  <text x="431" y="394" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="11" fill="#15803D">Justificativa por LLM+RAG</text>
 
   <!-- Author block -->
   <rect x="88" y="450" width="580" height="80" rx="8" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1"/>

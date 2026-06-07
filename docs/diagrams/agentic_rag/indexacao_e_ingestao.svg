@@ -42,7 +42,7 @@
   <!-- ETAPA 3: Limpeza -->
   <rect x="304" y="96" width="116" height="76" rx="8" fill="#FFFFFF" stroke="#0F766E" stroke-width="1.8"/>
   <text x="362" y="118" font-size="10.5" font-weight="700" fill="#0F766E" text-anchor="middle">Limpeza Textual</text>
-  <text x="362" y="134" font-size="9.5" fill="#64748B" text-anchor="middle">remoção de ruido</text>
+  <text x="362" y="134" font-size="9.5" fill="#64748B" text-anchor="middle">remoção de ruído</text>
   <text x="362" y="148" font-size="9.5" fill="#64748B" text-anchor="middle">normalização</text>
   <text x="362" y="162" font-size="9.5" fill="#64748B" text-anchor="middle">Unicode + espaços</text>
 

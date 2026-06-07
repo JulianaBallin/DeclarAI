@@ -74,7 +74,7 @@
     <text x="97" y="88" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#172033">Receita Federal</text>
     <text x="97" y="108" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">Regulamentações e</text>
     <text x="97" y="123" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">normas do IRPF</text>
-    <text x="97" y="143" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#CBD5E1">Base de conhecimento</text>
+    <text x="97" y="143" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">Base de conhecimento</text>
   </g>
 
   <!-- ===== EXTERNAL: Documentos Fiscais (x=630, y=265, w=195, h=145) ===== -->
@@ -87,7 +87,7 @@
     <text x="97" y="84" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="13" font-weight="700" fill="#172033">Docs Fiscais</text>
     <text x="97" y="104" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">Recibos, notas fiscais</text>
     <text x="97" y="119" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9.5" fill="#64748B">e informes de rendimento</text>
-    <text x="97" y="136" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#CBD5E1">PDF / TXT / HTML</text>
+    <text x="97" y="136" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="9" fill="#64748B">PDF / TXT / HTML</text>
   </g>
 
   <!-- ===== ARROWS ===== -->

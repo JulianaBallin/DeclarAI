@@ -36,6 +36,10 @@ Use este conteúdo como prompt para gerar uma apresentação profissional sobre 
 
 **Visual sugerido:** logo DeclaraAI, selo IRPF 2026, nomes dos integrantes e UEA no rodapé.
 
+**Diagrama:** `diagrams/cover_slide.svg`
+
+![Capa](diagrams/cover_slide.svg)
+
 ## Slide 2: Problema Real
 
 **Título:** Por que o DeclaraAI é necessário?
@@ -66,6 +70,15 @@ Use um diagrama por camadas:
 
 **Diferencial:** execução local, sem envio de documentos fiscais para APIs externas.
 
+**Diagramas disponíveis:**
+
+- Contexto geral: `diagrams/agentic_rag/c4_contexto.svg`
+- Contêineres: `diagrams/agentic_rag/c4_containers.svg`
+
+![Contexto C4](diagrams/agentic_rag/c4_contexto.svg)
+
+![Contêineres C4](diagrams/agentic_rag/c4_containers.svg)
+
 ## Slide 4: Agentic RAG
 
 **Título:** O agente escolhe a ferramenta certa
@@ -90,6 +103,15 @@ Entrada do usuário
 5. Justificativa enriquecida com segundo pipeline RAG.
 6. Consulta ao histórico e resumo anual.
 
+**Diagramas disponíveis:**
+
+- Fluxo de decisão do agente: `diagrams/agentic_rag/fluxo_agentico.svg`
+- Ferramentas do agente: `diagrams/agentic_rag/ferramentas_agente.svg`
+
+![Fluxo Agêntico](diagrams/agentic_rag/fluxo_agentico.svg)
+
+![Ferramentas do Agente](diagrams/agentic_rag/ferramentas_agente.svg)
+
 ## Slide 5: Melhoria 1 Desde a Main - Re-ranking
 
 **Título:** Re-ranking semântico com CrossEncoder
@@ -105,6 +127,10 @@ Entrada do usuário
 - aumenta a confiança das fontes exibidas ao usuário.
 
 **Arquivo principal:** `backend/app/rag/retriever.py`
+
+**Diagrama:** `diagrams/agentic_rag/recuperacao_reranking.svg`
+
+![Recuperação e Re-ranking](diagrams/agentic_rag/recuperacao_reranking.svg)
 
 ## Slide 6: Melhoria 2 Desde a Main - Classificação LLM-first
 
@@ -137,6 +163,10 @@ Categorias reconhecidas:
 - `doacoes`
 - `outros_nao_dedutivel`
 
+**Diagrama:** `diagrams/agentic_rag/classificacao_llm_first.svg`
+
+![Classificação LLM-first](diagrams/agentic_rag/classificacao_llm_first.svg)
+
 ## Slide 7: Melhoria 3 Desde a Main - Titularidade
 
 **Título:** Verificação de titular, dependente ou terceiro
@@ -157,6 +187,10 @@ Estados possíveis:
 | Dependente provável | Usuário deve confirmar vínculo |
 | Terceiro | Sistema exibe alerta antes de salvar |
 
+**Diagrama:** `diagrams/agentic_rag/titularidade_justificativa.svg`
+
+![Titularidade e Justificativa](diagrams/agentic_rag/titularidade_justificativa.svg)
+
 ## Slide 8: Melhoria 4 Desde a Main - Justificativa RAG
 
 **Título:** Justificativa enriquecida com base de conhecimento
@@ -176,6 +210,10 @@ Estados possíveis:
 - trechos recuperados da base.
 
 **Impacto:** o usuário entende por que o documento recebeu aquela categoria e quais cuidados precisa verificar.
+
+**Diagrama completo do pipeline:** `diagrams/agentic_rag/pipeline_rag.svg`
+
+![Pipeline RAG](diagrams/agentic_rag/pipeline_rag.svg)
 
 ## Slide 9: Melhoria 5 Desde a Main - Frontend
 
@@ -207,6 +245,15 @@ Carregamento -> limpeza textual -> chunking 600/80 -> embeddings MiniLM -> Chrom
 
 A base pode ser ampliada pela interface, e a re-indexação aceita diferentes configurações para experimentos.
 
+**Diagramas disponíveis:**
+
+- Ingestão e pré-processamento: `diagrams/agentic_rag/indexacao_e_ingestao.svg`
+- Estratégia de chunking: `diagrams/chunking_estrategia.svg`
+
+![Ingestão e Pré-processamento](diagrams/agentic_rag/indexacao_e_ingestao.svg)
+
+![Estratégia de Chunking](diagrams/chunking_estrategia.svg)
+
 ## Slide 11: Avaliação Quantitativa
 
 **Título:** Como a qualidade foi medida
@@ -226,6 +273,10 @@ Métricas:
 | Score médio de contexto | medir similaridade dos chunks retornados |
 | Cobertura de keywords | medir termos esperados na resposta |
 | Latência por pergunta | medir tempo total do pipeline |
+
+**Diagrama:** `diagrams/agentic_rag/avaliacao_rag.svg`
+
+![Avaliação do Pipeline RAG](diagrams/agentic_rag/avaliacao_rag.svg)
 
 ## Slide 12: Resultados de Modelos
 
