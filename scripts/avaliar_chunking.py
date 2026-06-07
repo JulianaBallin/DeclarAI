@@ -1,5 +1,5 @@
 """
-Script de avaliação de estratégias de chunking para o DeclaraAI.
+Script de avaliação de estratégias de chunking para o DeclarAI.
 
 Testa diferentes configurações de chunking nas perguntas do dataset
 e salva métricas em CSV para comparação no artigo acadêmico.
@@ -188,7 +188,7 @@ def salvar_csv(todos_resultados: list[dict]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Avaliação de estratégias de chunking - DeclaraAI")
+    parser = argparse.ArgumentParser(description="Avaliação de estratégias de chunking - DeclarAI")
     parser.add_argument(
         "--config",
         choices=[c["nome"] for c in CONFIGURACOES_CHUNKING],

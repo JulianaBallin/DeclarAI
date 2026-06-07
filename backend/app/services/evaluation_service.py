@@ -1,5 +1,5 @@
 """
-Serviço de avaliação do pipeline RAG do DeclaraAI.
+Serviço de avaliação do pipeline RAG do DeclarAI.
 
 Implementa métricas quantitativas para avaliar a qualidade da recuperação
 semântica e das respostas geradas, seguindo princípios inspirados no RAGAS.
@@ -141,7 +141,7 @@ def carregar_casos_teste() -> List[dict]:
 
 class ServicoAvaliacao:
     """
-    Avalia a qualidade do pipeline RAG do DeclaraAI.
+    Avalia a qualidade do pipeline RAG do DeclarAI.
 
     Fornece dois modos de avaliação:
     - Recuperação: avalia apenas o retriever (sem LLM, rápido)

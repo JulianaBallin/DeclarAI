@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" width="900" height="560" font-family="'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="título desc">
-  <title id="título">Fluxo de titularidade e justificativa do DeclaraAI</title>
+  <title id="título">Fluxo de titularidade e justificativa do DeclarAI</title>
   <desc id="desc">Fluxo agentic do upload fiscal, classificação, titularidade, justificativa RAG e revisão pelo usuário.</desc>
   <defs>
     <marker id="seta" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">

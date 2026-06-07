@@ -5,7 +5,7 @@ import { enviarPergunta } from "../services/api";
 const MENSAGEM_BOAS_VINDAS = {
   papel: "assistant",
   conteudo:
-    "Olá! Sou o DeclaraAI, seu assistente para o Imposto de Renda.\n\nPode me perguntar sobre deduções, documentos necessários, prazos, categorias tributárias, rendimentos isentos e muito mais.",
+    "Olá! Sou o DeclarAI, seu assistente para o Imposto de Renda.\n\nPode me perguntar sobre deduções, documentos necessários, prazos, categorias tributárias, rendimentos isentos e muito mais.",
   fontes: [],
 };
 

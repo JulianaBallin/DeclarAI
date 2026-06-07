@@ -25,7 +25,7 @@
   <rect width="1000" height="640" fill="none" stroke="#FF6B35" stroke-width="1.5" opacity="0.35"/>
 
   <!-- Title -->
-  <text x="500" y="36" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="19" font-weight="700" fill="#0F766E">Pipeline RAG - DeclaraAI</text>
+  <text x="500" y="36" text-anchor="middle" font-family="'Segoe UI', Arial, sans-serif" font-size="19" font-weight="700" fill="#0F766E">Pipeline RAG - DeclarAI</text>
   <line x1="60" y1="46" x2="940" y2="46" stroke="#FF6B35" stroke-width="1" opacity="0.45"/>
 
   <!-- ===== FASE 1: INGESTÃO ===== -->

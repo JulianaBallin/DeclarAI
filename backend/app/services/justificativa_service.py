@@ -65,7 +65,7 @@ _CONSULTAS_POR_CATEGORIA: dict[str, str] = {
 }
 
 PROMPT_JUSTIFICATIVA = """\
-Você é o DeclaraAI, especialista em imposto de renda para pessoas físicas no Brasil.
+Você é o DeclarAI, especialista em imposto de renda para pessoas físicas no Brasil.
 
 Analise as informações do documento abaixo e produza uma justificativa técnica de 2 a 4 \
 linhas explicando a classificação e o que o contribuinte deve fazer na declaração do IRPF.
@@ -85,7 +85,7 @@ DOCUMENTO:
 - Valor: {valor}
 - Situação no IRPF: {status_irpf}
 
-INFORMAÇÕES DE REFERÊNCIA (base de conhecimento DeclaraAI):
+INFORMAÇÕES DE REFERÊNCIA (base de conhecimento DeclarAI):
 {contexto}
 
 JUSTIFICATIVA (2-4 linhas, português, técnico, direto):"""

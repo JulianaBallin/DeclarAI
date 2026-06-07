@@ -1,4 +1,4 @@
-# Roteiro de Demonstração DeclaraAI
+# Roteiro de Demonstração DeclarAI
 
 Este roteiro prepara o ambiente e orienta uma demonstração curta, com duração máxima de 5 minutos. A ideia é mostrar primeiro que o sistema está inteiro e funcionando, depois destacar as partes de maior valor: Chat RAG, upload fiscal, classificação, titularidade, justificativa, histórico e avaliação.
 
@@ -7,11 +7,11 @@ Este roteiro prepara o ambiente e orienta uma demonstração curta, com duraçã
 Execute estes comandos antes da apresentação. Eles sobem a aplicação completa com Docker.
 
 ```bash
-cd /home/cronos-1226/Documentos/uea/DeclaraAI
+cd /home/cronos-1226/Documentos/uea/DeclarAI
 git checkout develop
 git pull origin develop
 docker compose up -d --build
-docker exec declaraai-ollama ollama pull mistral
+docker exec declarai-ollama ollama pull mistral
 ```
 
 Confirme se os serviços estão no ar.
@@ -65,7 +65,7 @@ Use esta alternativa apenas se o Docker falhar.
 Terminal 1, back-end:
 
 ```bash
-cd /home/cronos-1226/Documentos/uea/DeclaraAI
+cd /home/cronos-1226/Documentos/uea/DeclarAI
 source .venv/bin/activate
 pip install -r backend/requirements.txt
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --app-dir backend
@@ -81,7 +81,7 @@ ollama pull mistral
 Terminal 3, front-end:
 
 ```bash
-cd /home/cronos-1226/Documentos/uea/DeclaraAI/frontend
+cd /home/cronos-1226/Documentos/uea/DeclarAI/frontend
 npm install
 npm run dev -- --host 0.0.0.0
 ```
@@ -127,7 +127,7 @@ Mostre:
 
 Fala sugerida:
 
-> "O DeclaraAI é um Micro SaaS acadêmico para apoiar contribuintes na organização da declaração de IRPF. A ideia não é substituir um contador, mas reduzir erros comuns usando uma base fiscal própria, LLM aberto e execução local."
+> "O DeclarAI é um Micro SaaS acadêmico para apoiar contribuintes na organização da declaração de IRPF. A ideia não é substituir um contador, mas reduzir erros comuns usando uma base fiscal própria, LLM aberto e execução local."
 
 ### 0:30 a 1:00 | Visão Geral do Sistema
 
@@ -260,7 +260,7 @@ Fala sugerida:
 
 Fechamento:
 
-> "Em resumo, o DeclaraAI atende ao requisito de Agentic RAG porque o LLM não só responde perguntas. Ele participa de um fluxo com ferramentas, documentos, classificação, titularidade, justificativa e avaliação."
+> "Em resumo, o DeclarAI atende ao requisito de Agentic RAG porque o LLM não só responde perguntas. Ele participa de um fluxo com ferramentas, documentos, classificação, titularidade, justificativa e avaliação."
 
 ## 5. Comandos de Teste do Fluxo
 

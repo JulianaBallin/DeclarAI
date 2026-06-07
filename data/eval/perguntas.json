@@ -1,6 +1,6 @@
 {
   "versao": "1.0",
-  "descricao": "Dataset de avaliação do pipeline RAG do DeclaraAI. Perguntas sobre IRPF com respostas de referência anotadas manualmente.",
+  "descricao": "Dataset de avaliação do pipeline RAG do DeclarAI. Perguntas sobre IRPF com respostas de referência anotadas manualmente.",
   "total": 60,
   "categorias": [
     "obrigatoriedade",

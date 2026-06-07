@@ -1,5 +1,5 @@
 """
-Script de avaliação RAGAS para o DeclaraAI.
+Script de avaliação RAGAS para o DeclarAI.
 
 Calcula as 4 métricas RAGAS usando Ollama local como juiz:
 - Faithfulness: respostas estão apoiadas no contexto?
@@ -156,7 +156,7 @@ def salvar_csv(todos_resultados: list[dict]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Avaliação RAGAS - DeclaraAI")
+    parser = argparse.ArgumentParser(description="Avaliação RAGAS - DeclarAI")
     parser.add_argument("--modelo", default="mistral", help="Modelo Ollama a usar como LLM e juiz")
     parser.add_argument("--limite", type=int, default=None, help="Limita número de perguntas")
     args = parser.parse_args()

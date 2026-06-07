@@ -46,7 +46,7 @@
   linkcolor=declaraTeal,
   urlcolor=declaraOrange,
   citecolor=declaraTeal,
-  pdftitle={Relatório Técnico DeclaraAI},
+  pdftitle={Relatório Técnico DeclarAI},
   pdfauthor={Juliana Ballin Lima, Fernando Luiz Da Silva Freire},
   pdfsubject={Agentic RAG aplicado ao apoio à declaração de IRPF},
   pdfkeywords={RAG, Agentic RAG, IRPF, Ollama, FastAPI, React}
@@ -66,7 +66,7 @@
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\textbf{\color{declaraTeal}DeclaraAI}}
+\fancyhead[L]{\textbf{\color{declaraTeal}DeclarAI}}
 \fancyhead[C]{\textcolor{declaraGray}{Relatório Técnico}}
 \fancyhead[R]{\textcolor{declaraGray}{UEA}}
 \fancyfoot[L]{\textcolor{declaraGray}{Oficina e Desenvolvimento de Sistemas I}}
@@ -81,7 +81,7 @@
 \begin{titlepage}
   \centering
   \vspace*{18mm}
-  {\Huge\bfseries\color{declaraTeal}DeclaraAI\par}
+  {\Huge\bfseries\color{declaraTeal}DeclarAI\par}
   \vspace{4mm}
   {\Large Agentic RAG para apoio à declaração de IRPF\par}
   \vspace{10mm}
@@ -106,7 +106,7 @@
 
 \section{Resumo Executivo}
 
-O DeclaraAI é um assistente inteligente para apoiar contribuintes brasileiros na organização de documentos e no entendimento de regras da declaração do Imposto de Renda Pessoa Física. A solução utiliza uma arquitetura Agentic RAG com base de conhecimento própria, LLM aberto via Ollama, embeddings locais, ChromaDB, API FastAPI e frontend React.
+O DeclarAI é um assistente inteligente para apoiar contribuintes brasileiros na organização de documentos e no entendimento de regras da declaração do Imposto de Renda Pessoa Física. A solução utiliza uma arquitetura Agentic RAG com base de conhecimento própria, LLM aberto via Ollama, embeddings locais, ChromaDB, API FastAPI e frontend React.
 
 O sistema permite consultar regras fiscais, enviar documentos, extrair dados, classificar categorias tributárias, verificar titularidade e gerar justificativas fundamentadas. A proposta não substitui a orientação profissional de um contador, mas reduz erros comuns e melhora a preparação documental do contribuinte.
 
@@ -195,17 +195,52 @@ Essas fontes cobrem despesas médicas, educação, previdência privada, rendime
 
 \section{Modelo de Linguagem e Recuperação}
 
-O modelo padrão é o \texttt{mistral} executado via Ollama. A escolha prioriza licença aberta, execução local, bom desempenho em português e custo computacional compatível com máquinas comuns. O embedding padrão é \texttt{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2}, escolhido por ser leve, multilíngue e adequado para CPU.
+\subsection{Justificativa para Execução Local}
+
+Documentos fiscais contêm dados altamente sensíveis: CPF, renda anual, despesas médicas, informações de dependentes e valores de patrimônio. O envio desses dados para APIs externas de LLM em nuvem representaria risco à privacidade do contribuinte, possível violação da Lei Geral de Proteção de Dados (LGPD) e dependência de serviços pagos e de conectividade.
+
+O uso do Ollama garante execução inteiramente local: nenhum dado sai do ambiente do usuário. Essa decisão elimina custos recorrentes por token, remove a dependência de internet e mantém pleno controle sobre o processamento das informações. Modelos em nuvem como GPT-4 e Gemini foram descartados por esses motivos, mesmo que pudessem oferecer maior capacidade de geração.
+
+\subsection{Seleção dos Modelos}
+
+\subsubsection*{Modelo de Geração e Classificação (LLM)}
+
+Quatro modelos foram avaliados via Ollama no dataset de 60 perguntas do domínio IRPF:
 
 \begin{center}
-\begin{tabularx}{\textwidth}{@{}L{36mm}Y@{}}
+\begin{tabularx}{\textwidth}{@{}L{54mm}L{30mm}L{26mm}Y@{}}
+\toprule
+\textbf{Modelo} & \textbf{Cobertura (\%)} & \textbf{Latência (s)} & \textbf{Observação} \\
+\midrule
+Mistral + RAG (escolhido) & 72,4 & 8,2 & Maior cobertura; bom suporte ao PT-BR \\
+Phi-4 Mini + RAG          & 68,3 & 7,0 & Boa relação tamanho/qualidade \\
+Llama 3.2:3b + RAG        & 65,8 & 6,4 & Mais leve, menor cobertura \\
+Gemma 3:4b + RAG          & 61,2 & 6,9 & Menor cobertura no domínio fiscal \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+O Mistral foi escolhido por apresentar a maior cobertura de palavras-chave esperadas (72,4\%) e desempenho consistente em perguntas sobre regras fiscais em português. Sua licença aberta e compatibilidade com Ollama também foram fatores determinantes.
+
+\subsubsection*{Modelo de Embeddings}
+
+O \texttt{sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2} foi escolhido por três razões: (1) suporte nativo ao português brasileiro, sem necessidade de tradução prévia; (2) dimensionalidade de 384, adequada para ChromaDB em CPU; e (3) tamanho reduzido, permitindo execução eficiente em máquinas sem GPU.
+
+\subsubsection*{Modelo de Re-ranking}
+
+O \texttt{cross-encoder/mmarco-mMiniLMv2-L12-H384-v1} foi selecionado por ser multilíngue e treinado em tarefas de recuperação de informação. Apresenta desempenho superior em perguntas com negações e exceções fiscais, como ``não é dedutível'' ou ``apenas para autônomos'', casos em que a busca vetorial pura tende a retornar trechos irrelevantes.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{42mm}Y@{}}
 \toprule
 \textbf{Decisão} & \textbf{Motivo} \\
 \midrule
-Ollama local & Evita envio de documentos fiscais para APIs externas. \\
-ChromaDB & Banco vetorial simples, persistente e suficiente para protótipo. \\
-Re-ranking & Melhora a ordem dos trechos em perguntas complexas. \\
-Temperatura baixa & Reduz alucinações em domínio fiscal. \\
+Ollama local & Evita envio de dados fiscais sensíveis para APIs externas e garante conformidade com a LGPD. \\
+Mistral & Maior cobertura no domínio fiscal entre os modelos testados; licença aberta. \\
+MiniLM multilíngue & Leve, com suporte a PT-BR e compatível com CPU sem GPU. \\
+CrossEncoder multilíngue & Re-ranking preciso em perguntas fiscais com negações e exceções. \\
+ChromaDB & Banco vetorial simples, persistente e suficiente para protótipo local. \\
+Temperatura baixa & Reduz alucinações em domínio fiscal com regras específicas. \\
 \bottomrule
 \end{tabularx}
 \end{center}
@@ -225,14 +260,14 @@ O frontend foi desenvolvido em React + Vite. A interface possui páginas de uso 
 
 \section{Diagramas e Identidade Visual}
 
-A documentação visual foi atualizada com fundo claro, textos acentuados e espaçamento suficiente para evitar sobreposição de setas e componentes. A nova marca do DeclaraAI foi gerada em SVG e exportada para PNG, sendo usada no relatório e no frontend.
+A documentação visual foi atualizada com fundo claro, textos acentuados e espaçamento suficiente para evitar sobreposição de setas e componentes. A nova marca do DeclarAI foi gerada em SVG e exportada para PNG, sendo usada no relatório e no frontend.
 
 \begin{center}
 \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash\ttfamily\scriptsize}p{92mm}Y@{}}
 \toprule
 \textbf{Arquivo} & \textbf{Conteúdo} \\
 \midrule
-docs/diagrams/logo.svg & Logo horizontal do DeclaraAI. \\
+docs/diagrams/logo.svg & Logo horizontal do DeclarAI. \\
 docs/diagrams/logo\_icon.svg & Ícone usado no frontend. \\
 docs/diagrams/rag/recuperacao\_reranking.svg & Fluxo de recuperação, re-ranking e geração da resposta. \\
 docs/diagrams/agentic\_rag/titularidade\_justificativa.svg & Fluxo agentic de upload, titularidade, justificativa e salvamento. \\
@@ -275,6 +310,28 @@ Mistral sem RAG        & 44,1 & 5,1 & Ablation study; confirma necessidade do RA
 \end{center}
 
 A diferença de cobertura entre o Mistral com RAG (72,4\%) e sem RAG (44,1\%) confirma que a recuperação semântica contribui com +28,3 pontos percentuais na qualidade das respostas sobre domínio fiscal, justificando a arquitetura RAG adotada.
+
+\subsection{Comparação de Estratégias de Chunking}
+
+Para definir a configuração de chunking mais adequada ao domínio fiscal, foram desenhadas e testadas sete configurações distintas, avaliadas com as métricas de recuperação do dataset anotado.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{36mm}L{22mm}L{22mm}Y@{}}
+\toprule
+\textbf{Configuração} & \textbf{Tamanho} & \textbf{Sobreposição} & \textbf{Observação} \\
+\midrule
+fixo\_200\_0   & 200 & 0   & Trechos curtos; perde contexto de regras fiscais \\
+fixo\_400\_40  & 400 & 40  & Equilíbrio fraco; sobreposição insuficiente \\
+\textbf{fixo\_600\_80}  & \textbf{600} & \textbf{80}  & \textbf{Melhor equilíbrio: contexto fiscal + precisão semântica} \\
+fixo\_800\_120 & 800 & 120 & Contexto rico, mas maior ruído semântico nos embeddings \\
+fixo\_1000\_200 & 1000 & 200 & Trechos longos demais; diluem a similaridade vetorial \\
+sentença       & variável & 0   & Fragmentos irregulares em documentos fiscais \\
+semântico      & variável & variável & Experimental; sem vantagem clara no domínio \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+A configuração 600/80 foi selecionada por dois motivos principais: (1) preserva parágrafos completos de regras fiscais, incluindo exceções e limites de dedução; (2) a sobreposição de 80 caracteres mantém a continuidade de sentido entre fragmentos adjacentes sem aumentar demasiadamente o volume de tokens enviados ao LLM.
 
 \subsection{Scripts de avaliação}
 
@@ -341,7 +398,7 @@ Compartilhado & Definição dos requisitos, base de conhecimento, testes de inte
 
 \section{Conclusão}
 
-O DeclaraAI atende a todos os requisitos da atividade: domínio bem definido (IRPF), base de conhecimento própria com documentos oficiais da Receita Federal, ingestão e pré-processamento com limpeza textual, chunking com sobreposição, embeddings multilíngues, recuperação semântica com re-ranking, LLM aberto via Ollama, comportamento Agentic RAG com seleção de ferramentas, interface web profissional e avaliação quantitativa com dataset anotado.
+O DeclarAI atende a todos os requisitos da atividade: domínio bem definido (IRPF), base de conhecimento própria com documentos oficiais da Receita Federal, ingestão e pré-processamento com limpeza textual, chunking com sobreposição, embeddings multilíngues, recuperação semântica com re-ranking, LLM aberto via Ollama, comportamento Agentic RAG com seleção de ferramentas, interface web profissional e avaliação quantitativa com dataset anotado.
 
 A comparação entre modelos mostra que o RAG contribui com ganho médio de 28 pontos percentuais na cobertura de keywords em relação ao LLM sem recuperação, validando a escolha arquitetural. A evolução futura prioritária é a busca híbrida (BM25 + vetorial) e a expansão da base com documentos atualizados para o exercício fiscal vigente.
 

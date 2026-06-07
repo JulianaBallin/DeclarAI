@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-inner">
-        <span className="footer-brand">DeclaraAI</span>
+        <span className="footer-brand">DeclarAI</span>
         <span className="footer-sep">·</span>
         <span>Projeto acadêmico UEA | Oficina e Desenvolvimento de Sistemas I</span>
         <span className="footer-sep">·</span>

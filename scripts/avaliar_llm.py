@@ -1,5 +1,5 @@
 """
-Script de avaliação comparativa de LLMs para o DeclaraAI.
+Script de avaliação comparativa de LLMs para o DeclarAI.
 
 Roda as perguntas do dataset de avaliação com diferentes modelos via Ollama
 e salva os resultados em CSV para comparação no artigo acadêmico.
@@ -187,7 +187,7 @@ def salvar_csv(todos_resultados: list[dict]) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Avaliação comparativa de LLMs - DeclaraAI")
+    parser = argparse.ArgumentParser(description="Avaliação comparativa de LLMs - DeclarAI")
     parser.add_argument("--modelo", choices=MODELOS, help="Avalia apenas este modelo")
     parser.add_argument(
         "--no-rag",

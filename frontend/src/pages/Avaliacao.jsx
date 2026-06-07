@@ -61,7 +61,7 @@ export default function Avaliacao() {
     <div className="page">
       <h1>Avaliação do Pipeline RAG</h1>
       <p className="page-desc">
-        Métricas quantitativas para validar a qualidade da recuperação semântica e das respostas geradas pelo DeclaraAI.
+        Métricas quantitativas para validar a qualidade da recuperação semântica e das respostas geradas pelo DeclarAI.
       </p>
 
       <div className="card">

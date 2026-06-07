@@ -17,8 +17,8 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <img src={logo} alt="DeclaraAI" className="navbar-logo-img" />
-        <span className="navbar-logo-text">DeclaraAI</span>
+        <img src={logo} alt="DeclarAI" className="navbar-logo-img" />
+        <span className="navbar-logo-text">DeclarAI</span>
         <span className="navbar-logo-badge">IRPF</span>
       </div>
       <div className="navbar-tabs">

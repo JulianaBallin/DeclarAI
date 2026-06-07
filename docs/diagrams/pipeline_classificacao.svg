@@ -28,7 +28,7 @@
   <rect width="1000" height="560" fill="none" stroke="#FF6B35" stroke-width="1.2" opacity="0.3"/>
 
   <!-- Title -->
-  <text x="500" y="32" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="17" font-weight="700" fill="#0F766E">Pipeline de Classificação e Justificativa - DeclaraAI</text>
+  <text x="500" y="32" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="17" font-weight="700" fill="#0F766E">Pipeline de Classificação e Justificativa - DeclarAI</text>
   <line x1="50" y1="42" x2="950" y2="42" stroke="#FF6B35" stroke-width="0.8" opacity="0.4"/>
 
   <!-- ===== FASE 1: CLASSIFICAÇÃO ===== -->
@@ -179,5 +179,5 @@
   <line x1="650" y1="532" x2="678" y2="532" stroke="#15803D" stroke-width="1.5" stroke-dasharray="4,2"/>
   <text x="684" y="536" font-family="'Segoe UI',Arial,sans-serif" font-size="9.5" fill="#172033">Conexão entre fases</text>
   <rect x="860" y="520" width="110" height="20" rx="4" fill="#FF6B35" opacity="0.12" stroke="#FF6B35" stroke-width="0.8"/>
-  <text x="915" y="534" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="10" font-weight="700" fill="#FF6B35">DeclaraAI</text>
+  <text x="915" y="534" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="10" font-weight="700" fill="#FF6B35">DeclarAI</text>
 </svg>

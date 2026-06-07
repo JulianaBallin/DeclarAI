@@ -30,7 +30,7 @@
   <circle cx="65" cy="15" r="10" fill="#F97316"/>
   <text x="65" y="19" font-family="'Segoe UI', Arial, sans-serif" font-size="9" font-weight="900" fill="white" text-anchor="middle">AI</text>
 
-  <!-- Texto principal: DeclaraAI -->
+  <!-- Texto principal: DeclarAI -->
   <text x="94" y="52" font-family="'Segoe UI', Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="-1">
     <tspan fill="#0F766E">Declara</tspan><tspan fill="#F97316">AI</tspan>
   </text>

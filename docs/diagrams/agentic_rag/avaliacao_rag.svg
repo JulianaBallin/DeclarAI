@@ -23,7 +23,7 @@
   <rect width="900" height="480" fill="none" stroke="#FF6B35" stroke-width="1.2" opacity="0.3"/>
 
   <!-- Title -->
-  <text x="450" y="30" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="16" font-weight="700" fill="#0F766E">Avaliação do Pipeline RAG - DeclaraAI</text>
+  <text x="450" y="30" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="16" font-weight="700" fill="#0F766E">Avaliação do Pipeline RAG - DeclarAI</text>
   <line x1="50" y1="40" x2="850" y2="40" stroke="#FF6B35" stroke-width="0.8" opacity="0.4"/>
 
   <!-- Subtitle -->

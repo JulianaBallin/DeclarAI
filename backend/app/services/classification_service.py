@@ -256,7 +256,7 @@ CATEGORIA_REVISAO = "Requer Revisão"
 CATEGORIAS_VALIDAS = set(CATEGORIAS_TRIBUTARIAS.keys()) | {CATEGORIA_PADRAO}
 
 PROMPT_CLASSIFICACAO = """\
-Você é um classificador de documentos fiscais brasileiros para o sistema DeclaraAI.
+Você é um classificador de documentos fiscais brasileiros para o sistema DeclarAI.
 
 Analise o texto do documento abaixo e classifique em UMA das categorias:
 - Recibo Médico

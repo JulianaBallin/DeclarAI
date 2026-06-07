@@ -1,5 +1,5 @@
 """
-Ponto de entrada da API DeclaraAI.
+Ponto de entrada da API DeclarAI.
 
 Configura o aplicativo FastAPI, registra as rotas, inicializa o banco de dados
 e executa a ingestão automática da base de conhecimento na primeira execução.
@@ -124,7 +124,7 @@ app = FastAPI(
     title=configuracoes.NOME_APP,
     version=configuracoes.VERSAO_APP,
     description=(
-        "API do DeclaraAI - assistente inteligente com RAG para organização de "
+        "API do DeclarAI - assistente inteligente com RAG para organização de "
         "documentos e apoio à declaração do imposto de renda pessoa física."
     ),
     lifespan=ciclo_de_vida,

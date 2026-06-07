@@ -24,8 +24,8 @@ export default function Upload() {
   const [mensagem, setMensagem] = useState(null);
   const [confirmado, setConfirmado] = useState(false);
   const [perfil, setPerfil] = useState(() => ({
-    nome: localStorage.getItem("declaraai_nome_declarante") || "",
-    cpf: localStorage.getItem("declaraai_cpf_declarante") || "",
+    nome: localStorage.getItem("declarai_nome_declarante") || "",
+    cpf: localStorage.getItem("declarai_cpf_declarante") || "",
   }));
   const [salvandoPerfil, setSalvandoPerfil] = useState(false);
   const [titularidade, setTitularidade] = useState(null);
@@ -67,8 +67,8 @@ export default function Upload() {
     setSalvandoPerfil(true);
     try {
       await registrarPerfil(perfil.nome.trim(), perfil.cpf.trim());
-      localStorage.setItem("declaraai_nome_declarante", perfil.nome.trim());
-      localStorage.setItem("declaraai_cpf_declarante", perfil.cpf.trim());
+      localStorage.setItem("declarai_nome_declarante", perfil.nome.trim());
+      localStorage.setItem("declarai_cpf_declarante", perfil.cpf.trim());
       setMensagem({ tipo: "success", texto: "Declarante registrado para esta sessão." });
       if (dados?.nome_beneficiario) {
         await avaliarTitularidade(dados.nome_beneficiario);

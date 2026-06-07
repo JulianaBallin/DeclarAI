@@ -7,7 +7,7 @@
   <!-- ===== TITULO ===== -->
   <text x="450" y="26" text-anchor="middle"
         font-family="Arial,Helvetica,sans-serif" font-size="15" font-weight="bold" fill="#C04A00">
-    Estrategia de Chunking - DeclaraAI
+    Estrategia de Chunking - DeclarAI
   </text>
   <line x1="30" y1="36" x2="870" y2="36" stroke="#FF6B35" stroke-width="1"/>
 

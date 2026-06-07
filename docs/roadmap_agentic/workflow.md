@@ -1,6 +1,6 @@
-# Workflow Agentic RAG do DeclaraAI
+# Workflow Agentic RAG do DeclarAI
 
-Este documento descreve como o DeclaraAI atende à abordagem Agentic RAG solicitada na atividade. O domínio é a declaração do Imposto de Renda Pessoa Física no Brasil, com foco em organização de documentos, deduções, titularidade e consulta a regras fiscais.
+Este documento descreve como o DeclarAI atende à abordagem Agentic RAG solicitada na atividade. O domínio é a declaração do Imposto de Renda Pessoa Física no Brasil, com foco em organização de documentos, deduções, titularidade e consulta a regras fiscais.
 
 ## 1. Objetivo do Agente
 

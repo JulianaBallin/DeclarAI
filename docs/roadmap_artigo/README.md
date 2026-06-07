@@ -1,6 +1,6 @@
 # Roadmap do Artigo
 
-Esta pasta contém um único roadmap consolidado para o artigo acadêmico do DeclaraAI.
+Esta pasta contém um único roadmap consolidado para o artigo acadêmico do DeclarAI.
 
 | Arquivo | Descrição |
 |---|---|

@@ -32,7 +32,7 @@ from app.services.classification_service import (
 logger = logging.getLogger(__name__)
 
 PROMPT_CLASSIFICACAO_LLM = """\
-Você é um classificador especialista em documentos fiscais brasileiros para o sistema DeclaraAI.
+Você é um classificador especialista em documentos fiscais brasileiros para o sistema DeclarAI.
 
 Analise o texto do documento abaixo e classifique em EXATAMENTE UMA das categorias:
 - Recibo Médico

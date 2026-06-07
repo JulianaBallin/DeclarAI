@@ -1,6 +1,6 @@
 
 # ============================================================
-# DeclaraAI - Docker Compose
+# DeclarAI - Docker Compose
 #
 # Serviços:
 #   - backend  : API FastAPI com pipeline RAG (porta 8000)
@@ -21,11 +21,11 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: declaraai-backend
+    container_name: declarai-backend
     ports:
       - "8000:8000"
     environment:
-      - DATABASE_URL=sqlite:///./data/declaraai.db
+      - DATABASE_URL=sqlite:///./data/declarai.db
       - OLLAMA_BASE_URL=http://ollama:11434
       - OLLAMA_MODELO=mistral
       - MODELO_EMBEDDINGS=sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
@@ -48,7 +48,7 @@ services:
         condition: service_started
     restart: unless-stopped
     networks:
-      - declaraai-net
+      - declarai-net
 
   # ----------------------------------------------------------
   # Frontend - React + Vite (build) + Nginx (serve)
@@ -61,21 +61,21 @@ services:
         # VITE_API_URL não é necessário em Docker pois o nginx faz proxy de /api
         # para o backend internamente. Deixado aqui para referência.
         VITE_API_URL: ""
-    container_name: declaraai-frontend
+    container_name: declarai-frontend
     ports:
       - "3000:80"
     depends_on:
       - backend
     restart: unless-stopped
     networks:
-      - declaraai-net
+      - declarai-net
 
   # ----------------------------------------------------------
   # Ollama - Servidor de LLM local
   # ----------------------------------------------------------
   ollama:
     image: ollama/ollama:latest
-    container_name: declaraai-ollama
+    container_name: declarai-ollama
     ports:
       - "11434:11434"
     volumes:
@@ -83,13 +83,13 @@ services:
       - ollama_models:/root/.ollama
     restart: unless-stopped
     networks:
-      - declaraai-net
+      - declarai-net
 
 # ----------------------------------------------------------
 # Rede interna
 # ----------------------------------------------------------
 networks:
-  declaraai-net:
+  declarai-net:
     driver: bridge
 
 # ----------------------------------------------------------

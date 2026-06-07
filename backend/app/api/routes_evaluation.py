@@ -1,5 +1,5 @@
 """
-Rotas da API para avaliação do pipeline RAG do DeclaraAI.
+Rotas da API para avaliação do pipeline RAG do DeclarAI.
 
 Expõe endpoints para medir a qualidade da recuperação semântica e das
 respostas geradas, facilitando a análise de desempenho do sistema.

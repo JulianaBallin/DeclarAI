@@ -37,7 +37,7 @@ def get_servico_rag() -> "ServicoRAG":
 
 class ServicoRAG:
     """
-    Orquestrador do pipeline RAG do DeclaraAI.
+    Orquestrador do pipeline RAG do DeclarAI.
 
     Instancia e conecta todos os componentes necessários para ingestão
     de documentos e geração de respostas baseadas em recuperação semântica.

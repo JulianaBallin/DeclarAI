@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" width="900" height="520" font-family="'Segoe UI', Arial, sans-serif" role="img" aria-labelledby="título desc">
-  <title id="título">Recuperação e re-ranking do DeclaraAI</title>
+  <title id="título">Recuperação e re-ranking do DeclarAI</title>
   <desc id="desc">Fluxo claro da pergunta do usuário até a resposta gerada pelo LLM com fontes e scores.</desc>
   <defs>
     <marker id="seta" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">

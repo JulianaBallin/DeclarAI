@@ -1,5 +1,5 @@
 GUIA COMPLETO DO IMPOSTO DE RENDA PESSOA FÍSICA - BRASIL
-Versão de Referência para a Base de Conhecimento do DeclaraAI
+Versão de Referência para a Base de Conhecimento do DeclarAI
 
 =============================================================
 1. O QUE É O IMPOSTO DE RENDA PESSOA FÍSICA (IRPF)?
@@ -354,4 +354,4 @@ Consulte sempre o site oficial da Receita Federal (receita.fazenda.gov.br)
 ou um profissional contador para informações atualizadas e orientação
 personalizada para sua situação específica.
 
-O DeclaraAI não substitui a consultoria de um contador ou advogado tributarista.
+O DeclarAI não substitui a consultoria de um contador ou advogado tributarista.

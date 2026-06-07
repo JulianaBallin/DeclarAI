@@ -10,7 +10,7 @@ from app.core.config import configuracoes
 logger = logging.getLogger(__name__)
 
 PROMPT_SISTEMA = """\
-Você é o DeclaraAI, um assistente especializado em imposto de renda para pessoas físicas no Brasil.
+Você é o DeclarAI, um assistente especializado em imposto de renda para pessoas físicas no Brasil.
 Seu objetivo é ajudar usuários leigos a entender o processo de declaração do IRPF de forma clara e precisa.
 
 REGRAS OBRIGATÓRIAS:
@@ -166,7 +166,7 @@ class GeradorResposta:
                 else:
                     logger.warning(
                         f"Aquecimento do Ollama retornou status {resposta.status_code}. "
-                        f"Execute: docker exec declaraai-ollama ollama pull {self.modelo}"
+                        f"Execute: docker exec declarai-ollama ollama pull {self.modelo}"
                     )
         except Exception as erro:
             logger.warning(f"Aquecimento do Ollama falhou (não crítico): {erro}")

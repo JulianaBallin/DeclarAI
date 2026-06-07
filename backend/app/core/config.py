@@ -1,5 +1,5 @@
 """
-Configurações centrais da aplicação DeclaraAI.
+Configurações centrais da aplicação DeclarAI.
 Carrega variáveis de ambiente com fallback para valores padrão.
 """
 
@@ -15,12 +15,12 @@ class Configuracoes(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     # Informações da aplicação
-    NOME_APP: str = "DeclaraAI"
+    NOME_APP: str = "DeclarAI"
     VERSAO_APP: str = "1.0.0"
     DEBUG: bool = False
 
     # Banco de dados relacional (SQLite)
-    DATABASE_URL: str = "sqlite:///./data/declaraai.db"
+    DATABASE_URL: str = "sqlite:///./data/declarai.db"
 
     # Caminhos de dados
     CAMINHO_UPLOADS: str = "./data/uploads"

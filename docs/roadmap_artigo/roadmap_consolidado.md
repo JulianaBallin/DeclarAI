@@ -1,4 +1,4 @@
-# Roadmap Consolidado do Artigo DeclaraAI
+# Roadmap Consolidado do Artigo DeclarAI
 
 Este roadmap unifica os planejamentos anteriores do artigo e organiza as próximas etapas de pesquisa, avaliação e escrita. As versões antigas foram removidas para manter uma única fonte de planejamento.
 
@@ -12,7 +12,7 @@ Este roadmap unifica os planejamentos anteriores do artigo e organiza as próxim
 | Dataset de avaliação | Concluído | `data/eval/perguntas.json` com 60 perguntas |
 | Scripts de avaliação | Concluído | LLMs, chunking e RAGAS |
 | Workflow Agentic RAG | Concluído | `docs/roadmap_agentic/workflow.md` |
-| Relatório técnico | Concluído | `docs/reports/relatório_declaraai.tex` |
+| Relatório técnico | Concluído | `docs/reports/relatorio_declarai.tex` |
 | Busca híbrida BM25 + vetorial | Futuro | Boa contribuição para artigo |
 | Comparação de embeddings | Futuro | Avaliar MiniLM, E5 e nomic |
 | Dataset anotado de documentos | Futuro | Necessário para medir classificação |
@@ -152,7 +152,7 @@ Notebooks recomendados:
 Seção obrigatória do artigo:
 
 - Dados de IRPF podem conter CPF, renda, informações de saúde e dados de dependentes.
-- O DeclaraAI executa LLM localmente via Ollama.
+- O DeclarAI executa LLM localmente via Ollama.
 - Vetores ficam no ChromaDB local.
 - Histórico fica em SQLite local.
 - Nenhum documento precisa ser enviado a APIs externas.

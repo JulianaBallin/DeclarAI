@@ -253,7 +253,7 @@ async def salvar_documento(
     ),
 )
 async def obter_referencia_irpf(
-    categoria: str = Query(..., description="Categoria do DeclaraAI"),
+    categoria: str = Query(..., description="Categoria do DeclarAI"),
     texto: str = Query(
         "", max_length=12000, description="Trecho do texto extraído (opcional)"
     ),

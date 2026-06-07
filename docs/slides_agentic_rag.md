@@ -1,12 +1,12 @@
-# Prompt para NotebookLM - Slides DeclaraAI: Agentic RAG
+# Prompt para NotebookLM - Slides DeclarAI: Agentic RAG
 
-Use este conteúdo como prompt para gerar uma apresentação profissional sobre o DeclaraAI. A apresentação deve priorizar as melhorias implementadas desde a última entrega na branch `main`, destacando a evolução atual da branch `develop`.
+Use este conteúdo como prompt para gerar uma apresentação profissional sobre o DeclarAI. A apresentação deve priorizar as melhorias implementadas desde a última entrega na branch `main`, destacando a evolução atual da branch `develop`.
 
 Este PDF deve ser usado como briefing único para o NotebookLM. Ele contém contexto, problema, solução, roteiro de slides, padrão visual, diagramas existentes e regras de composição. Gere uma apresentação 16:9, profissional, clara, em português brasileiro e pronta para demonstração acadêmica.
 
 ## Objetivo do Slide Deck
 
-Criar uma apresentação sobre o DeclaraAI, um Micro SaaS acadêmico com Agentic RAG para apoiar a organização de documentos e dúvidas sobre a declaração do Imposto de Renda Pessoa Física no Brasil.
+Criar uma apresentação sobre o DeclarAI, um Micro SaaS acadêmico com Agentic RAG para apoiar a organização de documentos e dúvidas sobre a declaração do Imposto de Renda Pessoa Física no Brasil.
 
 A apresentação deve convencer a banca de que o projeto atende aos requisitos da atividade, com foco em:
 
@@ -26,7 +26,7 @@ A apresentação deve convencer a banca de que o projeto atende aos requisitos d
 - Usar português brasileiro com acentuação correta.
 - Não criar informações, métricas, autores, endpoints ou tecnologias que não estejam neste PDF.
 - Não usar conteúdo genérico de imposto de renda fora do contexto do projeto.
-- Não transformar o DeclaraAI em produto comercial real. Tratar como Micro SaaS acadêmico.
+- Não transformar o DeclarAI em produto comercial real. Tratar como Micro SaaS acadêmico.
 - Não dizer que o sistema substitui contador. Sempre posicionar como apoio informativo.
 - Evitar blocos longos de texto. Preferir frases curtas, tabelas pequenas, diagramas e bullets objetivos.
 - Cada slide deve ter título forte, mensagem principal e visual associado quando houver diagrama indicado.
@@ -49,14 +49,14 @@ A apresentação deve convencer a banca de que o projeto atende aos requisitos d
 
 ## Padrão de Títulos, Rodapé e Layout
 
-- Título de slide: topo esquerdo, cor `#F97316`, peso alto.
-- Subtítulo ou frase guia: abaixo do título, cor `#172033`.
+- Título de slide: topo esquerdo, cor `#F97316`, peso alto, fonte de **50px**.
+- Subtítulo ou frase guia: abaixo do título, cor `#172033`, fonte de 22px.
 - Rodapé em todos os slides, exceto se a capa ficar visualmente melhor sem rodapé.
-- Rodapé sugerido: `DeclaraAI | UEA | Oficina e Desenvolvimento de Sistemas I | Junho de 2026`.
+- Rodapé sugerido: `DeclarAI | UEA | Oficina e Desenvolvimento de Sistemas I | Junho de 2026`.
 - Numeração discreta no canto inferior direito, formato `01/16`, `02/16` e assim por diante.
-- Usar logotipo pequeno do DeclaraAI no rodapé ou no canto superior direito.
+- Usar logotipo pequeno do DeclarAI no rodapé ou no canto superior direito.
 - Capa: criar composição nova, limpa e institucional. Não usar `diagrams/cover_slide.svg` como layout principal.
-- Capa deve usar o nome `DeclaraAI` como elemento mais forte da primeira tela.
+- Capa deve usar o nome `DeclarAI` como elemento mais forte da primeira tela.
 - A capa deve mostrar equipe, disciplina, instituição e data sem parecer pôster poluído.
 
 ## Banco Visual Disponível
@@ -65,7 +65,7 @@ Use os arquivos abaixo como referência visual. Ao montar os slides, incorpore o
 
 | Arquivo | Uso recomendado |
 |---|---|
-| `diagrams/logo.svg` | marca horizontal do DeclaraAI |
+| `diagrams/logo.svg` | marca horizontal do DeclarAI |
 | `diagrams/logo_icon.svg` | ícone pequeno para rodapé, capa ou detalhes |
 | `diagrams/agentic_rag/c4_contexto.svg` | arquitetura em nível de contexto |
 | `diagrams/agentic_rag/c4_containers.svg` | arquitetura de contêineres |
@@ -82,7 +82,7 @@ Use os arquivos abaixo como referência visual. Ao montar os slides, incorpore o
 
 ## Contexto do Projeto
 
-**Título geral:** DeclaraAI: Agentic RAG para apoio à declaração do IRPF
+**Título geral:** DeclarAI: Agentic RAG para apoio à declaração do IRPF
 
 **Instituição:** Universidade do Estado do Amazonas
 
@@ -96,7 +96,7 @@ Use os arquivos abaixo como referência visual. Ao montar os slides, incorpore o
 
 ## Contexto Técnico Sintético
 
-O DeclaraAI possui backend FastAPI, frontend React + Vite, banco SQLite para histórico, ChromaDB para vetores, embeddings com `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, re-ranking com `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` e LLM aberto `mistral` executado via Ollama.
+O DeclarAI possui backend FastAPI, frontend React + Vite, banco SQLite para histórico, ChromaDB para vetores, embeddings com `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, re-ranking com `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` e LLM aberto `mistral` executado via Ollama.
 
 O fluxo principal é:
 
@@ -127,19 +127,19 @@ Usuário
 
 ## Slide 1: Capa
 
-**Título:** DeclaraAI
+**Título:** DeclarAI
 
 **Subtítulo:** Agentic RAG para apoio inteligente à declaração do IRPF
 
 **Mensagem principal:** Micro SaaS acadêmico com LLM aberto, execução local, base de conhecimento fiscal e classificação automática de documentos.
 
-**Visual sugerido:** fundo off-white, nome DeclaraAI grande, logo pequeno, selo IRPF 2026 como detalhe visual, nomes dos integrantes e UEA no rodapé.
+**Visual sugerido:** fundo off-white, nome DeclarAI grande, logo pequeno, selo IRPF 2026 como detalhe visual, nomes dos integrantes e UEA no rodapé.
 
-**Instrução de composição:** criar capa nova, sem reaproveitar a capa antiga. A capa deve parecer acadêmica, limpa e moderna, com foco no nome DeclaraAI.
+**Instrução de composição:** criar capa nova, sem reaproveitar a capa antiga. A capa deve parecer acadêmica, limpa e moderna, com foco no nome DeclarAI.
 
 ## Slide 2: Problema Real
 
-**Título:** Por que o DeclaraAI é necessário?
+**Título:** Por que o DeclarAI é necessário?
 
 A declaração do IRPF exige que contribuintes organizem recibos, notas fiscais, informes e comprovantes ao longo do ano. Usuários que não são contadores costumam ter dificuldades para:
 
@@ -152,7 +152,7 @@ A declaração do IRPF exige que contribuintes organizem recibos, notas fiscais,
 
 ## Slide 3: Arquitetura Geral
 
-**Título:** Arquitetura do DeclaraAI
+**Título:** Arquitetura do DeclarAI
 
 Use um diagrama por camadas e destaque a execução local:
 
@@ -166,6 +166,25 @@ Use um diagrama por camadas e destaque a execução local:
 | Persistência | SQLite + ChromaDB | Histórico de documentos e vetores |
 
 **Diferencial:** execução local, sem envio de documentos fiscais para APIs externas.
+
+**Por que apenas modelos locais (sem APIs de nuvem)?**
+
+Documentos fiscais contem dados altamente sensiveis: CPF, renda anual, informacoes de saude, dependentes, valores de patrimonio. O envio desses dados para APIs externas (OpenAI, Gemini, Claude) representaria:
+
+- Risco de violacao da LGPD (Lei Geral de Protecao de Dados);
+- Dependencia de internet e disponibilidade de servico externo;
+- Custo recorrente por token, inviavel para projeto academico;
+- Perda de controle sobre como os dados sao usados e armazenados.
+
+A execucao local via Ollama resolve todos esses pontos: os dados nunca saem do ambiente do usuario.
+
+**Justificativa de cada modelo escolhido:**
+
+| Modelo | Papel | Justificativa |
+|---|---|---|
+| Mistral (Ollama) | Geracao e classificacao | Licenca aberta, melhor cobertura no dominio fiscal (72,4%), bom suporte a PT-BR |
+| MiniLM-L12-v2 (multilingual) | Embeddings | Leve, multilingue (suporta PT-BR), 384 dimensoes, compativel com CPU |
+| CrossEncoder mmarco multilingual | Re-ranking | Re-ranqueamento multilingue, melhora qualidade em perguntas com negacoes fiscais |
 
 **Diagramas disponíveis:**
 
@@ -260,6 +279,23 @@ Categorias reconhecidas:
 - `doacoes`
 - `outros_nao_dedutivel`
 
+**Por que usar LLM para classificacao?**
+
+A classificacao por palavras-chave fixas falha em documentos com linguagem informal, abreviacoes medicas ou termos regionais. O LLM interpreta o contexto completo do documento, reduzindo falsos negativos e permitindo identificar categorias ambiguas. O fallback por regras garante seguranca quando o Ollama nao esta disponivel.
+
+**Como o Mistral foi selecionado para classificacao?**
+
+Foram avaliados quatro modelos locais via Ollama no dataset de 60 perguntas do dominio IRPF:
+
+| Modelo | Cobertura (%) | Latencia (s) |
+|---|---|---|
+| Mistral + RAG | 72,4 | 8,2 |
+| Phi-4 Mini + RAG | 68,3 | 7,0 |
+| Llama 3.2:3b + RAG | 65,8 | 6,4 |
+| Gemma 3:4b + RAG | 61,2 | 6,9 |
+
+O Mistral foi escolhido por apresentar a maior cobertura de palavras-chave esperadas (72,4%) e bom suporte ao portugues brasileiro, com custo computacional compativel com CPUs comuns. Os demais modelos foram descartados por cobertura inferior no dominio fiscal.
+
 **Diagrama:** `diagrams/agentic_rag/classificacao_llm_first.svg`
 
 ![Classificação LLM-first](diagrams/agentic_rag/classificacao_llm_first.svg)
@@ -345,6 +381,22 @@ Carregamento -> limpeza textual -> chunking 600/80 -> embeddings MiniLM -> Chrom
 ```
 
 A base pode ser ampliada pela interface, e a re-indexação aceita diferentes configurações para experimentos.
+
+**Por que chunk_size=600 e overlap=80?**
+
+Foram desenhadas e testadas 7 configuracoes via `scripts/avaliar_chunking.py`, avaliadas no dataset de perguntas do dominio IRPF:
+
+| Configuracao | chunk_size | overlap | Observacao |
+|---|---|---|---|
+| fixo_200_0 | 200 | 0 | Trechos curtos, perda de contexto fiscal |
+| fixo_400_40 | 400 | 40 | Equilibrio fraco, sobreposicao insuficiente |
+| **fixo_600_80** | **600** | **80** | **Melhor equilibrio contexto x precisao** |
+| fixo_800_120 | 800 | 120 | Contexto rico, mas maior ruido semantico |
+| fixo_1000_200 | 1000 | 200 | Trechos longos demais para o modelo de embedding |
+| sentenca | variavel | 0 | Fragmentos irregulares em documentos fiscais |
+| semantico | variavel | variavel | Experimental, sem vantagem clara no dominio |
+
+A configuracao 600/80 foi selecionada por preservar regras fiscais completas (paragrafos com limites e excecoes) sem gerar trechos longos demais que diluem a similaridade semantica.
 
 **Diagramas disponíveis:**
 
@@ -461,7 +513,7 @@ Pontos-chave:
 
 ## Encerramento
 
-Concluir destacando que o DeclaraAI evoluiu de um RAG básico para um Micro SaaS com comportamento agentic, avaliação quantitativa, interface utilizável, privacidade local e documentação completa.
+Concluir destacando que o DeclarAI evoluiu de um RAG básico para um Micro SaaS com comportamento agentic, avaliação quantitativa, interface utilizável, privacidade local e documentação completa.
 
 ## Checklist Final para o NotebookLM
 
