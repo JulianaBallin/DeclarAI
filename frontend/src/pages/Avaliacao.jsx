@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { TestTube, CheckCircle, XCircle, TrendingUp, Info } from "lucide-react";
-import { avaliarRecuperacao } from "../services/api";
+import { TestTube, CheckCircle, XCircle, TrendingUp, Info, Brain } from "lucide-react";
+import { avaliarCompleta, avaliarRecuperacao } from "../services/api";
 
 const COMPARACAO_MODELOS = [
   { modelo: "mistral (RAG)", cobertura: 72.4, latencia: 8.2, descricao: "Modelo padrão + base de conhecimento", recomendado: true },
@@ -33,12 +33,22 @@ export default function Avaliacao() {
   const [resultado, setResultado] = useState(null);
   const [carregando, setCarregando] = useState(false);
   const [erro, setErro] = useState(null);
+  const [modo, setModo] = useState(null);
 
-  async function avaliar() {
+  function contextoEncontrado(resultadoPergunta) {
+    return (
+      resultadoPergunta.contexto_encontrado ??
+      (resultadoPergunta.chunks_recuperados || 0) > 0
+    );
+  }
+
+  async function executarAvaliacao(tipo) {
     setCarregando(true);
     setErro(null);
+    setModo(tipo);
     try {
-      const dados = await avaliarRecuperacao();
+      const dados =
+        tipo === "completa" ? await avaliarCompleta() : await avaliarRecuperacao();
       setResultado(dados);
     } catch (err) {
       setErro(err.message);
@@ -133,32 +143,60 @@ export default function Avaliacao() {
 
       <div className="card">
         <div className="card-header">
-          <h2>Avaliar Recuperação Semântica</h2>
-          <span className="badge-secondary">Não requer Ollama</span>
+          <h2>Executar Avaliação</h2>
+          <span className="badge-secondary">60 perguntas anotadas</span>
         </div>
-        <p>Testa o retriever com o dataset anotado do domínio IRPF sem chamar o LLM.</p>
-        <button
-          className="btn-primary"
-          onClick={avaliar}
-          disabled={carregando}
-          style={{ marginTop: "0.75rem" }}
-        >
-          <TestTube size={16} />
-          {carregando ? "Avaliando..." : "Avaliar Recuperação"}
-        </button>
+        <p>
+          Teste a recuperação semântica sem Ollama ou execute a avaliação completa,
+          que também gera respostas via LLM local.
+        </p>
+        <div className="btn-row">
+          <button
+            className="btn-primary"
+            onClick={() => executarAvaliacao("recuperacao")}
+            disabled={carregando}
+          >
+            <TestTube size={16} />
+            {carregando && modo === "recuperacao"
+              ? "Avaliando..."
+              : "Avaliar Recuperação"}
+          </button>
+          <button
+            className="btn-secondary"
+            onClick={() => executarAvaliacao("completa")}
+            disabled={carregando}
+            title="Requer Ollama ativo e pode levar alguns minutos"
+          >
+            <Brain size={16} />
+            {carregando && modo === "completa"
+              ? "Avaliando..."
+              : "Avaliação Completa"}
+          </button>
+        </div>
+        <div className="alert alert-warning" style={{ marginTop: "0.75rem" }}>
+          <Info size={16} />
+          A avaliação completa usa o Mistral via Ollama e percorre todo o dataset.
+        </div>
 
         {erro && <div className="alert alert-error" style={{ marginTop: "0.75rem" }}>{erro}</div>}
 
         {resultado && (
           <div className="resultado-avaliacao">
             <div className="alert alert-success">
-              <CheckCircle size={16} /> Avaliação concluída!
+              <CheckCircle size={16} />
+              Avaliação concluída: {resultado.total_casos_testados || 0} casos testados.
             </div>
 
             <GaugeBarra
               label="Taxa de Recuperação (%)"
               valor={resultado.taxa_recuperacao_pct || 0}
             />
+            {resultado.media_cobertura_keywords_pct !== undefined && (
+              <GaugeBarra
+                label="Cobertura Média de Keywords (%)"
+                valor={resultado.media_cobertura_keywords_pct || 0}
+              />
+            )}
 
             <div className="metricas-row">
               <div className="metrica-card">
@@ -172,8 +210,14 @@ export default function Avaliacao() {
                 <span className="metrica-label">Chunks Indexados</span>
               </div>
               <div className="metrica-card metrica-destaque">
-                <span className="metrica-valor">{resultado.casos_sem_contexto || 0}</span>
-                <span className="metrica-label">Casos sem Contexto</span>
+                <span className="metrica-valor">
+                  {resultado.casos_sem_contexto ?? resultado.casos_com_falha ?? 0}
+                </span>
+                <span className="metrica-label">
+                  {resultado.casos_com_falha !== undefined
+                    ? "Casos com Falha"
+                    : "Casos sem Contexto"}
+                </span>
               </div>
             </div>
 
@@ -203,12 +247,22 @@ export default function Avaliacao() {
                 <div className="resultados-lista">
                   {resultado.resultados.map((r) => (
                     <div key={r.id} className="resultado-item">
-                      <span className={`resultado-status ${r.contexto_encontrado ? "ok" : "fail"}`}>
-                        {r.contexto_encontrado ? <CheckCircle size={14} /> : <XCircle size={14} />}
+                      <span
+                        className={`resultado-status ${
+                          contextoEncontrado(r) ? "ok" : "fail"
+                        }`}
+                      >
+                        {contextoEncontrado(r) ? (
+                          <CheckCircle size={14} />
+                        ) : (
+                          <XCircle size={14} />
+                        )}
                       </span>
                       <span className="resultado-pergunta">{r.pergunta}</span>
                       <span className="resultado-score">
                         Score: {r.score_medio_contexto.toFixed(4)} | Chunks: {r.chunks_recuperados}
+                        {r.cobertura_keywords_pct !== undefined &&
+                          ` | Keywords: ${r.cobertura_keywords_pct.toFixed(1)}%`}
                       </span>
                     </div>
                   ))}

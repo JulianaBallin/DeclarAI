@@ -351,7 +351,7 @@ Pontos-chave:
 6. Mostrar extração, classificação, titularidade e justificativa.
 7. Salvar o documento após revisão.
 8. Abrir histórico e mostrar resumo anual.
-9. Executar avaliação de recuperação ao vivo.
+9. Executar avaliação de recuperação ao vivo e mostrar a opção de avaliação completa.
 10. Abrir Swagger em `http://localhost:8000/docs`.
 
 ## Encerramento

@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   Building2,
+  X,
   FileText,
   GraduationCap,
   HeartHandshake,
@@ -52,7 +53,7 @@ export default function Historico() {
   const [resumo, setResumo] = useState(null);
   const [anoResumo, setAnoResumo] = useState(new Date().getFullYear());
 
-  async function carregar() {
+  const carregar = useCallback(async () => {
     setCarregando(true);
     try {
       const params = { limite: 200 };
@@ -64,24 +65,24 @@ export default function Historico() {
     } finally {
       setCarregando(false);
     }
-  }
+  }, [filtroCategoria]);
 
-  async function carregarResumo() {
+  const carregarResumo = useCallback(async () => {
     try {
       const dados = await obterResumoAnual(anoResumo);
       setResumo(dados);
     } catch (err) {
       setMensagem({ tipo: "error", texto: `Erro no resumo: ${err.message}` });
     }
-  }
+  }, [anoResumo]);
 
   useEffect(() => {
     carregar();
-  }, [filtroCategoria]);
+  }, [carregar]);
 
   useEffect(() => {
     carregarResumo();
-  }, [anoResumo]);
+  }, [carregarResumo]);
 
   async function excluir(id, nome) {
     if (!confirm(`Excluir "${nome}"?`)) return;
@@ -126,8 +127,13 @@ export default function Historico() {
       {mensagem && (
         <div className={`alert alert-${mensagem.tipo}`}>
           {mensagem.texto}
-          <button className="alert-close" onClick={() => setMensagem(null)} aria-label="Fechar alerta">
-            x
+          <button
+            className="alert-close"
+            onClick={() => setMensagem(null)}
+            aria-label="Fechar alerta"
+            title="Fechar alerta"
+          >
+            <X size={14} />
           </button>
         </div>
       )}

@@ -96,6 +96,16 @@ export async function avaliarRecuperacao() {
   return response.data;
 }
 
+export async function avaliarCompleta() {
+  const response = await api.post("/evaluation/completa", {}, { timeout: 900000 });
+  return response.data;
+}
+
+export async function listarCasosTeste() {
+  const response = await api.get("/evaluation/casos-teste");
+  return response.data;
+}
+
 export async function obterResumoCategorias() {
   const response = await api.get("/documents/categorias");
   return response.data;

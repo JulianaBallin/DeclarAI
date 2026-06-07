@@ -285,6 +285,7 @@ class ServicoAvaliacao:
             "taxa_recuperacao_pct": round(com_contexto / total * 100, 1),
             "score_medio_contexto": round(media_score, 4),
             "media_cobertura_keywords_pct": round(media_cobertura, 1),
+            "chunks_indexados": self.banco_vetorial.total_chunks(),
             "casos_com_falha": len(casos_falha),
             "analise_falhas": [
                 {

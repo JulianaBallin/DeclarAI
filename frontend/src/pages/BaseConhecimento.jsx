@@ -3,6 +3,7 @@ import {
   AlertCircle,
   BookOpen,
   CheckCircle,
+  X,
   FileCode2,
   FileText,
   FileType,
@@ -34,6 +35,7 @@ export default function BaseConhecimento() {
   const [chunkSize, setChunkSize] = useState(600);
   const [chunkOverlap, setChunkOverlap] = useState(80);
   const [reindexando, setReindexando] = useState(false);
+  const chunkInvalido = Number(chunkOverlap) >= Number(chunkSize);
 
   async function carregar() {
     setCarregando(true);
@@ -81,6 +83,14 @@ export default function BaseConhecimento() {
   }
 
   async function reindexar() {
+    if (chunkInvalido) {
+      setMensagem({
+        tipo: "error",
+        texto: "A sobreposição precisa ser menor que o tamanho do chunk.",
+      });
+      return;
+    }
+
     setReindexando(true);
     try {
       const resultado = await reindexarBase({
@@ -117,8 +127,13 @@ export default function BaseConhecimento() {
         <div className={`alert alert-${mensagem.tipo}`}>
           {mensagem.tipo === "success" ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
           {mensagem.texto}
-          <button className="alert-close" onClick={() => setMensagem(null)} aria-label="Fechar alerta">
-            x
+          <button
+            className="alert-close"
+            onClick={() => setMensagem(null)}
+            aria-label="Fechar alerta"
+            title="Fechar alerta"
+          >
+            <X size={14} />
           </button>
         </div>
       )}
@@ -183,12 +198,22 @@ export default function BaseConhecimento() {
           <button
             className="btn-secondary"
             onClick={reindexar}
-            disabled={reindexando}
+            disabled={reindexando || chunkInvalido}
+            title={
+              chunkInvalido
+                ? "A sobreposição precisa ser menor que o tamanho"
+                : "Re-indexar base"
+            }
           >
             <RefreshCw size={14} />
             {reindexando ? "Re-indexando..." : "Re-indexar"}
           </button>
         </div>
+        {chunkInvalido && (
+          <p className="upload-hint erro-texto">
+            Ajuste a sobreposição para um valor menor que o tamanho do chunk.
+          </p>
+        )}
       </div>
 
       <div className="card">

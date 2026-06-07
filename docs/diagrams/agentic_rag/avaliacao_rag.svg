@@ -27,7 +27,7 @@
   <line x1="50" y1="40" x2="850" y2="40" stroke="#FF6B35" stroke-width="0.8" opacity="0.4"/>
 
   <!-- Subtitle -->
-  <text x="450" y="58" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="10.5" fill="#64748B">8 casos de teste cobrindo: Obrigatoriedade • Deduções Médicas • Educação • Previdência • Penalidades • Autônomos • Dependentes</text>
+  <text x="450" y="58" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="10.5" fill="#64748B">60 perguntas anotadas cobrindo: Obrigatoriedade • Deduções Médicas • Educação • Previdência • Penalidades • Autônomos • Dependentes</text>
 
   <!-- ===== METRIC 1: TAXA DE RECUPERAÇÃO ===== -->
   <rect x="40" y="72" width="810" height="68" rx="8" fill="#FFFFFF" stroke="#15803D" stroke-width="1.6"/>
@@ -42,7 +42,7 @@
   <rect x="290" y="82" width="440" height="22" rx="4" fill="url(#barGreen)" opacity="0.85"/>
   <!-- Value label -->
   <text x="742" y="98" font-family="'Segoe UI',Arial,sans-serif" font-size="13" font-weight="700" fill="#15803D">100%</text>
-  <text x="742" y="124" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#64748B">8/8 casos</text>
+  <text x="742" y="124" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#64748B">60/60 perguntas</text>
   <!-- Stars -->
   <text x="820" y="103" font-size="18">🟢</text>
 
@@ -93,7 +93,7 @@
 
   <!-- ===== ANÁLISE DE CASOS ===== -->
   <rect x="40" y="326" width="810" height="114" rx="8" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="1.2"/>
-  <text x="62" y="348" font-family="'Segoe UI',Arial,sans-serif" font-size="11" font-weight="700" fill="#172033">Casos de Teste (8 perguntas)</text>
+  <text x="62" y="348" font-family="'Segoe UI',Arial,sans-serif" font-size="11" font-weight="700" fill="#172033">Dataset de Teste (60 perguntas)</text>
   <line x1="60" y1="354" x2="828" y2="354" stroke="#E2E8F0" stroke-width="0.8"/>
 
   <!-- Case rows -->
@@ -124,5 +124,5 @@
 
   <!-- Footer note -->
   <rect x="40" y="450" width="810" height="18" rx="4" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="0.8"/>
-  <text x="450" y="463" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#64748B">Avaliação executada via POST /evaluation/recuperacao (sem LLM) e POST /evaluation/completa (com LLM) - endpoint disponível na interface</text>
+  <text x="450" y="463" text-anchor="middle" font-family="'Segoe UI',Arial,sans-serif" font-size="9" fill="#64748B">Avaliação executada via POST /evaluation/recuperacao (sem LLM) e POST /evaluation/completa (com LLM) - ambos disponíveis na interface</text>
 </svg>

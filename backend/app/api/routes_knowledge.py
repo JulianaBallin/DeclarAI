@@ -11,11 +11,10 @@ from pathlib import Path
 
 from app.core.config import configuracoes
 from app.rag.chunker import ChunkerTexto
-from app.services.rag_service import get_servico_rag
+from app.schemas.document import RequisicaoReindexacao
 from app.utils.filenames import nome_arquivo_seguro
 from fastapi import APIRouter, File, HTTPException, UploadFile
 from fastapi.responses import FileResponse
-from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
@@ -24,10 +23,10 @@ roteador = APIRouter()
 EXTENSOES_PERMITIDAS = {".pdf", ".txt", ".html", ".htm"}
 
 
-class RequisicaoReindexacao(BaseModel):
-    tipo: str = Field(default="fixo", pattern="^(fixo|sentenca|semantico)$")
-    chunk_size: int | None = Field(default=None, ge=50, le=4000)
-    chunk_overlap: int | None = Field(default=None, ge=0, le=1000)
+def _obter_servico_rag():
+    from app.services.rag_service import get_servico_rag
+
+    return get_servico_rag()
 
 
 @roteador.get(
@@ -56,7 +55,7 @@ async def listar_arquivos_base():
             )
 
     try:
-        servico = get_servico_rag()
+        servico = _obter_servico_rag()
         chunks_total = servico.banco_vetorial.total_chunks()
     except Exception:
         chunks_total = 0
@@ -95,7 +94,7 @@ async def reindexar_base(requisicao: RequisicaoReindexacao):
             tamanho_chunk = tamanho_chunk or 800
             overlap = overlap if overlap is not None else 120
 
-        servico = get_servico_rag()
+        servico = _obter_servico_rag()
         servico.banco_vetorial.limpar()
         servico.chunker = ChunkerTexto(
             tamanho_chunk=tamanho_chunk,
@@ -169,7 +168,7 @@ async def adicionar_a_base(arquivo: UploadFile = File(...)):
     # Re-indexa toda a base para incluir o novo documento
     # IMPORTANTE: limpar antes de re-indexar evita duplicação de chunks no ChromaDB
     try:
-        servico = get_servico_rag()
+        servico = _obter_servico_rag()
         servico.banco_vetorial.limpar()
         total_chunks = servico.ingerir_base_conhecimento()
         logger.info(
@@ -248,7 +247,7 @@ async def remover_arquivo_base(nome_arquivo: str):
     logger.info(f"Arquivo removido da base de conhecimento: {nome_arquivo}")
 
     try:
-        servico = get_servico_rag()
+        servico = _obter_servico_rag()
         # Limpa o ChromaDB e re-indexa apenas os arquivos restantes
         servico.banco_vetorial.limpar()
         total_chunks = servico.ingerir_base_conhecimento()

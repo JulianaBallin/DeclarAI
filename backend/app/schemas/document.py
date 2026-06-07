@@ -5,7 +5,7 @@ Schemas Pydantic para validação e serialização de dados da API.
 from datetime import datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 # ---------------------------------------------------------------------------
 # Schemas de Documento
@@ -151,6 +151,27 @@ class ResumoAnual(BaseModel):
     ano: int
     total_documentos: int
     categorias: dict
+
+
+# ---------------------------------------------------------------------------
+# Schemas da Base de Conhecimento
+# ---------------------------------------------------------------------------
+
+
+class RequisicaoReindexacao(BaseModel):
+    """Configuração de chunking para re-indexar a base de conhecimento."""
+
+    tipo: str = Field(default="fixo", pattern="^(fixo|sentenca|semantico)$")
+    chunk_size: int | None = Field(default=None, ge=50, le=4000)
+    chunk_overlap: int | None = Field(default=None, ge=0, le=1000)
+
+    @model_validator(mode="after")
+    def validar_overlap_menor_que_chunk(self) -> "RequisicaoReindexacao":
+        tamanho = self.chunk_size
+        sobreposicao = self.chunk_overlap
+        if tamanho is not None and sobreposicao is not None and sobreposicao >= tamanho:
+            raise ValueError("chunk_overlap deve ser menor que chunk_size.")
+        return self
 
 
 # ---------------------------------------------------------------------------

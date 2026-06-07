@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { RefreshCw, CheckCircle, XCircle, Activity } from "lucide-react";
 import { obterStatus } from "../services/api";
 
+const API_BASE = import.meta.env.VITE_API_URL || "/api";
+const DOCS_URL = API_BASE === "/api" ? "/api/docs" : `${API_BASE}/docs`;
+
 export default function Status() {
   const [status, setStatus] = useState(null);
   const [carregando, setCarregando] = useState(false);
@@ -98,12 +101,12 @@ export default function Status() {
         <div className="info-list">
           <div className="info-row">
             <span>API URL</span>
-            <code>{import.meta.env.VITE_API_URL || "http://localhost:8000"}</code>
+            <code>{API_BASE}</code>
           </div>
           <div className="info-row">
             <span>Documentação da API</span>
             <a
-              href={`${import.meta.env.VITE_API_URL || "http://localhost:8000"}/docs`}
+              href={DOCS_URL}
               target="_blank"
               rel="noopener noreferrer"
             >

@@ -2,11 +2,14 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+from pydantic import ValidationError
 
 RAIZ = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(RAIZ / "backend"))
 
 from app.rag.chunker import ChunkerTexto
+from app.schemas.document import RequisicaoReindexacao
 from app.utils.filenames import nome_arquivo_seguro
 
 
@@ -36,6 +39,20 @@ def test_dataset_de_avaliacao_tem_60_perguntas_anotadas():
     assert all(pergunta["pergunta"].strip() for pergunta in perguntas)
     assert all(pergunta.get("keywords") for pergunta in perguntas)
     assert all(pergunta.get("resposta_referencia") for pergunta in perguntas)
+    assert len({pergunta["categoria"] for pergunta in perguntas}) == 12
+
+
+def test_reindexacao_rejeita_sobreposicao_maior_ou_igual_ao_chunk():
+    with pytest.raises(ValidationError):
+        RequisicaoReindexacao(tipo="fixo", chunk_size=100, chunk_overlap=100)
+
+    requisicao = RequisicaoReindexacao(
+        tipo="fixo",
+        chunk_size=100,
+        chunk_overlap=20,
+    )
+    assert requisicao.chunk_size == 100
+    assert requisicao.chunk_overlap == 20
 
 
 def test_arquivos_internos_estao_protegidos_no_gitignore():

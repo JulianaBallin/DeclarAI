@@ -72,7 +72,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 .alert-success  { background: var(--success-bg); color: #1b5e20; border-color: var(--success); }
 .alert-error    { background: var(--error-bg);   color: #7b0000; border-color: var(--error); }
 .alert-warning  { background: var(--warning-bg); color: #3e3000; border-color: var(--warning); }
-.alert-close { margin-left: auto; background: none; border: none; cursor: pointer; font-size: 1rem; line-height: 1; opacity: 0.6; }
+.alert-close { margin-left: auto; background: none; border: none; cursor: pointer; opacity: 0.6; color: inherit; display: inline-flex; align-items: center; justify-content: center; padding: 0.1rem; }
 
 /* CHAT */
 .page-chat { display: flex; flex-direction: column; height: calc(100vh - var(--navbar-h)); }
@@ -124,6 +124,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text); line
 /* BASE DE CONHECIMENTO */
 .upload-row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
 .upload-hint { font-size: 0.82rem; color: var(--text-muted); margin-top: 6px; }
+.erro-texto { color: var(--error); }
 .file-row { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
 .file-row:last-child { border-bottom: none; }
 .file-icon { display: inline-flex; color: var(--primary); }

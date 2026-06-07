@@ -131,7 +131,7 @@ O público-alvo são contribuintes pessoas físicas com perfil simples ou interm
 \toprule
 \textbf{Camada} & \textbf{Responsabilidade} \\
 \midrule
-Frontend React & Interface de chat, upload, base de conhecimento, histórico, avaliação e status. \\
+Frontend React & Interface de chat, upload, base de conhecimento, histórico, avaliação de recuperação, avaliação completa e status. \\
 FastAPI & Endpoints REST, validações, orquestração de serviços e documentação Swagger. \\
 Pipeline RAG & Ingestão, chunking, embeddings, recuperação, re-ranking e geração. \\
 Ollama & Execução local do LLM aberto usado em geração e classificação. \\
@@ -219,7 +219,7 @@ O frontend foi desenvolvido em React + Vite. A interface possui páginas de uso 
   \item Upload de documentos com perfil do declarante, verificação de titularidade e revisão antes de salvar;
   \item Base de conhecimento para adicionar, remover e re-indexar fontes;
   \item Histórico de documentos salvos, com resumo anual e economia estimada;
-  \item Avaliação do pipeline;
+  \item Avaliação do pipeline, com modo de recuperação e modo completo com LLM;
   \item Status do sistema, incluindo Ollama, modelos e chunks indexados.
 \end{itemize}
 
@@ -244,7 +244,7 @@ docs/diagrams/agentic\_rag/ferramentas\_agente.svg & Ferramentas disponíveis ao
 
 \section{Avaliação e Comparações}
 
-O dataset \texttt{data/eval/perguntas.json} possui 60 perguntas anotadas com resposta de referência, palavras-chave e nível de dificuldade distribuídos em seis categorias fiscais: obrigatoriedade, deduções médicas, educação, previdência privada, penalidades e modalidades de declaração.
+O dataset \texttt{data/eval/perguntas.json} possui 60 perguntas anotadas com resposta de referência, palavras-chave e nível de dificuldade distribuídos em 12 categorias fiscais: obrigatoriedade, deduções médicas, educação, previdência privada, rendimentos, prazos, penalidades, autônomos, dependentes, aluguéis, doações e documentos fiscais.
 
 \subsection{Métricas implementadas}
 
@@ -308,7 +308,7 @@ Frontend React & Concluída & Interface profissional com chat, upload, históric
 Dataset de avaliação & Concluída & 60 perguntas anotadas com keywords, resposta e dificuldade. \\
 Comparação de modelos & Concluída & Scripts salvam resultados em CSV para análise comparativa. \\
 Relatório LaTeX & Concluída & Documentação técnica com tabelas de avaliação. \\
-Validação técnica & Concluída & \texttt{make check}, testes de smoke e build do frontend executados. \\
+Validação técnica & Concluída & Testes de smoke, build do frontend e validações de interface executados. \\
 Busca híbrida & Futuro & BM25 + vetorial + fusão de rankings (RRF). \\
 Notebooks analíticos & Futuro & Visualizações para artigo e apresentação. \\
 \bottomrule

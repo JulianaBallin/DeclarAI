@@ -3,7 +3,7 @@
 # Multi-stage: Node.js (build) + Nginx (serve)
 # ============================================================
 
-# Estagio 1: build do React
+# Estágio 1: build do React
 FROM node:18-alpine AS builder
 
 WORKDIR /app
@@ -20,7 +20,7 @@ ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
 
 # ============================================================
-# Estagio 2: servidor Nginx para os arquivos estaticos
+# Estágio 2: servidor Nginx para os arquivos estáticos
 # ============================================================
 FROM nginx:1.27-alpine
 
@@ -29,7 +29,7 @@ LABEL description="Frontend React do DeclaraAI"
 # Config Nginx com suporte a SPA (react-router)
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copia o build gerado no estagio anterior
+# Copia o build gerado no estágio anterior
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80

@@ -185,6 +185,8 @@ make test            # executa testes Python
 | `POST` | `/knowledge/reindex` | Re-indexa a base com configuração de chunking |
 | `POST` | `/evaluation/recuperacao` | Avalia recuperação no dataset anotado |
 | `POST` | `/evaluation/recuperacao-pergunta` | Avalia uma pergunta isolada |
+| `POST` | `/evaluation/completa` | Avalia recuperação e geração com LLM local |
+| `GET` | `/evaluation/casos-teste` | Lista as perguntas anotadas da avaliação |
 
 Exemplo:
 
