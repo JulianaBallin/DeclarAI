@@ -169,22 +169,22 @@ Use um diagrama por camadas e destaque a execução local:
 
 **Por que apenas modelos locais (sem APIs de nuvem)?**
 
-Documentos fiscais contem dados altamente sensiveis: CPF, renda anual, informacoes de saude, dependentes, valores de patrimonio. O envio desses dados para APIs externas (OpenAI, Gemini, Claude) representaria:
+Documentos fiscais contêm dados altamente sensíveis: CPF, renda anual, informações de saúde, dependentes, valores de patrimônio. O envio desses dados para APIs externas (OpenAI, Gemini, Claude) representaria:
 
-- Risco de violacao da LGPD (Lei Geral de Protecao de Dados);
-- Dependencia de internet e disponibilidade de servico externo;
-- Custo recorrente por token, inviavel para projeto academico;
-- Perda de controle sobre como os dados sao usados e armazenados.
+- Risco de violação da LGPD (Lei Geral de Proteção de Dados);
+- Dependência de internet e disponibilidade de serviço externo;
+- Custo recorrente por token, inviável para projeto acadêmico;
+- Perda de controle sobre como os dados são usados e armazenados.
 
-A execucao local via Ollama resolve todos esses pontos: os dados nunca saem do ambiente do usuario.
+A execução local via Ollama resolve todos esses pontos: os dados nunca saem do ambiente do usuário.
 
 **Justificativa de cada modelo escolhido:**
 
 | Modelo | Papel | Justificativa |
 |---|---|---|
-| Mistral (Ollama) | Geracao e classificacao | Licenca aberta, melhor cobertura no dominio fiscal (72,4%), bom suporte a PT-BR |
-| MiniLM-L12-v2 (multilingual) | Embeddings | Leve, multilingue (suporta PT-BR), 384 dimensoes, compativel com CPU |
-| CrossEncoder mmarco multilingual | Re-ranking | Re-ranqueamento multilingue, melhora qualidade em perguntas com negacoes fiscais |
+| Mistral (Ollama) | Geração e classificação | Licença aberta, melhor cobertura no domínio fiscal (72,4%), bom suporte ao PT-BR |
+| MiniLM-L12-v2 (multilingual) | Embeddings | Leve, multilíngue (suporta PT-BR), 384 dimensões, compatível com CPU |
+| CrossEncoder mmarco multilingual | Re-ranking | Re-ranqueamento multilíngue, melhora qualidade em perguntas com negações fiscais |
 
 **Diagramas disponíveis:**
 
@@ -279,22 +279,22 @@ Categorias reconhecidas:
 - `doacoes`
 - `outros_nao_dedutivel`
 
-**Por que usar LLM para classificacao?**
+**Por que usar LLM para classificação?**
 
-A classificacao por palavras-chave fixas falha em documentos com linguagem informal, abreviacoes medicas ou termos regionais. O LLM interpreta o contexto completo do documento, reduzindo falsos negativos e permitindo identificar categorias ambiguas. O fallback por regras garante seguranca quando o Ollama nao esta disponivel.
+A classificação por palavras-chave fixas falha em documentos com linguagem informal, abreviações médicas ou termos regionais. O LLM interpreta o contexto completo do documento, reduzindo falsos negativos e permitindo identificar categorias ambíguas. O fallback por regras garante segurança quando o Ollama não está disponível.
 
-**Como o Mistral foi selecionado para classificacao?**
+**Como o Mistral foi selecionado para classificação?**
 
-Foram avaliados quatro modelos locais via Ollama no dataset de 60 perguntas do dominio IRPF:
+Foram avaliados quatro modelos locais via Ollama no dataset de 60 perguntas do domínio IRPF:
 
-| Modelo | Cobertura (%) | Latencia (s) |
+| Modelo | Cobertura (%) | Latência (s) |
 |---|---|---|
 | Mistral + RAG | 72,4 | 8,2 |
 | Phi-4 Mini + RAG | 68,3 | 7,0 |
 | Llama 3.2:3b + RAG | 65,8 | 6,4 |
 | Gemma 3:4b + RAG | 61,2 | 6,9 |
 
-O Mistral foi escolhido por apresentar a maior cobertura de palavras-chave esperadas (72,4%) e bom suporte ao portugues brasileiro, com custo computacional compativel com CPUs comuns. Os demais modelos foram descartados por cobertura inferior no dominio fiscal.
+O Mistral foi escolhido por apresentar a maior cobertura de palavras-chave esperadas (72,4%) e bom suporte ao português brasileiro, com custo computacional compatível com CPUs comuns. Os demais modelos foram descartados por cobertura inferior no domínio fiscal.
 
 **Diagrama:** `diagrams/agentic_rag/classificacao_llm_first.svg`
 
@@ -384,19 +384,19 @@ A base pode ser ampliada pela interface, e a re-indexação aceita diferentes co
 
 **Por que chunk_size=600 e overlap=80?**
 
-Foram desenhadas e testadas 7 configuracoes via `scripts/avaliar_chunking.py`, avaliadas no dataset de perguntas do dominio IRPF:
+Foram desenhadas e testadas 7 configurações via `scripts/avaliar_chunking.py`, avaliadas no dataset de perguntas do domínio IRPF:
 
-| Configuracao | chunk_size | overlap | Observacao |
+| Configuração | chunk_size | overlap | Observação |
 |---|---|---|---|
 | fixo_200_0 | 200 | 0 | Trechos curtos, perda de contexto fiscal |
-| fixo_400_40 | 400 | 40 | Equilibrio fraco, sobreposicao insuficiente |
-| **fixo_600_80** | **600** | **80** | **Melhor equilibrio contexto x precisao** |
-| fixo_800_120 | 800 | 120 | Contexto rico, mas maior ruido semantico |
+| fixo_400_40 | 400 | 40 | Equilíbrio fraco, sobreposição insuficiente |
+| **fixo_600_80** | **600** | **80** | **Melhor equilíbrio contexto x precisão** |
+| fixo_800_120 | 800 | 120 | Contexto rico, mas maior ruído semântico |
 | fixo_1000_200 | 1000 | 200 | Trechos longos demais para o modelo de embedding |
-| sentenca | variavel | 0 | Fragmentos irregulares em documentos fiscais |
-| semantico | variavel | variavel | Experimental, sem vantagem clara no dominio |
+| sentenca | variável | 0 | Fragmentos irregulares em documentos fiscais |
+| semantico | variável | variável | Experimental, sem vantagem clara no domínio |
 
-A configuracao 600/80 foi selecionada por preservar regras fiscais completas (paragrafos com limites e excecoes) sem gerar trechos longos demais que diluem a similaridade semantica.
+A configuração 600/80 foi selecionada por preservar regras fiscais completas (parágrafos com limites e exceções) sem gerar trechos longos demais que diluem a similaridade semântica.
 
 **Diagramas disponíveis:**
 
