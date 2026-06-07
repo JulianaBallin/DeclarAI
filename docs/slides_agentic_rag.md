@@ -1,6 +1,36 @@
-# Prompt para Notebook LLM - Slides DeclaraAI: Agentic RAG
+# Prompt para NotebookLM - Slides DeclaraAI: Agentic RAG
 
 Use este conteúdo como prompt para gerar uma apresentação profissional sobre o DeclaraAI. A apresentação deve priorizar as melhorias implementadas desde a última entrega na branch `main`, destacando a evolução atual da branch `develop`.
+
+Este PDF deve ser usado como briefing único para o NotebookLM. Ele contém contexto, problema, solução, roteiro de slides, padrão visual, diagramas existentes e regras de composição. Gere uma apresentação 16:9, profissional, clara, em português brasileiro e pronta para demonstração acadêmica.
+
+## Objetivo do Slide Deck
+
+Criar uma apresentação sobre o DeclaraAI, um Micro SaaS acadêmico com Agentic RAG para apoiar a organização de documentos e dúvidas sobre a declaração do Imposto de Renda Pessoa Física no Brasil.
+
+A apresentação deve convencer a banca de que o projeto atende aos requisitos da atividade, com foco em:
+
+- problema real e domínio claramente delimitado;
+- base de conhecimento própria;
+- pipeline RAG com ingestão, chunking, embeddings, recuperação e re-ranking;
+- comportamento Agentic RAG com ferramentas;
+- LLM aberto via Ollama;
+- interface web utilizável;
+- avaliação quantitativa com dataset anotado;
+- documentação, diagramas e demonstração ao vivo.
+
+## Regras de Geração da Apresentação
+
+- Gerar exatamente 16 slides.
+- Usar formato widescreen 16:9.
+- Usar português brasileiro com acentuação correta.
+- Não criar informações, métricas, autores, endpoints ou tecnologias que não estejam neste PDF.
+- Não usar conteúdo genérico de imposto de renda fora do contexto do projeto.
+- Não transformar o DeclaraAI em produto comercial real. Tratar como Micro SaaS acadêmico.
+- Não dizer que o sistema substitui contador. Sempre posicionar como apoio informativo.
+- Evitar blocos longos de texto. Preferir frases curtas, tabelas pequenas, diagramas e bullets objetivos.
+- Cada slide deve ter título forte, mensagem principal e visual associado quando houver diagrama indicado.
+- Não usar travessão. Use hífen simples quando precisar separar ideias.
 
 ## Direção Visual
 
@@ -11,6 +41,44 @@ Use este conteúdo como prompt para gerar uma apresentação profissional sobre 
 - Usar verde-teal `#0F766E` apenas como cor de apoio para métricas e barras.
 - Evitar fundo escuro, gradientes pesados, blocos poluídos e setas sobrepostas.
 - Preferir diagramas simples, com muito respiro, cartões claros e tipografia sem serifa.
+- Usar cartões apenas para informações comparáveis, métricas, etapas e componentes.
+- Manter margens generosas e alinhamento consistente.
+- Usar no máximo 5 bullets por slide.
+- Quando houver diagrama, ele deve ser o elemento visual principal.
+- Não colocar texto sobre diagramas de forma que prejudique leitura.
+
+## Padrão de Títulos, Rodapé e Layout
+
+- Título de slide: topo esquerdo, cor `#F97316`, peso alto.
+- Subtítulo ou frase guia: abaixo do título, cor `#172033`.
+- Rodapé em todos os slides, exceto se a capa ficar visualmente melhor sem rodapé.
+- Rodapé sugerido: `DeclaraAI | UEA | Oficina e Desenvolvimento de Sistemas I | Junho de 2026`.
+- Numeração discreta no canto inferior direito, formato `01/16`, `02/16` e assim por diante.
+- Usar logotipo pequeno do DeclaraAI no rodapé ou no canto superior direito.
+- Capa: criar composição nova, limpa e institucional. Não usar `diagrams/cover_slide.svg` como layout principal.
+- Capa deve usar o nome `DeclaraAI` como elemento mais forte da primeira tela.
+- A capa deve mostrar equipe, disciplina, instituição e data sem parecer pôster poluído.
+
+## Banco Visual Disponível
+
+Use os arquivos abaixo como referência visual. Ao montar os slides, incorpore os diagramas indicados nas seções de cada slide.
+
+| Arquivo | Uso recomendado |
+|---|---|
+| `diagrams/logo.svg` | marca horizontal do DeclaraAI |
+| `diagrams/logo_icon.svg` | ícone pequeno para rodapé, capa ou detalhes |
+| `diagrams/agentic_rag/c4_contexto.svg` | arquitetura em nível de contexto |
+| `diagrams/agentic_rag/c4_containers.svg` | arquitetura de contêineres |
+| `diagrams/agentic_rag/fluxo_agentico.svg` | decisão do agente por tipo de entrada |
+| `diagrams/agentic_rag/ferramentas_agente.svg` | ferramentas do agente |
+| `diagrams/agentic_rag/recuperacao_reranking.svg` | recuperação e re-ranking |
+| `diagrams/agentic_rag/classificacao_llm_first.svg` | classificação LLM-first |
+| `diagrams/agentic_rag/titularidade_justificativa.svg` | titularidade e justificativa |
+| `diagrams/agentic_rag/pipeline_rag.svg` | pipeline RAG completo |
+| `diagrams/agentic_rag/indexacao_e_ingestao.svg` | ingestão e pré-processamento |
+| `diagrams/chunking_estrategia.svg` | estratégia de chunking |
+| `diagrams/agentic_rag/avaliacao_rag.svg` | métricas de avaliação |
+| `diagrams/cover_slide.svg` | capa antiga, usar apenas como referência de paleta se necessário |
 
 ## Contexto do Projeto
 
@@ -26,6 +94,37 @@ Use este conteúdo como prompt para gerar uma apresentação profissional sobre 
 
 **Repositório:** apresentar a branch `develop`
 
+## Contexto Técnico Sintético
+
+O DeclaraAI possui backend FastAPI, frontend React + Vite, banco SQLite para histórico, ChromaDB para vetores, embeddings com `sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2`, re-ranking com `cross-encoder/mmarco-mMiniLMv2-L12-H384-v1` e LLM aberto `mistral` executado via Ollama.
+
+O fluxo principal é:
+
+```text
+Usuário
+  |
+  + Frontend React
+  |
+  + API FastAPI
+  |
+  + Ferramentas do agente
+      + Chat RAG
+      + Upload fiscal
+      + Classificação LLM-first
+      + Verificação de titularidade
+      + Justificativa RAG
+      + Histórico SQLite
+      + Avaliação do pipeline
+```
+
+## Problema, Solução e Valor
+
+**Problema:** contribuintes leigos têm dificuldade para organizar documentos do IRPF, diferenciar despesas dedutíveis de não dedutíveis, separar titular, dependentes e terceiros, e entender regras fiscais com base em documentos confiáveis.
+
+**Solução:** um assistente local com Agentic RAG que consulta uma base fiscal própria, processa documentos, classifica categorias tributárias, verifica titularidade e gera justificativas fundamentadas.
+
+**Valor:** reduzir erros de organização, melhorar a revisão documental, preservar privacidade e facilitar a demonstração dos critérios técnicos da atividade.
+
 ## Slide 1: Capa
 
 **Título:** DeclaraAI
@@ -34,11 +133,9 @@ Use este conteúdo como prompt para gerar uma apresentação profissional sobre 
 
 **Mensagem principal:** Micro SaaS acadêmico com LLM aberto, execução local, base de conhecimento fiscal e classificação automática de documentos.
 
-**Visual sugerido:** logo DeclaraAI, selo IRPF 2026, nomes dos integrantes e UEA no rodapé.
+**Visual sugerido:** fundo off-white, nome DeclaraAI grande, logo pequeno, selo IRPF 2026 como detalhe visual, nomes dos integrantes e UEA no rodapé.
 
-**Diagrama:** `diagrams/cover_slide.svg`
-
-![Capa](diagrams/cover_slide.svg)
+**Instrução de composição:** criar capa nova, sem reaproveitar a capa antiga. A capa deve parecer acadêmica, limpa e moderna, com foco no nome DeclaraAI.
 
 ## Slide 2: Problema Real
 
@@ -57,7 +154,7 @@ A declaração do IRPF exige que contribuintes organizem recibos, notas fiscais,
 
 **Título:** Arquitetura do DeclaraAI
 
-Use um diagrama por camadas:
+Use um diagrama por camadas e destaque a execução local:
 
 | Camada | Tecnologia | Papel |
 |---|---|---|
@@ -225,8 +322,10 @@ Páginas funcionais:
 - **Upload Fiscal:** drag-and-drop, extração, classificação, titularidade e salvamento revisado.
 - **Base de Conhecimento:** adicionar, remover e re-indexar documentos.
 - **Histórico:** filtros, exclusão, agrupamento por categoria e resumo anual.
-- **Avaliação:** métricas de recuperação e comparação de modelos.
+- **Avaliação:** métricas de recuperação, avaliação completa e comparação de modelos.
 - **Status:** Ollama, modelos, chunks e estado do pipeline.
+
+**Mensagem visual:** mostrar a interface como hub do sistema. Usar cartões ou uma grade de páginas com ícones.
 
 ## Slide 10: Base de Conhecimento
 
@@ -236,6 +335,8 @@ Páginas funcionais:
 |---|---|---|
 | `guia_imposto_renda.txt` | TXT | Regras resumidas de obrigatoriedade, deduções e documentos |
 | `pr-irpf-2024.pdf` | PDF | Perguntas e respostas oficiais da Receita Federal |
+
+Explique que os documentos foram escolhidos por cobrirem dúvidas recorrentes sobre despesas médicas, educação, previdência privada, rendimentos, dependentes, aluguéis, prazos, penalidades e documentos fiscais.
 
 **Pipeline de ingestão:**
 
@@ -273,6 +374,8 @@ Métricas:
 | Score médio de contexto | medir similaridade dos chunks retornados |
 | Cobertura de keywords | medir termos esperados na resposta |
 | Latência por pergunta | medir tempo total do pipeline |
+
+Também existe avaliação completa pela interface, usando `POST /evaluation/completa`, que executa recuperação e geração via LLM local. A avaliação de recuperação usa `POST /evaluation/recuperacao` e não exige Ollama.
 
 **Diagrama:** `diagrams/agentic_rag/avaliacao_rag.svg`
 
@@ -321,6 +424,8 @@ Pontos-chave:
 | Avaliação | dataset, scripts e métricas |
 | Documentação | README, relatório, diagramas e slides |
 
+**Mensagem principal:** o projeto cobre todos os requisitos técnicos obrigatórios e os critérios de documentação, avaliação e demonstração.
+
 ## Slide 15: Limitações e Próximos Passos
 
 **Título:** Limitações conhecidas
@@ -357,3 +462,18 @@ Pontos-chave:
 ## Encerramento
 
 Concluir destacando que o DeclaraAI evoluiu de um RAG básico para um Micro SaaS com comportamento agentic, avaliação quantitativa, interface utilizável, privacidade local e documentação completa.
+
+## Checklist Final para o NotebookLM
+
+Antes de finalizar a apresentação, verificar:
+
+- todos os slides têm título padronizado;
+- todos os slides estão em português brasileiro;
+- a capa usa composição nova e não a capa antiga;
+- o rodapé aparece de forma discreta e consistente;
+- os diagramas estão legíveis e sem sobreposição;
+- as cores seguem a paleta definida;
+- as métricas são exatamente as informadas neste PDF;
+- os endpoints e tecnologias não foram alterados;
+- o sistema é descrito como apoio informativo, não como substituto de contador;
+- a apresentação fecha com roteiro de demonstração ao vivo.
