@@ -32,7 +32,7 @@
 
   <!-- Texto principal: DeclarAI -->
   <text x="94" y="52" font-family="'Segoe UI', Arial, sans-serif" font-size="38" font-weight="800" letter-spacing="-1">
-    <tspan fill="#0F766E">Declara</tspan><tspan fill="#F97316">AI</tspan>
+    <tspan fill="#0F766E">Declar</tspan><tspan fill="#F97316">AI</tspan>
   </text>
 
   <!-- Tagline -->
