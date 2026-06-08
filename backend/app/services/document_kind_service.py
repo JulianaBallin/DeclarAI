@@ -272,6 +272,12 @@ def ajustar_categoria_irpf_por_tipo_documento(
             or _texto_parece_previdencia_pgbl(texto)
         ):
             return "Previdência Privada"
+        if categoria_sugerida == "Recibo Médico" or _texto_parece_saude(texto):
+            return "Recibo Médico"
+        if categoria_sugerida == "Comprovante Educacional" or _texto_parece_educacao(
+            texto
+        ):
+            return "Comprovante Educacional"
         return "Documento Não Classificado"
     if tipo_resumido in ("NFS-e", "NFC-e", "NF-e") or (
         tipo_resumido

@@ -23,6 +23,7 @@ Referência metodológica:
 
 import json
 import logging
+import os
 import re
 from pathlib import Path
 from typing import List
@@ -98,9 +99,29 @@ CASOS_TESTE_PADRAO: List[dict] = [
     },
 ]
 
-CAMINHO_DATASET = (
-    Path(__file__).resolve().parents[3] / "data" / "eval" / "perguntas.json"
-)
+
+def _resolver_caminho_dataset() -> Path:
+    caminho_env = os.getenv("CAMINHO_DATASET_AVALIACAO")
+    candidatos = []
+    if caminho_env:
+        candidatos.append(Path(caminho_env))
+
+    arquivo_atual = Path(__file__).resolve()
+    candidatos.extend(
+        [
+            Path.cwd() / "data" / "eval" / "perguntas.json",
+            arquivo_atual.parents[2] / "data" / "eval" / "perguntas.json",
+            arquivo_atual.parents[3] / "data" / "eval" / "perguntas.json",
+        ]
+    )
+
+    for caminho in candidatos:
+        if caminho.exists():
+            return caminho
+    return candidatos[0] if candidatos else Path("data/eval/perguntas.json")
+
+
+CAMINHO_DATASET = _resolver_caminho_dataset()
 
 
 def carregar_casos_teste() -> List[dict]:
