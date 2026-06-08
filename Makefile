@@ -9,9 +9,9 @@
 
 # Variáveis
 COMPOSE          = docker compose
-CONTAINER_BACK   = declaraai-backend
-CONTAINER_FRONT  = declaraai-frontend
-CONTAINER_OLLAMA = declaraai-ollama
+CONTAINER_BACK   = declarai-backend
+CONTAINER_FRONT  = declarai-frontend
+CONTAINER_OLLAMA = declarai-ollama
 SRC_DIR          = backend/app
 PYTHON           ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 PIP              := $(PYTHON) -m pip
@@ -21,7 +21,7 @@ ISORT            := $(PYTHON) -m isort
 
 # Ajuda
 help: ## Mostra esta mensagem de ajuda
-	@printf "\n\033[1;33mDeclaraAI - Comandos disponíveis\033[0m\n"
+	@printf "\n\033[1;33mDeclarAI - Comandos disponíveis\033[0m\n"
 
 	@printf "\n\033[1;36mCiclo da Stack\033[0m\n"
 	@printf "  make up                - sobe todos os serviços em background\n"

@@ -7,9 +7,8 @@ Este roteiro prepara o ambiente e orienta uma demonstração curta, com duraçã
 Execute estes comandos antes da apresentação. Eles sobem a aplicação completa com Docker.
 
 ```bash
-cd /home/cronos-1226/Documentos/uea/DeclarAI
-git checkout develop
-git pull origin develop
+cd /caminho/do/repositorio
+git pull
 docker compose up -d --build
 docker exec declarai-ollama ollama pull mistral
 ```
@@ -23,7 +22,7 @@ curl -s http://localhost:8000/ | python3 -m json.tool
 curl -s http://localhost:8000/status | python3 -m json.tool
 ```
 
-Observação: se o Docker marcar o front-end como `unhealthy`, mas `curl -s -I http://localhost:3000` retornar `HTTP/1.1 200 OK`, a interface está servindo normalmente. No ambiente testado, o healthcheck interno do Nginx tentou resolver `localhost` por IPv6, mas a página abriu corretamente pela porta publicada no host.
+Se algum serviço aparecer como `unhealthy`, confirme a resposta HTTP pelos comandos acima e consulte os logs com `docker compose logs <serviço>`.
 
 Re-indexe a base de conhecimento antes da demo.
 
@@ -65,7 +64,7 @@ Use esta alternativa apenas se o Docker falhar.
 Terminal 1, back-end:
 
 ```bash
-cd /home/cronos-1226/Documentos/uea/DeclarAI
+cd /caminho/do/repositorio
 source .venv/bin/activate
 pip install -r backend/requirements.txt
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --app-dir backend
@@ -81,7 +80,7 @@ ollama pull mistral
 Terminal 3, front-end:
 
 ```bash
-cd /home/cronos-1226/Documentos/uea/DeclarAI/frontend
+cd /caminho/do/repositorio/frontend
 npm install
 npm run dev -- --host 0.0.0.0
 ```

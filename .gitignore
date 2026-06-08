@@ -1,4 +1,4 @@
-# DeclaraAI - dados de execução (não versionar)
+# DeclarAI - dados de execução (não versionar)
 data/uploads/*
 !data/uploads/.gitkeep
 data/chroma_db/*

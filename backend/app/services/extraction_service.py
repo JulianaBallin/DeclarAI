@@ -946,6 +946,30 @@ class ServicoExtracao:
                     return self._ajustar_caixa_nome_proprio(nome)[:120]
         return None
 
+    def _nome_paciente_saude(self, texto: str) -> Optional[str]:
+        if not re.search(
+            r"(?i)\b(paciente|consulta|m[eé]dic|odont|dentista|cl[ií]nica|hospital)",
+            texto[:20000],
+        ):
+            return None
+        for rx in (
+            r"(?is)paciente\s*[:.]\s*([A-ZÀ-Ü](?:[A-ZÀ-Úa-z\'.-]|\s){2,120}?)(?=\s*(?:\(|\n|CPF\b|$))",
+            r"(?is)nome\s+do\s+paciente\s*[:.]\s*([^\n\r(]{4,120})",
+        ):
+            m = re.search(rx, texto)
+            if m:
+                nome = re.sub(r"\s+", " ", m.group(1).strip().rstrip(":;|"))
+                nome = re.sub(
+                    r"(?i)\s*(cpf|data\s+de\s+nascimento|procedimento).*$",
+                    "",
+                    nome,
+                ).strip()
+                if len(nome) >= 4 and not re.match(
+                    r"^[\d./\s-]+(?!.*[A-Za-zÀ-ü])$", nome
+                ):
+                    return self._ajustar_caixa_nome_proprio(nome)[:120]
+        return None
+
     def _extrair_nome_beneficiario(
         self,
         texto: str,
@@ -979,6 +1003,9 @@ class ServicoExtracao:
             t = self._razao_tomador_nfse(texto)
             if t:
                 return t
+        paciente = self._nome_paciente_saude(texto)
+        if paciente:
+            return paciente
         nb = self._nome_benef_nfe_ou_nfce(texto)
         if nb:
             return nb

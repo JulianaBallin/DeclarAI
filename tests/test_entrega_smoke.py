@@ -10,6 +10,7 @@ sys.path.insert(0, str(RAIZ / "backend"))
 
 from app.rag.chunker import ChunkerTexto
 from app.schemas.document import RequisicaoReindexacao
+from app.services.document_kind_service import ajustar_categoria_irpf_por_tipo_documento
 from app.utils.filenames import nome_arquivo_seguro
 
 
@@ -66,3 +67,29 @@ def test_nome_arquivo_seguro_remove_traversal_e_caracteres_invalidos():
     assert nome_arquivo_seguro("../../Atividade.pdf") == "Atividade.pdf"
     assert nome_arquivo_seguro(r"..\\segredo?.txt") == "segredo_.txt"
     assert nome_arquivo_seguro("\x00  ") == "arquivo"
+
+
+def test_extracao_prioriza_paciente_em_recibo_com_responsavel():
+    pytest.importorskip("pdfplumber")
+    from app.services.extraction_service import ServicoExtracao
+
+    caminho = (
+        RAIZ / "data" / "test_documents" / "simulation" / "05_recibo_dentista_pedro.txt"
+    )
+    dados = ServicoExtracao().processar_arquivo(str(caminho))
+
+    assert dados["nome_beneficiario"] == "Pedro Henrique Rodrigues Nascimento"
+
+
+def test_recibo_odontologico_preserva_categoria_medica():
+    texto = (
+        RAIZ / "data" / "test_documents" / "simulation" / "05_recibo_dentista_pedro.txt"
+    ).read_text(encoding="utf-8")
+
+    categoria = ajustar_categoria_irpf_por_tipo_documento(
+        "Recibo",
+        "Recibo Médico",
+        texto,
+    )
+
+    assert categoria == "Recibo Médico"

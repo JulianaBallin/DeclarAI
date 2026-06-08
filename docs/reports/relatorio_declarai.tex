@@ -91,7 +91,7 @@
     \textbf{Instituição:} & Universidade do Estado do Amazonas \\
     \textbf{Disciplina:} & Oficina e Desenvolvimento de Sistemas I \\
     \textbf{Projeto:} & Micro SaaS com Agentic RAG \\
-    \textbf{Data:} & 4 de junho de 2026 \\
+    \textbf{Data:} & 7 de junho de 2026 \\
     \textbf{Integrantes:} & Juliana Ballin Lima \\
                          & Fernando Luiz Da Silva Freire \\
   \end{tabular}
@@ -109,6 +109,27 @@
 O DeclarAI é um assistente inteligente para apoiar contribuintes brasileiros na organização de documentos e no entendimento de regras da declaração do Imposto de Renda Pessoa Física. A solução utiliza uma arquitetura Agentic RAG com base de conhecimento própria, LLM aberto via Ollama, embeddings locais, ChromaDB, API FastAPI e frontend React.
 
 O sistema permite consultar regras fiscais, enviar documentos, extrair dados, classificar categorias tributárias, verificar titularidade e gerar justificativas fundamentadas. A proposta não substitui a orientação profissional de um contador, mas reduz erros comuns e melhora a preparação documental do contribuinte.
+
+\section{Matriz de Atendimento aos Requisitos}
+
+\begin{longtable}{@{}L{44mm}L{24mm}L{88mm}@{}}
+\toprule
+\textbf{Requisito da atividade} & \textbf{Status} & \textbf{Evidência no projeto} \\
+\midrule
+\endhead
+Problema e domínio & Atendido & O domínio é IRPF para contribuintes pessoas físicas, com foco em organização documental, deduções, titularidade e consulta a regras fiscais. \\
+Base de conhecimento própria & Atendido & A base contém \texttt{guia\_imposto\_renda.txt} e \texttt{pr-irpf-2024.pdf}, ambos justificados por relevância fiscal. \\
+Ingestão e pré-processamento & Atendido & O backend carrega PDF, TXT e HTML, limpa textos, preserva metadados e re-indexa a base pela API. \\
+Chunking ou estruturação & Atendido & O padrão 600/80 foi escolhido após comparação de sete estratégias e está disponível para re-indexação experimental. \\
+Embeddings e recuperação & Atendido & Usa embeddings \texttt{MiniLM} multilíngues, ChromaDB, busca vetorial e re-ranking com CrossEncoder. \\
+Agentic RAG & Atendido & O agente escolhe ferramentas para chat, upload, classificação, titularidade, justificativa, histórico e avaliação. \\
+LLM aberto & Atendido & O Mistral é executado localmente via Ollama, com justificativa de privacidade, custo e suporte a português. \\
+Geração de respostas & Atendido & As respostas usam contexto recuperado, fontes, score médio e regra de indicar insuficiência quando necessário. \\
+Interface ou API & Atendido & O projeto possui frontend React, API FastAPI, Swagger, Docker Compose e comandos locais. \\
+Avaliação da solução & Atendido & Há dataset com 60 perguntas, scripts de avaliação, comparação de modelos, avaliação de recuperação e avaliação completa. \\
+Documentação e apresentação & Atendido & README, relatório, diagramas, roteiro de demonstração e prompt de slides documentam arquitetura, decisões, limites e uso. \\
+\bottomrule
+\end{longtable}
 
 \section{Definição do Problema}
 
@@ -370,6 +391,28 @@ Busca híbrida & Futuro & BM25 + vetorial + fusão de rankings (RRF). \\
 Notebooks analíticos & Futuro & Visualizações para artigo e apresentação. \\
 \bottomrule
 \end{longtable}
+
+\section{Validação Executada}
+
+A validação final combinou testes automatizados, build de interface, checagens Docker e fluxos HTTP dos principais casos de uso.
+
+\begin{center}
+\begin{tabularx}{\textwidth}{@{}L{54mm}L{32mm}Y@{}}
+\toprule
+\textbf{Validação} & \textbf{Resultado} & \textbf{Observação} \\
+\midrule
+\texttt{pytest -v} & Aprovado & 6 testes passaram e 1 teste de extração completa foi pulado na \texttt{venv} leve por ausência de \texttt{pdfplumber}. \\
+\texttt{make check} & Aprovado & \texttt{isort}, \texttt{black} e \texttt{flake8} sem pendências no backend. \\
+\texttt{npm run build} & Aprovado & Build Vite gerado sem erro. \\
+\texttt{npm run lint} & Aprovado & ESLint sem avisos ou erros. \\
+Docker Compose & Aprovado & Backend e frontend saudáveis, Ollama disponível e modelo \texttt{mistral} instalado. \\
+Fluxo de upload & Aprovado & Recibo odontológico de dependente processado com beneficiário correto, categoria \texttt{Recibo Médico} e justificativa enriquecida. \\
+Histórico & Aprovado & Documento salvo, listado no histórico, considerado no resumo anual e removido em seguida no teste. \\
+Chat RAG & Aprovado & Pergunta sobre curso de inglês recuperou 5 trechos e respondeu corretamente que não é dedutível. \\
+Avaliação de recuperação & Aprovado & Execução pela API retornou recuperação em todos os casos testados. \\
+\bottomrule
+\end{tabularx}
+\end{center}
 
 \section{Divisão de Tarefas}
 

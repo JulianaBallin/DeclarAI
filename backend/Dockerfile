@@ -1,13 +1,13 @@
 # ============================================================
-# DeclaraAI - Backend Dockerfile
+# DeclarAI - Backend Dockerfile
 # Python 3.11-slim para imagem menor
 # ============================================================
 
 FROM python:3.11-slim
 
 # Metadados
-LABEL maintainer="DeclaraAI Team"
-LABEL description="Backend FastAPI com pipeline RAG para o DeclaraAI"
+LABEL maintainer="DeclarAI Team"
+LABEL description="Backend FastAPI com pipeline RAG para o DeclarAI"
 
 # Variáveis de ambiente
 ENV PYTHONDONTWRITEBYTECODE=1 \

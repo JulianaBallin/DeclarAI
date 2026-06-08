@@ -1,6 +1,6 @@
 # Prompt para NotebookLM - Slides DeclarAI: Agentic RAG
 
-Use este conteúdo como prompt para gerar uma apresentação profissional sobre o DeclarAI. A apresentação deve priorizar as melhorias implementadas desde a última entrega na branch `main`, destacando a evolução atual da branch `develop`.
+Use este conteúdo como prompt para gerar uma apresentação profissional sobre o DeclarAI. A apresentação deve priorizar as melhorias implementadas desde a versão anterior do projeto, destacando a evolução da versão atual.
 
 Este PDF deve ser usado como briefing único para o NotebookLM. Ele contém contexto, problema, solução, roteiro de slides, padrão visual, diagramas existentes e regras de composição. Gere uma apresentação 16:9, profissional, clara, em português brasileiro e pronta para demonstração acadêmica.
 
@@ -21,7 +21,7 @@ A apresentação deve convencer a banca de que o projeto atende aos requisitos d
 
 ## Regras de Geração da Apresentação
 
-- Gerar exatamente 16 slides.
+- Gerar exatamente 18 slides.
 - Usar formato widescreen 16:9.
 - Usar português brasileiro com acentuação correta.
 - Não criar informações, métricas, autores, endpoints ou tecnologias que não estejam neste PDF.
@@ -50,10 +50,12 @@ A apresentação deve convencer a banca de que o projeto atende aos requisitos d
 ## Padrão de Títulos, Rodapé e Layout
 
 - Título de slide: topo esquerdo, cor `#F97316`, peso alto, fonte de **50px**.
-- Subtítulo ou frase guia: abaixo do título, cor `#172033`, fonte de 22px.
+- Subtítulo ou frase guia: abaixo do título, cor `#172033`, fonte de 27px.
+- Corpo de texto, tabelas e bullets: fonte de 27px.
+- Notas, observações, alertas e textos secundários: fonte de 23px.
 - Rodapé em todos os slides, exceto se a capa ficar visualmente melhor sem rodapé.
 - Rodapé sugerido: `DeclarAI | UEA | Oficina e Desenvolvimento de Sistemas I | Junho de 2026`.
-- Numeração discreta no canto inferior direito, formato `01/16`, `02/16` e assim por diante.
+- Numeração discreta no canto inferior direito, formato `01/18`, `02/18` e assim por diante.
 - Usar logotipo pequeno do DeclarAI no rodapé ou no canto superior direito.
 - Capa: criar composição nova, limpa e institucional. Não usar `diagrams/cover_slide.svg` como layout principal.
 - Capa deve usar o nome `DeclarAI` como elemento mais forte da primeira tela.
@@ -92,7 +94,7 @@ Use os arquivos abaixo como referência visual. Ao montar os slides, incorpore o
 
 **Data:** Junho de 2026
 
-**Repositório:** apresentar a branch `develop`
+**Repositório:** apresentar a versão atual do projeto.
 
 ## Contexto Técnico Sintético
 
@@ -137,7 +139,24 @@ Usuário
 
 **Instrução de composição:** criar capa nova, sem reaproveitar a capa antiga. A capa deve parecer acadêmica, limpa e moderna, com foco no nome DeclarAI.
 
-## Slide 2: Problema Real
+## Slide 2: Estrutura de Apresentação
+
+**Título:** Estrutura de Apresentação
+
+**Mensagem principal:** organizar a banca para entender problema, arquitetura, evolução, avaliação e demonstração.
+
+**Tópicos do sumário:**
+
+1. Problema real e proposta de valor.
+2. Arquitetura e Agentic RAG.
+3. Evolução da versão anterior para a versão atual.
+4. Base de conhecimento, chunking e modelos locais.
+5. Avaliação quantitativa e resultados.
+6. Demonstração ao vivo, limitações e próximos passos.
+
+**Visual sugerido:** sumário em duas colunas, com ícones simples e uma linha de progresso discreta.
+
+## Slide 3: Problema Real
 
 **Título:** Por que o DeclarAI é necessário?
 
@@ -150,7 +169,7 @@ A declaração do IRPF exige que contribuintes organizem recibos, notas fiscais,
 
 **Proposta de valor:** um assistente especializado no domínio fiscal brasileiro, com respostas fundamentadas em documentos de referência e processamento local de dados sensíveis.
 
-## Slide 3: Arquitetura Geral
+## Slide 4: Arquitetura Geral
 
 **Título:** Arquitetura do DeclarAI
 
@@ -195,7 +214,7 @@ A execução local via Ollama resolve todos esses pontos: os dados nunca saem do
 
 ![Contêineres C4](diagrams/agentic_rag/c4_containers.svg)
 
-## Slide 4: Agentic RAG
+## Slide 5: Agentic RAG
 
 **Título:** O agente escolhe a ferramenta certa
 
@@ -228,13 +247,13 @@ Entrada do usuário
 
 ![Ferramentas do Agente](diagrams/agentic_rag/ferramentas_agente.svg)
 
-## Slide 5: Melhoria 1 Desde a Main - Re-ranking
+## Slide 6: Evolução 1 - Re-ranking Semântico
 
 **Título:** Re-ranking semântico com CrossEncoder
 
-**Antes:** a busca vetorial retornava trechos apenas por similaridade de embedding.
+**Versão anterior:** a busca vetorial retornava trechos apenas por similaridade de embedding.
 
-**Depois:** o ChromaDB recupera top-15 candidatos e o CrossEncoder reordena os pares pergunta + trecho, retornando os top-5 mais relevantes.
+**Versão atual:** o ChromaDB recupera top-15 candidatos e o CrossEncoder reordena os pares pergunta + trecho, retornando os top-5 mais relevantes.
 
 **Impacto técnico:**
 
@@ -248,13 +267,13 @@ Entrada do usuário
 
 ![Recuperação e Re-ranking](diagrams/agentic_rag/recuperacao_reranking.svg)
 
-## Slide 6: Melhoria 2 Desde a Main - Classificação LLM-first
+## Slide 7: Evolução 2 - Classificação LLM-first
 
 **Título:** Classificação mais flexível de documentos fiscais
 
-**Antes:** classificação por palavras-chave fixas.
+**Versão anterior:** classificação por palavras-chave fixas.
 
-**Depois:** o Mistral tenta classificar primeiro. Se o resultado for inválido ou incerto, o sistema usa fallback por regras.
+**Versão atual:** o Mistral tenta classificar primeiro. Se o resultado for inválido ou incerto, o sistema usa fallback por regras.
 
 Fluxo:
 
@@ -300,7 +319,7 @@ O Mistral foi escolhido por apresentar a maior cobertura de palavras-chave esper
 
 ![Classificação LLM-first](diagrams/agentic_rag/classificacao_llm_first.svg)
 
-## Slide 7: Melhoria 3 Desde a Main - Titularidade
+## Slide 8: Evolução 3 - Titularidade
 
 **Título:** Verificação de titular, dependente ou terceiro
 
@@ -324,13 +343,13 @@ Estados possíveis:
 
 ![Titularidade e Justificativa](diagrams/agentic_rag/titularidade_justificativa.svg)
 
-## Slide 8: Melhoria 4 Desde a Main - Justificativa RAG
+## Slide 9: Evolução 4 - Justificativa RAG
 
 **Título:** Justificativa enriquecida com base de conhecimento
 
-**Antes:** justificativas estáticas e genéricas.
+**Versão anterior:** justificativas estáticas e genéricas.
 
-**Depois:** após a classificação, o sistema consulta a base por categoria, recupera os top-3 trechos e gera uma justificativa curta com Mistral.
+**Versão atual:** após a classificação, o sistema consulta a base por categoria, recupera os top-3 trechos e gera uma justificativa curta com Mistral.
 
 **Dados usados no prompt:**
 
@@ -348,7 +367,7 @@ Estados possíveis:
 
 ![Pipeline RAG](diagrams/agentic_rag/pipeline_rag.svg)
 
-## Slide 9: Melhoria 5 Desde a Main - Frontend
+## Slide 10: Evolução 5 - Frontend
 
 **Título:** Interface React mais completa
 
@@ -363,7 +382,7 @@ Páginas funcionais:
 
 **Mensagem visual:** mostrar a interface como hub do sistema. Usar cartões ou uma grade de páginas com ícones.
 
-## Slide 10: Base de Conhecimento
+## Slide 11: Base de Conhecimento
 
 **Título:** Documentos próprios e relevantes ao domínio
 
@@ -407,7 +426,7 @@ A configuração 600/80 foi selecionada por preservar regras fiscais completas (
 
 ![Estratégia de Chunking](diagrams/chunking_estrategia.svg)
 
-## Slide 11: Avaliação Quantitativa
+## Slide 12: Avaliação Quantitativa
 
 **Título:** Como a qualidade foi medida
 
@@ -433,7 +452,7 @@ Também existe avaliação completa pela interface, usando `POST /evaluation/com
 
 ![Avaliação do Pipeline RAG](diagrams/agentic_rag/avaliacao_rag.svg)
 
-## Slide 12: Resultados de Modelos
+## Slide 13: Resultados de Modelos
 
 **Título:** Mistral + RAG teve melhor cobertura
 
@@ -447,7 +466,7 @@ Também existe avaliação completa pela interface, usando `POST /evaluation/com
 
 **Conclusão:** o RAG acrescenta +28,3 pontos percentuais ao Mistral em comparação com o LLM sem recuperação.
 
-## Slide 13: Ablation Study
+## Slide 14: Ablation Study
 
 **Título:** Por que o RAG faz diferença
 
@@ -460,7 +479,7 @@ Pontos-chave:
 - a base oficial reduz alucinações;
 - fontes e scores tornam a resposta auditável.
 
-## Slide 14: Conformidade com a Atividade
+## Slide 15: Conformidade com a Atividade
 
 **Título:** Requisitos técnicos atendidos
 
@@ -478,7 +497,7 @@ Pontos-chave:
 
 **Mensagem principal:** o projeto cobre todos os requisitos técnicos obrigatórios e os critérios de documentação, avaliação e demonstração.
 
-## Slide 15: Limitações e Próximos Passos
+## Slide 16: Limitações e Próximos Passos
 
 **Título:** Limitações conhecidas
 
@@ -496,7 +515,7 @@ Pontos-chave:
 - base atualizada para o exercício fiscal vigente;
 - dataset anotado de documentos enviados.
 
-## Slide 16: Demonstração ao Vivo
+## Slide 17: Demonstração ao Vivo
 
 **Título:** Roteiro da apresentação
 
@@ -511,9 +530,19 @@ Pontos-chave:
 9. Executar avaliação de recuperação ao vivo e mostrar a opção de avaliação completa.
 10. Abrir Swagger em `http://localhost:8000/docs`.
 
-## Encerramento
+## Slide 18: Agradecimentos
 
-Concluir destacando que o DeclarAI evoluiu de um RAG básico para um Micro SaaS com comportamento agentic, avaliação quantitativa, interface utilizável, privacidade local e documentação completa.
+**Título:** Agradecimentos
+
+**Mensagem principal:** agradecer à banca e abrir espaço para perguntas.
+
+**Texto sugerido:**
+
+Obrigado pela atenção.
+
+O DeclarAI evoluiu de um RAG básico para um Micro SaaS acadêmico com comportamento agentic, avaliação quantitativa, interface utilizável, privacidade local e documentação completa.
+
+**Visual sugerido:** tela limpa com logo do DeclarAI, nomes da equipe, UEA, disciplina e uma chamada curta: `Perguntas?`.
 
 ## Checklist Final para o NotebookLM
 
@@ -529,3 +558,16 @@ Antes de finalizar a apresentação, verificar:
 - os endpoints e tecnologias não foram alterados;
 - o sistema é descrito como apoio informativo, não como substituto de contador;
 - a apresentação fecha com roteiro de demonstração ao vivo.
+
+## Regras Consolidadas para o NotebookLM
+
+- Gerar exatamente 18 slides em formato 16:9.
+- Usar português brasileiro com acentuação correta.
+- Não citar nomes de ramificações do Git. Usar apenas versão anterior e versão atual.
+- Usar rodapé com o nome do projeto: `DeclarAI | UEA | Oficina e Desenvolvimento de Sistemas I | Junho de 2026`.
+- Usar títulos com 50px, textos principais com 27px e notas ou observações com 23px.
+- Não usar travessão. Use hífen simples quando precisar separar ideias.
+- Incluir o slide 2 chamado `Estrutura de Apresentação`.
+- Encerrar com o slide 18 chamado `Agradecimentos`.
+- Não inventar métricas, tecnologias, autores ou endpoints.
+- Descrever o sistema como apoio informativo, nunca como substituto de contador.
