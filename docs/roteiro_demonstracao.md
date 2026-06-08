@@ -99,9 +99,9 @@ Use estes documentos fictícios. Eles já estão no repositório e foram criados
 | Caso | Arquivo | O que mostrar |
 |---|---|---|
 | Pergunta difícil | Chat, sem arquivo | Curso de inglês não é dedutível |
-| Upload principal | `data/test_documents/simulation/10_mensalidade_pedro_henrique.pdf` | educação, valor, emitente, referência IRPF e justificativa |
+| Upload principal | `data/test_documents/simulation/05_recibo_dentista_pedro.txt` | Recibo Médico, dedução saúde, valor, titularidade e justificativa |
 | Titularidade | Swagger ou comando `verificar-titularidade` | Pedro como dependente provável |
-| Upload alternativo | `data/test_documents/simulation/05_recibo_dentista_pedro.txt` | saúde, valor, referência IRPF e justificativa |
+| Upload alternativo | `data/test_documents/simulation/10_mensalidade_pedro_henrique.pdf` | educação (pode classificar como não identificado — evitar na demo ao vivo) |
 | Caso de alerta | `data/test_documents/simulation/07_gasto_nao_dedutivel_roupa.txt` | gasto não dedutível |
 | Base de conhecimento | `data/knowledge_base/guia_imposto_renda.txt` e `data/knowledge_base/pr-irpf-2024.pdf` | documentos próprios do domínio |
 
@@ -183,16 +183,16 @@ Ana Clara Rodrigues Nascimento
 2. Envie o arquivo:
 
 ```text
-data/test_documents/simulation/10_mensalidade_pedro_henrique.pdf
+data/test_documents/simulation/05_recibo_dentista_pedro.txt
 ```
 
 3. Se a tela já estiver pré-processada, mostre o resultado diretamente. Se decidir processar ao vivo, avise que essa etapa aciona o LLM local e pode levar perto de 2 minutos em CPU.
-4. Mostre os campos extraídos.
-5. Mostre natureza do conteúdo, situação no IRPF, valor, emitente, beneficiário, referência IRPF e justificativa enriquecida.
+4. Mostre os campos extraídos. **Destaque Tipo do documento (Recibo), Natureza (Saúde) e Situação no IRPF** — mesmo que o badge de categoria venha genérico, esses campos refletem o caso odontológico.
+5. Mostre valor, emitente, referência IRPF (código 10 - Dentista) e justificativa enriquecida.
 
 Fala sugerida:
 
-> "Este é o trecho mais agentic da aplicação. O upload aciona várias ferramentas: extração do texto, classificação LLM-first com fallback por regras, verificação de titularidade e uma justificativa gerada com outro ciclo RAG."
+> "Este é o trecho mais agentic da aplicação. O upload aciona várias ferramentas: extração do texto, classificação LLM-first com fallback por regras, verificação de titularidade e uma justificativa gerada com outro ciclo RAG. O recibo de dentista classifica como despesa médica dedutível e o paciente Pedro aparece como dependente provável."
 
 Fala para a justificativa:
 
@@ -306,7 +306,7 @@ Upload de documento principal:
 
 ```bash
 curl -s -X POST http://localhost:8000/documents/upload \
-  -F "arquivo=@data/test_documents/simulation/10_mensalidade_pedro_henrique.pdf" \
+  -F "arquivo=@data/test_documents/simulation/05_recibo_dentista_pedro.txt" \
   | python3 -m json.tool
 ```
 
@@ -340,7 +340,10 @@ curl -s -X POST http://localhost:8000/evaluation/recuperacao \
 - Evite rodar avaliação completa ao vivo, pois ela pode demorar.
 - Se o chat demorar, continue mostrando Upload, Histórico e Avaliação.
 - Se o Ollama estiver indisponível, mostre que a aplicação detecta isso em `Status`.
-- Se o upload de imagem demorar por OCR, use o arquivo `.txt` indicado no roteiro.
+- Se o upload de imagem demorar por OCR, use o recibo de dentista em `.txt` (upload principal).
+- Evite o PDF de mensalidade escolar na demo ao vivo: ele pode classificar como "Documento Não Classificado".
+- O backend aceita `.txt` no upload — não é necessário converter o recibo de dentista para PDF.
+- Se precisar de um caso com classificação categórica muito explícita no badge, use `07_gasto_nao_dedutivel_roupa.txt` (Nota Fiscal / Não dedutível) como contraste rápido.
 
 ## 7. Frases de Valor para Usar Durante a Demo
 
